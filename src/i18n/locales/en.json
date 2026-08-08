@@ -1,0 +1,87 @@
+{
+  "app": {
+    "name": "Ukulele"
+  },
+  "tabs": {
+    "today": "Today",
+    "chords": "Chords",
+    "songs": "Songs",
+    "practice": "Practice",
+    "progress": "Progress"
+  },
+  "today": {
+    "title": "What are we practising today?",
+    "subtitle": "A short session built just for you",
+    "startSession": "Start practising",
+    "estimatedMinutes": "About {{count}} minutes",
+    "streakDays_one": "1 day streak",
+    "streakDays_other": "{{count}} day streak",
+    "emptyState": "You haven't practised yet. Let's start with your first chord."
+  },
+  "chords": {
+    "title": "Chords",
+    "searchPlaceholder": "Search a chord…",
+    "allChords": "All",
+    "mastered": "Mastered",
+    "learning": "Learning",
+    "notStarted": "Not started",
+    "difficulty": "Difficulty",
+    "practice": "Practise chord",
+    "playSound": "Play",
+    "fingers": "Fingers",
+    "openStrings": "Open strings",
+    "barre": "Barre"
+  },
+  "songs": {
+    "title": "Songs",
+    "playableNow": "Playable now",
+    "all": "All songs",
+    "hebrew": "Hebrew",
+    "english": "English",
+    "chordsNeeded": "Chords in this song",
+    "unlockHint_one": "Learn one more chord ({{chords}}) to unlock 1 more song",
+    "unlockHint_other": "Learn one more chord ({{chords}}) to unlock {{count}} more songs",
+    "tempo": "Tempo",
+    "play": "Play",
+    "record": "Record"
+  },
+  "practice": {
+    "title": "Practice",
+    "tuner": "Tuner",
+    "metronome": "Metronome",
+    "chordChangeDrill": "Chord change drill",
+    "bpm": "BPM",
+    "countIn": "Count-in"
+  },
+  "progress": {
+    "title": "My progress",
+    "masteryLevel": "Mastery",
+    "practiceMinutes": "Practice minutes",
+    "recordings": "My recordings",
+    "personalBest": "Personal best",
+    "thisWeek": "This week"
+  },
+  "rhythm": {
+    "down": "Down",
+    "up": "Up",
+    "rest": "Rest",
+    "muted": "Muted",
+    "strong": "Strong",
+    "soft": "Soft",
+    "normal": "Normal"
+  },
+  "settings": {
+    "title": "Settings",
+    "language": "Language",
+    "hebrew": "עברית",
+    "english": "English",
+    "tuning": "Tuning",
+    "micCalibration": "Microphone calibration"
+  },
+  "common": {
+    "cancel": "Cancel",
+    "done": "Done",
+    "retry": "Retry",
+    "loading": "Loading…"
+  }
+}

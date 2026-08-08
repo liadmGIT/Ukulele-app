@@ -1,0 +1,87 @@
+{
+  "app": {
+    "name": "אוקולילי"
+  },
+  "tabs": {
+    "today": "היום",
+    "chords": "אקורדים",
+    "songs": "שירים",
+    "practice": "תרגול",
+    "progress": "התקדמות"
+  },
+  "today": {
+    "title": "מה מתרגלים היום?",
+    "subtitle": "אימון קצר שנבנה במיוחד בשבילך",
+    "startSession": "התחל תרגול",
+    "estimatedMinutes": "כ־{{count}} דקות",
+    "streakDays_one": "יום אחד ברצף",
+    "streakDays_other": "{{count}} ימים ברצף",
+    "emptyState": "עוד לא תרגלת. בוא נתחיל מהאקורד הראשון."
+  },
+  "chords": {
+    "title": "אקורדים",
+    "searchPlaceholder": "חפש אקורד…",
+    "allChords": "הכל",
+    "mastered": "בשליטה",
+    "learning": "בלימוד",
+    "notStarted": "טרם התחלת",
+    "difficulty": "רמת קושי",
+    "practice": "תרגל אקורד",
+    "playSound": "השמע",
+    "fingers": "אצבעות",
+    "openStrings": "מיתרים פתוחים",
+    "barre": "באריה"
+  },
+  "songs": {
+    "title": "שירים",
+    "playableNow": "אפשר לנגן עכשיו",
+    "all": "כל השירים",
+    "hebrew": "עברית",
+    "english": "אנגלית",
+    "chordsNeeded": "אקורדים בשיר",
+    "unlockHint_one": "למד עוד אקורד אחד ({{chords}}) ותפתח עוד שיר",
+    "unlockHint_other": "למד עוד אקורד אחד ({{chords}}) ותפתח עוד {{count}} שירים",
+    "tempo": "קצב",
+    "play": "נגן",
+    "record": "הקלט"
+  },
+  "practice": {
+    "title": "תרגול",
+    "tuner": "מכוון",
+    "metronome": "מטרונום",
+    "chordChangeDrill": "תרגיל מעברי אקורדים",
+    "bpm": "פעימות לדקה",
+    "countIn": "ספירה לפני התחלה"
+  },
+  "progress": {
+    "title": "ההתקדמות שלי",
+    "masteryLevel": "רמת שליטה",
+    "practiceMinutes": "דקות תרגול",
+    "recordings": "ההקלטות שלי",
+    "personalBest": "שיא אישי",
+    "thisWeek": "השבוע"
+  },
+  "rhythm": {
+    "down": "מטה",
+    "up": "מעלה",
+    "rest": "שקט",
+    "muted": "עמום",
+    "strong": "חזק",
+    "soft": "עדין",
+    "normal": "רגיל"
+  },
+  "settings": {
+    "title": "הגדרות",
+    "language": "שפה",
+    "hebrew": "עברית",
+    "english": "English",
+    "tuning": "כיוון",
+    "micCalibration": "כיול מיקרופון"
+  },
+  "common": {
+    "cancel": "ביטול",
+    "done": "סיום",
+    "retry": "נסה שוב",
+    "loading": "טוען…"
+  }
+}

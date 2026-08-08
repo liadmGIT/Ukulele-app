@@ -27,14 +27,22 @@ npx expo run:ios      # or: npx expo run:android
 > **This app does not run in Expo Go.** Real-time microphone PCM access requires native code
 > (`react-native-audio-api`), so a development build is required. `expo run:*` creates one.
 
+### Web preview
+
+`npx expo export --platform web` produces a browser build that is useful for iterating on layout
+and chord diagrams without a device. It is a **preview only**: microphone features do not work,
+and progress is held in memory rather than saved, because `expo-sqlite`'s synchronous API is
+native-only. See `src/db/memoryDriver.ts`.
+
 ## Scripts
 
 | Command | What it does |
 |---|---|
-| `npm test` | Unit tests (DSP, analysis, content validation) |
+| `npm test` | Unit tests (music theory, DSP, analysis) |
 | `npm run typecheck` | `tsc --noEmit` |
 | `npm run lint` | ESLint |
-| `npm run validate:content` | Validates every chord and song JSON file against its schema |
+| `npm run validate:content` | Validates every chord and song file against its schema and against music theory |
+| `npm run gen:chords` | Regenerates `content/chords.json` from the curated fingerings |
 
 ## Content policy
 

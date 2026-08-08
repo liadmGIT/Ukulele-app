@@ -1,0 +1,46 @@
+{
+  "expo": {
+    "name": "אוקולילי",
+    "slug": "ukulele-app",
+    "scheme": "ukuleleapp",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "automatic",
+    "newArchEnabled": true,
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.liadm.ukuleleapp"
+    },
+    "android": {
+      "package": "com.liadm.ukuleleapp",
+      "adaptiveIcon": {
+        "backgroundColor": "#E6F4FE",
+        "foregroundImage": "./assets/android-icon-foreground.png",
+        "backgroundImage": "./assets/android-icon-background.png",
+        "monochromeImage": "./assets/android-icon-monochrome.png"
+      },
+      "predictiveBackGestureEnabled": false
+    },
+    "web": {
+      "favicon": "./assets/favicon.png",
+      "bundler": "metro"
+    },
+    "plugins": [
+      "expo-router",
+      "expo-localization",
+      "expo-sqlite",
+      [
+        "react-native-audio-api",
+        {
+          "iosMicrophonePermission": "האפליקציה משתמשת במיקרופון כדי להאזין לנגינה שלך, לכוון את האוקולילי ולתת לך משוב על הביצוע.",
+          "androidPermissions": ["MODIFY_AUDIO_SETTINGS"],
+          "androidForegroundService": false
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": true
+    }
+  }
+}

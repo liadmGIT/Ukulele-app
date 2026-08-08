@@ -1,0 +1,3057 @@
+{
+  "version": 1,
+  "tuning": "GCEA-high-G",
+  "chords": [
+    {
+      "id": "C-maj",
+      "nameEn": "C",
+      "nameHe": "C",
+      "root": "C",
+      "quality": "maj",
+      "aliases": [],
+      "notes": [
+        "C",
+        "E",
+        "G"
+      ],
+      "shapes": [
+        {
+          "frets": [
+            0,
+            0,
+            0,
+            3
+          ],
+          "fingers": [
+            0,
+            0,
+            0,
+            1
+          ],
+          "barre": null,
+          "baseFret": 1
+        }
+      ],
+      "difficulty": 1,
+      "category": "open",
+      "sortOrder": 0
+    },
+    {
+      "id": "C-min",
+      "nameEn": "Cm",
+      "nameHe": "Cm",
+      "root": "C",
+      "quality": "min",
+      "aliases": [],
+      "notes": [
+        "C",
+        "Eb",
+        "G"
+      ],
+      "shapes": [
+        {
+          "frets": [
+            0,
+            3,
+            3,
+            3
+          ],
+          "fingers": [
+            0,
+            1,
+            1,
+            1
+          ],
+          "barre": {
+            "fret": 3,
+            "fromString": 1,
+            "toString": 3
+          },
+          "baseFret": 1
+        }
+      ],
+      "difficulty": 4,
+      "category": "barre",
+      "sortOrder": 1
+    },
+    {
+      "id": "C-dom7",
+      "nameEn": "C7",
+      "nameHe": "C7",
+      "root": "C",
+      "quality": "dom7",
+      "aliases": [],
+      "notes": [
+        "C",
+        "E",
+        "G",
+        "Bb"
+      ],
+      "shapes": [
+        {
+          "frets": [
+            0,
+            0,
+            0,
+            1
+          ],
+          "fingers": [
+            0,
+            0,
+            0,
+            1
+          ],
+          "barre": null,
+          "baseFret": 1
+        }
+      ],
+      "difficulty": 1,
+      "category": "open",
+      "sortOrder": 2
+    },
+    {
+      "id": "C-min7",
+      "nameEn": "Cm7",
+      "nameHe": "Cm7",
+      "root": "C",
+      "quality": "min7",
+      "aliases": [],
+      "notes": [
+        "C",
+        "Eb",
+        "G",
+        "Bb"
+      ],
+      "shapes": [
+        {
+          "frets": [
+            3,
+            3,
+            3,
+            3
+          ],
+          "fingers": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "barre": {
+            "fret": 3,
+            "fromString": 0,
+            "toString": 3
+          },
+          "baseFret": 1
+        }
+      ],
+      "difficulty": 4,
+      "category": "barre",
+      "sortOrder": 3
+    },
+    {
+      "id": "C-maj7",
+      "nameEn": "Cmaj7",
+      "nameHe": "Cmaj7",
+      "root": "C",
+      "quality": "maj7",
+      "aliases": [],
+      "notes": [
+        "C",
+        "E",
+        "G",
+        "B"
+      ],
+      "shapes": [
+        {
+          "frets": [
+            0,
+            0,
+            0,
+            2
+          ],
+          "fingers": [
+            0,
+            0,
+            0,
+            1
+          ],
+          "barre": null,
+          "baseFret": 1
+        }
+      ],
+      "difficulty": 1,
+      "category": "open",
+      "sortOrder": 4
+    },
+    {
+      "id": "C-sus2",
+      "nameEn": "Csus2",
+      "nameHe": "Csus2",
+      "root": "C",
+      "quality": "sus2",
+      "aliases": [],
+      "notes": [
+        "C",
+        "D",
+        "G"
+      ],
+      "shapes": [
+        {
+          "frets": [
+            0,
+            2,
+            3,
+            3
+          ],
+          "fingers": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "barre": null,
+          "baseFret": 1
+        }
+      ],
+      "difficulty": 3,
+      "category": "open",
+      "sortOrder": 5
+    },
+    {
+      "id": "C-sus4",
+      "nameEn": "Csus4",
+      "nameHe": "Csus4",
+      "root": "C",
+      "quality": "sus4",
+      "aliases": [],
+      "notes": [
+        "C",
+        "F",
+        "G"
+      ],
+      "shapes": [
+        {
+          "frets": [
+            0,
+            0,
+            1,
+            3
+          ],
+          "fingers": [
+            0,
+            0,
+            1,
+            2
+          ],
+          "barre": null,
+          "baseFret": 1
+        }
+      ],
+      "difficulty": 2,
+      "category": "open",
+      "sortOrder": 6
+    },
+    {
+      "id": "C-dim7",
+      "nameEn": "Cdim7",
+      "nameHe": "Cdim7",
+      "root": "C",
+      "quality": "dim7",
+      "aliases": [],
+      "notes": [
+        "C",
+        "Eb",
+        "Gb",
+        "A"
+      ],
+      "shapes": [
+        {
+          "frets": [
+            2,
+            3,
+            2,
+            3
+          ],
+          "fingers": [
+            1,
+            3,
+            2,
+            4
+          ],
+          "barre": null,
+          "baseFret": 1
+        }
+      ],
+      "difficulty": 3,
+      "category": "open",
+      "sortOrder": 7
+    },
+    {
+      "id": "C-aug",
+      "nameEn": "Caug",
+      "nameHe": "Caug",
+      "root": "C",
+      "quality": "aug",
+      "aliases": [],
+      "notes": [
+        "C",
+        "E",
+        "G#"
+      ],
+      "shapes": [
+        {
+          "frets": [
+            1,
+            0,
+            0,
+            3
+          ],
+          "fingers": [
+            1,
+            0,
+            0,
+            2
+          ],
+          "barre": null,
+          "baseFret": 1
+        }
+      ],
+      "difficulty": 2,
+      "category": "open",
+      "sortOrder": 8
+    },
+    {
+      "id": "C-maj6",
+      "nameEn": "C6",
+      "nameHe": "C6",
+      "root": "C",
+      "quality": "maj6",
+      "aliases": [],
+      "notes": [
+        "C",
+        "E",
+        "G",
+        "A"
+      ],
+      "shapes": [
+        {
+          "frets": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "fingers": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "barre": null,
+          "baseFret": 1
+        }
+      ],
+      "difficulty": 1,
+      "category": "open",
+      "sortOrder": 9
+    },
+    {
+      "id": "C-add9",
+      "nameEn": "Cadd9",
+      "nameHe": "Cadd9",
+      "root": "C",
+      "quality": "add9",
+      "aliases": [],
+      "notes": [
+        "C",
+        "D",
+        "E",
+        "G"
+      ],
+      "shapes": [
+        {
+          "frets": [
+            0,
+            2,
+            0,
+            3
+          ],
+          "fingers": [
+            0,
+            1,
+            0,
+            2
+          ],
+          "barre": null,
+          "baseFret": 1
+        }
+      ],
+      "difficulty": 2,
+      "category": "open",
+      "sortOrder": 10
+    },
+    {
+      "id": "Db-maj",
+      "nameEn": "Db",
+      "nameHe": "Db",
+      "root": "Db",
+      "quality": "maj",
+      "aliases": [
+        "C#"
+      ],
+      "notes": [
+        "Db",
+        "F",
+        "Ab"
+      ],
+      "shapes": [
+        {
+          "frets": [
+            1,
+            1,
+            1,
+            4
+          ],
+          "fingers": [
+            1,
+            1,
+            1,
+            2
+          ],
+          "barre": {
+            "fret": 1,
+            "fromString": 0,
+            "toString": 2
+          },
+          "baseFret": 1
+        }
+      ],
+      "difficulty": 5,
+      "category": "barre",
+      "sortOrder": 11
+    },
+    {
+      "id": "C#-min",
+      "nameEn": "C#m",
+      "nameHe": "C#m",
+      "root": "C#",
+      "quality": "min",
+      "aliases": [
+        "Dbm"
+      ],
+      "notes": [
+        "C#",
+        "E",
+        "G#"
+      ],
+      "shapes": [
+        {
+          "frets": [
+            1,
+            1,
+            0,
+            4
+          ],
+          "fingers": [
+            1,
+            1,
+            0,
+            2
+          ],
+          "barre": {
+            "fret": 1,
+            "fromString": 0,
+            "toString": 1
+          },
+          "baseFret": 1
+        }
+      ],
+      "difficulty": 4,
+      "category": "barre",
+      "sortOrder": 12
+    },
+    {
+      "id": "Db-dom7",
+      "nameEn": "Db7",
+      "nameHe": "Db7",
+      "root": "Db",
+      "quality": "dom7",
+      "aliases": [
+        "C#7"
+      ],
+      "notes": [
+        "Db",
+        "F",
+        "Ab",
+        "Cb"
+      ],
+      "shapes": [
+        {
+          "frets": [
+            1,
+            1,
+            1,
+            2
+          ],
+          "fingers": [
+            1,
+            1,
+            1,
+            2
+          ],
+          "barre": {
+            "fret": 1,
+            "fromString": 0,
+            "toString": 2
+          },
+          "baseFret": 1
+        }
+      ],
+      "difficulty": 4,
+      "category": "barre",
+      "sortOrder": 13
+    },
+    {
+      "id": "C#-min7",
+      "nameEn": "C#m7",
+      "nameHe": "C#m7",
+      "root": "C#",
+      "quality": "min7",
+      "aliases": [
+        "Dbm7"
+      ],
+      "notes": [
+        "C#",
+        "E",
+        "G#",
+        "B"
+      ],
+      "shapes": [
+        {
+          "frets": [
+            1,
+            1,
+            0,
+            2
+          ],
+          "fingers": [
+            1,
+            1,
+            0,
+            2
+          ],
+          "barre": {
+            "fret": 1,
+            "fromString": 0,
+            "toString": 1
+          },
+          "baseFret": 1
+        }
+      ],
+      "difficulty": 4,
+      "category": "barre",
+      "sortOrder": 14
+    },
+    {
+      "id": "D-maj",
+      "nameEn": "D",
+      "nameHe": "D",
+      "root": "D",
+      "quality": "maj",
+      "aliases": [],
+      "notes": [
+        "D",
+        "F#",
+        "A"
+      ],
+      "shapes": [
+        {
+          "frets": [
+            2,
+            2,
+            2,
+            0
+          ],
+          "fingers": [
+            1,
+            2,
+            3,
+            0
+          ],
+          "barre": null,
+          "baseFret": 1
+        }
+      ],
+      "difficulty": 3,
+      "category": "open",
+      "sortOrder": 15
+    },
+    {
+      "id": "D-min",
+      "nameEn": "Dm",
+      "nameHe": "Dm",
+      "root": "D",
+      "quality": "min",
+      "aliases": [],
+      "notes": [
+        "D",
+        "F",
+        "A"
+      ],
+      "shapes": [
+        {
+          "frets": [
+            2,
+            2,
+            1,
+            0
+          ],
+          "fingers": [
+            2,
+            3,
+            1,
+            0
+          ],
+          "barre": null,
+          "baseFret": 1
+        }
+      ],
+      "difficulty": 3,
+      "category": "open",
+      "sortOrder": 16
+    },
+    {
+      "id": "D-dom7",
+      "nameEn": "D7",
+      "nameHe": "D7",
+      "root": "D",
+      "quality": "dom7",
+      "aliases": [],
+      "notes": [
+        "D",
+        "F#",
+        "A",
+        "C"
+      ],
+      "shapes": [
+        {
+          "frets": [
+            2,
+            2,
+            2,
+            3
+          ],
+          "fingers": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "barre": null,
+          "baseFret": 1
+        }
+      ],
+      "difficulty": 3,
+      "category": "open",
+      "sortOrder": 17
+    },
+    {
+      "id": "D-min7",
+      "nameEn": "Dm7",
+      "nameHe": "Dm7",
+      "root": "D",
+      "quality": "min7",
+      "aliases": [],
+      "notes": [
+        "D",
+        "F",
+        "A",
+        "C"
+      ],
+      "shapes": [
+        {
+          "frets": [
+            2,
+            2,
+            1,
+            3
+          ],
+          "fingers": [
+            2,
+            3,
+            1,
+            4
+          ],
+          "barre": null,
+          "baseFret": 1
+        }
+      ],
+      "difficulty": 3,
+      "category": "open",
+      "sortOrder": 18
+    },
+    {
+      "id": "D-maj7",
+      "nameEn": "Dmaj7",
+      "nameHe": "Dmaj7",
+      "root": "D",
+      "quality": "maj7",
+      "aliases": [],
+      "notes": [
+        "D",
+        "F#",
+        "A",
+        "C#"
+      ],
+      "shapes": [
+        {
+          "frets": [
+            2,
+            2,
+            2,
+            4
+          ],
+          "fingers": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "barre": null,
+          "baseFret": 1
+        }
+      ],
+      "difficulty": 3,
+      "category": "open",
+      "sortOrder": 19
+    },
+    {
+      "id": "D-sus2",
+      "nameEn": "Dsus2",
+      "nameHe": "Dsus2",
+      "root": "D",
+      "quality": "sus2",
+      "aliases": [],
+      "notes": [
+        "D",
+        "E",
+        "A"
+      ],
+      "shapes": [
+        {
+          "frets": [
+            2,
+            2,
+            0,
+            0
+          ],
+          "fingers": [
+            1,
+            2,
+            0,
+            0
+          ],
+          "barre": null,
+          "baseFret": 1
+        }
+      ],
+      "difficulty": 2,
+      "category": "open",
+      "sortOrder": 20
+    },
+    {
+      "id": "D-sus4",
+      "nameEn": "Dsus4",
+      "nameHe": "Dsus4",
+      "root": "D",
+      "quality": "sus4",
+      "aliases": [],
+      "notes": [
+        "D",
+        "G",
+        "A"
+      ],
+      "shapes": [
+        {
+          "frets": [
+            0,
+            2,
+            3,
+            0
+          ],
+          "fingers": [
+            0,
+            1,
+            2,
+            0
+          ],
+          "barre": null,
+          "baseFret": 1
+        }
+      ],
+      "difficulty": 2,
+      "category": "open",
+      "sortOrder": 21
+    },
+    {
+      "id": "D-dim7",
+      "nameEn": "Ddim7",
+      "nameHe": "Ddim7",
+      "root": "D",
+      "quality": "dim7",
+      "aliases": [],
+      "notes": [
+        "D",
+        "F",
+        "Ab",
+        "B"
+      ],
+      "shapes": [
+        {
+          "frets": [
+            1,
+            2,
+            1,
+            2
+          ],
+          "fingers": [
+            1,
+            3,
+            2,
+            4
+          ],
+          "barre": null,
+          "baseFret": 1
+        }
+      ],
+      "difficulty": 3,
+      "category": "open",
+      "sortOrder": 22
+    },
+    {
+      "id": "D-maj6",
+      "nameEn": "D6",
+      "nameHe": "D6",
+      "root": "D",
+      "quality": "maj6",
+      "aliases": [],
+      "notes": [
+        "D",
+        "F#",
+        "A",
+        "B"
+      ],
+      "shapes": [
+        {
+          "frets": [
+            2,
+            2,
+            2,
+            2
+          ],
+          "fingers": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "barre": {
+            "fret": 2,
+            "fromString": 0,
+            "toString": 3
+          },
+          "baseFret": 1
+        }
+      ],
+      "difficulty": 4,
+      "category": "barre",
+      "sortOrder": 23
+    },
+    {
+      "id": "Eb-maj",
+      "nameEn": "Eb",
+      "nameHe": "Eb",
+      "root": "Eb",
+      "quality": "maj",
+      "aliases": [
+        "D#"
+      ],
+      "notes": [
+        "Eb",
+        "G",
+        "Bb"
+      ],
+      "shapes": [
+        {
+          "frets": [
+            3,
+            3,
+            3,
+            1
+          ],
+          "fingers": [
+            1,
+            1,
+            1,
+            2
+          ],
+          "barre": {
+            "fret": 3,
+            "fromString": 0,
+            "toString": 2
+          },
+          "baseFret": 1
+        }
+      ],
+      "difficulty": 4,
+      "category": "barre",
+      "sortOrder": 24
+    },
+    {
+      "id": "Eb-min",
+      "nameEn": "Ebm",
+      "nameHe": "Ebm",
+      "root": "Eb",
+      "quality": "min",
+      "aliases": [
+        "D#m"
+      ],
+      "notes": [
+        "Eb",
+        "Gb",
+        "Bb"
+      ],
+      "shapes": [
+        {
+          "frets": [
+            3,
+            3,
+            2,
+            1
+          ],
+          "fingers": [
+            3,
+            4,
+            2,
+            1
+          ],
+          "barre": null,
+          "baseFret": 1
+        }
+      ],
+      "difficulty": 3,
+      "category": "open",
+      "sortOrder": 25
+    },
+    {
+      "id": "Eb-dom7",
+      "nameEn": "Eb7",
+      "nameHe": "Eb7",
+      "root": "Eb",
+      "quality": "dom7",
+      "aliases": [
+        "D#7"
+      ],
+      "notes": [
+        "Eb",
+        "G",
+        "Bb",
+        "Db"
+      ],
+      "shapes": [
+        {
+          "frets": [
+            3,
+            3,
+            3,
+            4
+          ],
+          "fingers": [
+            1,
+            1,
+            1,
+            2
+          ],
+          "barre": {
+            "fret": 3,
+            "fromString": 0,
+            "toString": 2
+          },
+          "baseFret": 1
+        }
+      ],
+      "difficulty": 4,
+      "category": "barre",
+      "sortOrder": 26
+    },
+    {
+      "id": "Eb-min7",
+      "nameEn": "Ebm7",
+      "nameHe": "Ebm7",
+      "root": "Eb",
+      "quality": "min7",
+      "aliases": [
+        "D#m7"
+      ],
+      "notes": [
+        "Eb",
+        "Gb",
+        "Bb",
+        "Db"
+      ],
+      "shapes": [
+        {
+          "frets": [
+            3,
+            3,
+            2,
+            4
+          ],
+          "fingers": [
+            2,
+            3,
+            1,
+            4
+          ],
+          "barre": null,
+          "baseFret": 1
+        }
+      ],
+      "difficulty": 3,
+      "category": "open",
+      "sortOrder": 27
+    },
+    {
+      "id": "E-maj",
+      "nameEn": "E",
+      "nameHe": "E",
+      "root": "E",
+      "quality": "maj",
+      "aliases": [],
+      "notes": [
+        "E",
+        "G#",
+        "B"
+      ],
+      "shapes": [
+        {
+          "frets": [
+            4,
+            4,
+            4,
+            2
+          ],
+          "fingers": [
+            1,
+            1,
+            1,
+            2
+          ],
+          "barre": {
+            "fret": 4,
+            "fromString": 0,
+            "toString": 2
+          },
+          "baseFret": 1
+        }
+      ],
+      "difficulty": 4,
+      "category": "barre",
+      "sortOrder": 28
+    },
+    {
+      "id": "E-min",
+      "nameEn": "Em",
+      "nameHe": "Em",
+      "root": "E",
+      "quality": "min",
+      "aliases": [],
+      "notes": [
+        "E",
+        "G",
+        "B"
+      ],
+      "shapes": [
+        {
+          "frets": [
+            0,
+            4,
+            3,
+            2
+          ],
+          "fingers": [
+            0,
+            3,
+            2,
+            1
+          ],
+          "barre": null,
+          "baseFret": 1
+        }
+      ],
+      "difficulty": 3,
+      "category": "open",
+      "sortOrder": 29
+    },
+    {
+      "id": "E-dom7",
+      "nameEn": "E7",
+      "nameHe": "E7",
+      "root": "E",
+      "quality": "dom7",
+      "aliases": [],
+      "notes": [
+        "E",
+        "G#",
+        "B",
+        "D"
+      ],
+      "shapes": [
+        {
+          "frets": [
+            1,
+            2,
+            0,
+            2
+          ],
+          "fingers": [
+            1,
+            2,
+            0,
+            3
+          ],
+          "barre": null,
+          "baseFret": 1
+        }
+      ],
+      "difficulty": 3,
+      "category": "open",
+      "sortOrder": 30
+    },
+    {
+      "id": "E-min7",
+      "nameEn": "Em7",
+      "nameHe": "Em7",
+      "root": "E",
+      "quality": "min7",
+      "aliases": [],
+      "notes": [
+        "E",
+        "G",
+        "B",
+        "D"
+      ],
+      "shapes": [
+        {
+          "frets": [
+            0,
+            2,
+            0,
+            2
+          ],
+          "fingers": [
+            0,
+            1,
+            0,
+            2
+          ],
+          "barre": null,
+          "baseFret": 1
+        }
+      ],
+      "difficulty": 2,
+      "category": "open",
+      "sortOrder": 31
+    },
+    {
+      "id": "E-maj7",
+      "nameEn": "Emaj7",
+      "nameHe": "Emaj7",
+      "root": "E",
+      "quality": "maj7",
+      "aliases": [],
+      "notes": [
+        "E",
+        "G#",
+        "B",
+        "D#"
+      ],
+      "shapes": [
+        {
+          "frets": [
+            1,
+            3,
+            0,
+            2
+          ],
+          "fingers": [
+            1,
+            3,
+            0,
+            2
+          ],
+          "barre": null,
+          "baseFret": 1
+        }
+      ],
+      "difficulty": 3,
+      "category": "open",
+      "sortOrder": 32
+    },
+    {
+      "id": "E-sus4",
+      "nameEn": "Esus4",
+      "nameHe": "Esus4",
+      "root": "E",
+      "quality": "sus4",
+      "aliases": [],
+      "notes": [
+        "E",
+        "A",
+        "B"
+      ],
+      "shapes": [
+        {
+          "frets": [
+            4,
+            4,
+            5,
+            2
+          ],
+          "fingers": [
+            2,
+            3,
+            4,
+            1
+          ],
+          "barre": null,
+          "baseFret": 1
+        }
+      ],
+      "difficulty": 4,
+      "category": "extended",
+      "sortOrder": 33
+    },
+    {
+      "id": "E-dim7",
+      "nameEn": "Edim7",
+      "nameHe": "Edim7",
+      "root": "E",
+      "quality": "dim7",
+      "aliases": [],
+      "notes": [
+        "E",
+        "G",
+        "Bb",
+        "C#"
+      ],
+      "shapes": [
+        {
+          "frets": [
+            0,
+            1,
+            0,
+            1
+          ],
+          "fingers": [
+            0,
+            1,
+            0,
+            2
+          ],
+          "barre": null,
+          "baseFret": 1
+        }
+      ],
+      "difficulty": 2,
+      "category": "open",
+      "sortOrder": 34
+    },
+    {
+      "id": "E-min7b5",
+      "nameEn": "Em7b5",
+      "nameHe": "Em7b5",
+      "root": "E",
+      "quality": "min7b5",
+      "aliases": [],
+      "notes": [
+        "E",
+        "G",
+        "Bb",
+        "D"
+      ],
+      "shapes": [
+        {
+          "frets": [
+            0,
+            2,
+            0,
+            1
+          ],
+          "fingers": [
+            0,
+            2,
+            0,
+            1
+          ],
+          "barre": null,
+          "baseFret": 1
+        }
+      ],
+      "difficulty": 2,
+      "category": "open",
+      "sortOrder": 35
+    },
+    {
+      "id": "F-maj",
+      "nameEn": "F",
+      "nameHe": "F",
+      "root": "F",
+      "quality": "maj",
+      "aliases": [],
+      "notes": [
+        "F",
+        "A",
+        "C"
+      ],
+      "shapes": [
+        {
+          "frets": [
+            2,
+            0,
+            1,
+            0
+          ],
+          "fingers": [
+            2,
+            0,
+            1,
+            0
+          ],
+          "barre": null,
+          "baseFret": 1
+        }
+      ],
+      "difficulty": 2,
+      "category": "open",
+      "sortOrder": 36
+    },
+    {
+      "id": "F-min",
+      "nameEn": "Fm",
+      "nameHe": "Fm",
+      "root": "F",
+      "quality": "min",
+      "aliases": [],
+      "notes": [
+        "F",
+        "Ab",
+        "C"
+      ],
+      "shapes": [
+        {
+          "frets": [
+            1,
+            0,
+            1,
+            3
+          ],
+          "fingers": [
+            1,
+            0,
+            2,
+            3
+          ],
+          "barre": null,
+          "baseFret": 1
+        }
+      ],
+      "difficulty": 3,
+      "category": "open",
+      "sortOrder": 37
+    },
+    {
+      "id": "F-dom7",
+      "nameEn": "F7",
+      "nameHe": "F7",
+      "root": "F",
+      "quality": "dom7",
+      "aliases": [],
+      "notes": [
+        "F",
+        "A",
+        "C",
+        "Eb"
+      ],
+      "shapes": [
+        {
+          "frets": [
+            2,
+            3,
+            1,
+            0
+          ],
+          "fingers": [
+            2,
+            3,
+            1,
+            0
+          ],
+          "barre": null,
+          "baseFret": 1
+        }
+      ],
+      "difficulty": 3,
+      "category": "open",
+      "sortOrder": 38
+    },
+    {
+      "id": "F-min7",
+      "nameEn": "Fm7",
+      "nameHe": "Fm7",
+      "root": "F",
+      "quality": "min7",
+      "aliases": [],
+      "notes": [
+        "F",
+        "Ab",
+        "C",
+        "Eb"
+      ],
+      "shapes": [
+        {
+          "frets": [
+            1,
+            3,
+            1,
+            3
+          ],
+          "fingers": [
+            1,
+            3,
+            2,
+            4
+          ],
+          "barre": null,
+          "baseFret": 1
+        }
+      ],
+      "difficulty": 3,
+      "category": "open",
+      "sortOrder": 39
+    },
+    {
+      "id": "F-maj7",
+      "nameEn": "Fmaj7",
+      "nameHe": "Fmaj7",
+      "root": "F",
+      "quality": "maj7",
+      "aliases": [],
+      "notes": [
+        "F",
+        "A",
+        "C",
+        "E"
+      ],
+      "shapes": [
+        {
+          "frets": [
+            2,
+            4,
+            1,
+            3
+          ],
+          "fingers": [
+            2,
+            4,
+            1,
+            3
+          ],
+          "barre": null,
+          "baseFret": 1
+        }
+      ],
+      "difficulty": 4,
+      "category": "open",
+      "sortOrder": 40
+    },
+    {
+      "id": "F-sus2",
+      "nameEn": "Fsus2",
+      "nameHe": "Fsus2",
+      "root": "F",
+      "quality": "sus2",
+      "aliases": [],
+      "notes": [
+        "F",
+        "G",
+        "C"
+      ],
+      "shapes": [
+        {
+          "frets": [
+            0,
+            0,
+            1,
+            3
+          ],
+          "fingers": [
+            0,
+            0,
+            1,
+            2
+          ],
+          "barre": null,
+          "baseFret": 1
+        }
+      ],
+      "difficulty": 2,
+      "category": "open",
+      "sortOrder": 41
+    },
+    {
+      "id": "F-sus4",
+      "nameEn": "Fsus4",
+      "nameHe": "Fsus4",
+      "root": "F",
+      "quality": "sus4",
+      "aliases": [],
+      "notes": [
+        "F",
+        "Bb",
+        "C"
+      ],
+      "shapes": [
+        {
+          "frets": [
+            3,
+            0,
+            1,
+            1
+          ],
+          "fingers": [
+            3,
+            0,
+            1,
+            2
+          ],
+          "barre": null,
+          "baseFret": 1
+        }
+      ],
+      "difficulty": 3,
+      "category": "open",
+      "sortOrder": 42
+    },
+    {
+      "id": "F-aug",
+      "nameEn": "Faug",
+      "nameHe": "Faug",
+      "root": "F",
+      "quality": "aug",
+      "aliases": [],
+      "notes": [
+        "F",
+        "A",
+        "C#"
+      ],
+      "shapes": [
+        {
+          "frets": [
+            2,
+            1,
+            1,
+            0
+          ],
+          "fingers": [
+            3,
+            1,
+            2,
+            0
+          ],
+          "barre": null,
+          "baseFret": 1
+        }
+      ],
+      "difficulty": 3,
+      "category": "open",
+      "sortOrder": 43
+    },
+    {
+      "id": "F-maj6",
+      "nameEn": "F6",
+      "nameHe": "F6",
+      "root": "F",
+      "quality": "maj6",
+      "aliases": [],
+      "notes": [
+        "F",
+        "A",
+        "C",
+        "D"
+      ],
+      "shapes": [
+        {
+          "frets": [
+            2,
+            2,
+            1,
+            3
+          ],
+          "fingers": [
+            2,
+            3,
+            1,
+            4
+          ],
+          "barre": null,
+          "baseFret": 1
+        }
+      ],
+      "difficulty": 3,
+      "category": "open",
+      "sortOrder": 44
+    },
+    {
+      "id": "F-add9",
+      "nameEn": "Fadd9",
+      "nameHe": "Fadd9",
+      "root": "F",
+      "quality": "add9",
+      "aliases": [],
+      "notes": [
+        "F",
+        "G",
+        "A",
+        "C"
+      ],
+      "shapes": [
+        {
+          "frets": [
+            0,
+            0,
+            1,
+            0
+          ],
+          "fingers": [
+            0,
+            0,
+            1,
+            0
+          ],
+          "barre": null,
+          "baseFret": 1
+        }
+      ],
+      "difficulty": 1,
+      "category": "open",
+      "sortOrder": 45
+    },
+    {
+      "id": "F#-maj",
+      "nameEn": "F#",
+      "nameHe": "F#",
+      "root": "F#",
+      "quality": "maj",
+      "aliases": [
+        "Gb"
+      ],
+      "notes": [
+        "F#",
+        "A#",
+        "C#"
+      ],
+      "shapes": [
+        {
+          "frets": [
+            3,
+            1,
+            2,
+            1
+          ],
+          "fingers": [
+            4,
+            1,
+            3,
+            2
+          ],
+          "barre": null,
+          "baseFret": 1
+        }
+      ],
+      "difficulty": 3,
+      "category": "open",
+      "sortOrder": 46
+    },
+    {
+      "id": "F#-min",
+      "nameEn": "F#m",
+      "nameHe": "F#m",
+      "root": "F#",
+      "quality": "min",
+      "aliases": [
+        "Gbm"
+      ],
+      "notes": [
+        "F#",
+        "A",
+        "C#"
+      ],
+      "shapes": [
+        {
+          "frets": [
+            2,
+            1,
+            2,
+            0
+          ],
+          "fingers": [
+            2,
+            1,
+            3,
+            0
+          ],
+          "barre": null,
+          "baseFret": 1
+        }
+      ],
+      "difficulty": 3,
+      "category": "open",
+      "sortOrder": 47
+    },
+    {
+      "id": "F#-dom7",
+      "nameEn": "F#7",
+      "nameHe": "F#7",
+      "root": "F#",
+      "quality": "dom7",
+      "aliases": [
+        "Gb7"
+      ],
+      "notes": [
+        "F#",
+        "A#",
+        "C#",
+        "E"
+      ],
+      "shapes": [
+        {
+          "frets": [
+            3,
+            4,
+            2,
+            4
+          ],
+          "fingers": [
+            2,
+            3,
+            1,
+            4
+          ],
+          "barre": null,
+          "baseFret": 1
+        }
+      ],
+      "difficulty": 3,
+      "category": "open",
+      "sortOrder": 48
+    },
+    {
+      "id": "F#-min7",
+      "nameEn": "F#m7",
+      "nameHe": "F#m7",
+      "root": "F#",
+      "quality": "min7",
+      "aliases": [
+        "Gbm7"
+      ],
+      "notes": [
+        "F#",
+        "A",
+        "C#",
+        "E"
+      ],
+      "shapes": [
+        {
+          "frets": [
+            2,
+            4,
+            2,
+            4
+          ],
+          "fingers": [
+            1,
+            3,
+            2,
+            4
+          ],
+          "barre": null,
+          "baseFret": 1
+        }
+      ],
+      "difficulty": 3,
+      "category": "open",
+      "sortOrder": 49
+    },
+    {
+      "id": "G-maj",
+      "nameEn": "G",
+      "nameHe": "G",
+      "root": "G",
+      "quality": "maj",
+      "aliases": [],
+      "notes": [
+        "G",
+        "B",
+        "D"
+      ],
+      "shapes": [
+        {
+          "frets": [
+            0,
+            2,
+            3,
+            2
+          ],
+          "fingers": [
+            0,
+            1,
+            3,
+            2
+          ],
+          "barre": null,
+          "baseFret": 1
+        }
+      ],
+      "difficulty": 3,
+      "category": "open",
+      "sortOrder": 50
+    },
+    {
+      "id": "G-min",
+      "nameEn": "Gm",
+      "nameHe": "Gm",
+      "root": "G",
+      "quality": "min",
+      "aliases": [],
+      "notes": [
+        "G",
+        "Bb",
+        "D"
+      ],
+      "shapes": [
+        {
+          "frets": [
+            0,
+            2,
+            3,
+            1
+          ],
+          "fingers": [
+            0,
+            2,
+            3,
+            1
+          ],
+          "barre": null,
+          "baseFret": 1
+        }
+      ],
+      "difficulty": 3,
+      "category": "open",
+      "sortOrder": 51
+    },
+    {
+      "id": "G-dom7",
+      "nameEn": "G7",
+      "nameHe": "G7",
+      "root": "G",
+      "quality": "dom7",
+      "aliases": [],
+      "notes": [
+        "G",
+        "B",
+        "D",
+        "F"
+      ],
+      "shapes": [
+        {
+          "frets": [
+            0,
+            2,
+            1,
+            2
+          ],
+          "fingers": [
+            0,
+            2,
+            1,
+            3
+          ],
+          "barre": null,
+          "baseFret": 1
+        }
+      ],
+      "difficulty": 3,
+      "category": "open",
+      "sortOrder": 52
+    },
+    {
+      "id": "G-min7",
+      "nameEn": "Gm7",
+      "nameHe": "Gm7",
+      "root": "G",
+      "quality": "min7",
+      "aliases": [],
+      "notes": [
+        "G",
+        "Bb",
+        "D",
+        "F"
+      ],
+      "shapes": [
+        {
+          "frets": [
+            0,
+            2,
+            1,
+            1
+          ],
+          "fingers": [
+            0,
+            3,
+            1,
+            2
+          ],
+          "barre": null,
+          "baseFret": 1
+        }
+      ],
+      "difficulty": 3,
+      "category": "open",
+      "sortOrder": 53
+    },
+    {
+      "id": "G-maj7",
+      "nameEn": "Gmaj7",
+      "nameHe": "Gmaj7",
+      "root": "G",
+      "quality": "maj7",
+      "aliases": [],
+      "notes": [
+        "G",
+        "B",
+        "D",
+        "F#"
+      ],
+      "shapes": [
+        {
+          "frets": [
+            0,
+            2,
+            2,
+            2
+          ],
+          "fingers": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "barre": null,
+          "baseFret": 1
+        }
+      ],
+      "difficulty": 3,
+      "category": "open",
+      "sortOrder": 54
+    },
+    {
+      "id": "G-sus2",
+      "nameEn": "Gsus2",
+      "nameHe": "Gsus2",
+      "root": "G",
+      "quality": "sus2",
+      "aliases": [],
+      "notes": [
+        "G",
+        "A",
+        "D"
+      ],
+      "shapes": [
+        {
+          "frets": [
+            0,
+            2,
+            3,
+            0
+          ],
+          "fingers": [
+            0,
+            1,
+            2,
+            0
+          ],
+          "barre": null,
+          "baseFret": 1
+        }
+      ],
+      "difficulty": 2,
+      "category": "open",
+      "sortOrder": 55
+    },
+    {
+      "id": "G-sus4",
+      "nameEn": "Gsus4",
+      "nameHe": "Gsus4",
+      "root": "G",
+      "quality": "sus4",
+      "aliases": [],
+      "notes": [
+        "G",
+        "C",
+        "D"
+      ],
+      "shapes": [
+        {
+          "frets": [
+            0,
+            2,
+            3,
+            3
+          ],
+          "fingers": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "barre": null,
+          "baseFret": 1
+        }
+      ],
+      "difficulty": 3,
+      "category": "open",
+      "sortOrder": 56
+    },
+    {
+      "id": "G-aug",
+      "nameEn": "Gaug",
+      "nameHe": "Gaug",
+      "root": "G",
+      "quality": "aug",
+      "aliases": [],
+      "notes": [
+        "G",
+        "B",
+        "D#"
+      ],
+      "shapes": [
+        {
+          "frets": [
+            0,
+            3,
+            3,
+            2
+          ],
+          "fingers": [
+            0,
+            2,
+            3,
+            1
+          ],
+          "barre": null,
+          "baseFret": 1
+        }
+      ],
+      "difficulty": 3,
+      "category": "open",
+      "sortOrder": 57
+    },
+    {
+      "id": "G-maj6",
+      "nameEn": "G6",
+      "nameHe": "G6",
+      "root": "G",
+      "quality": "maj6",
+      "aliases": [],
+      "notes": [
+        "G",
+        "B",
+        "D",
+        "E"
+      ],
+      "shapes": [
+        {
+          "frets": [
+            0,
+            2,
+            0,
+            2
+          ],
+          "fingers": [
+            0,
+            1,
+            0,
+            2
+          ],
+          "barre": null,
+          "baseFret": 1
+        }
+      ],
+      "difficulty": 2,
+      "category": "open",
+      "sortOrder": 58
+    },
+    {
+      "id": "Ab-maj",
+      "nameEn": "Ab",
+      "nameHe": "Ab",
+      "root": "Ab",
+      "quality": "maj",
+      "aliases": [
+        "G#"
+      ],
+      "notes": [
+        "Ab",
+        "C",
+        "Eb"
+      ],
+      "shapes": [
+        {
+          "frets": [
+            5,
+            3,
+            4,
+            3
+          ],
+          "fingers": [
+            4,
+            1,
+            3,
+            2
+          ],
+          "barre": null,
+          "baseFret": 1
+        }
+      ],
+      "difficulty": 4,
+      "category": "extended",
+      "sortOrder": 59
+    },
+    {
+      "id": "G#-min",
+      "nameEn": "G#m",
+      "nameHe": "G#m",
+      "root": "G#",
+      "quality": "min",
+      "aliases": [
+        "Abm"
+      ],
+      "notes": [
+        "G#",
+        "B",
+        "D#"
+      ],
+      "shapes": [
+        {
+          "frets": [
+            1,
+            3,
+            4,
+            2
+          ],
+          "fingers": [
+            1,
+            3,
+            4,
+            2
+          ],
+          "barre": null,
+          "baseFret": 1
+        }
+      ],
+      "difficulty": 4,
+      "category": "open",
+      "sortOrder": 60
+    },
+    {
+      "id": "Ab-dom7",
+      "nameEn": "Ab7",
+      "nameHe": "Ab7",
+      "root": "Ab",
+      "quality": "dom7",
+      "aliases": [
+        "G#7"
+      ],
+      "notes": [
+        "Ab",
+        "C",
+        "Eb",
+        "Gb"
+      ],
+      "shapes": [
+        {
+          "frets": [
+            1,
+            3,
+            2,
+            3
+          ],
+          "fingers": [
+            1,
+            3,
+            2,
+            4
+          ],
+          "barre": null,
+          "baseFret": 1
+        }
+      ],
+      "difficulty": 3,
+      "category": "open",
+      "sortOrder": 61
+    },
+    {
+      "id": "G#-min7",
+      "nameEn": "G#m7",
+      "nameHe": "G#m7",
+      "root": "G#",
+      "quality": "min7",
+      "aliases": [
+        "Abm7"
+      ],
+      "notes": [
+        "G#",
+        "B",
+        "D#",
+        "F#"
+      ],
+      "shapes": [
+        {
+          "frets": [
+            1,
+            3,
+            2,
+            2
+          ],
+          "fingers": [
+            1,
+            4,
+            2,
+            3
+          ],
+          "barre": null,
+          "baseFret": 1
+        }
+      ],
+      "difficulty": 3,
+      "category": "open",
+      "sortOrder": 62
+    },
+    {
+      "id": "A-maj",
+      "nameEn": "A",
+      "nameHe": "A",
+      "root": "A",
+      "quality": "maj",
+      "aliases": [],
+      "notes": [
+        "A",
+        "C#",
+        "E"
+      ],
+      "shapes": [
+        {
+          "frets": [
+            2,
+            1,
+            0,
+            0
+          ],
+          "fingers": [
+            2,
+            1,
+            0,
+            0
+          ],
+          "barre": null,
+          "baseFret": 1
+        }
+      ],
+      "difficulty": 2,
+      "category": "open",
+      "sortOrder": 63
+    },
+    {
+      "id": "A-min",
+      "nameEn": "Am",
+      "nameHe": "Am",
+      "root": "A",
+      "quality": "min",
+      "aliases": [],
+      "notes": [
+        "A",
+        "C",
+        "E"
+      ],
+      "shapes": [
+        {
+          "frets": [
+            2,
+            0,
+            0,
+            0
+          ],
+          "fingers": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "barre": null,
+          "baseFret": 1
+        }
+      ],
+      "difficulty": 1,
+      "category": "open",
+      "sortOrder": 64
+    },
+    {
+      "id": "A-dom7",
+      "nameEn": "A7",
+      "nameHe": "A7",
+      "root": "A",
+      "quality": "dom7",
+      "aliases": [],
+      "notes": [
+        "A",
+        "C#",
+        "E",
+        "G"
+      ],
+      "shapes": [
+        {
+          "frets": [
+            0,
+            1,
+            0,
+            0
+          ],
+          "fingers": [
+            0,
+            1,
+            0,
+            0
+          ],
+          "barre": null,
+          "baseFret": 1
+        }
+      ],
+      "difficulty": 1,
+      "category": "open",
+      "sortOrder": 65
+    },
+    {
+      "id": "A-min7",
+      "nameEn": "Am7",
+      "nameHe": "Am7",
+      "root": "A",
+      "quality": "min7",
+      "aliases": [],
+      "notes": [
+        "A",
+        "C",
+        "E",
+        "G"
+      ],
+      "shapes": [
+        {
+          "frets": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "fingers": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "barre": null,
+          "baseFret": 1
+        }
+      ],
+      "difficulty": 1,
+      "category": "open",
+      "sortOrder": 66
+    },
+    {
+      "id": "A-maj7",
+      "nameEn": "Amaj7",
+      "nameHe": "Amaj7",
+      "root": "A",
+      "quality": "maj7",
+      "aliases": [],
+      "notes": [
+        "A",
+        "C#",
+        "E",
+        "G#"
+      ],
+      "shapes": [
+        {
+          "frets": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "fingers": [
+            1,
+            2,
+            0,
+            0
+          ],
+          "barre": null,
+          "baseFret": 1
+        }
+      ],
+      "difficulty": 2,
+      "category": "open",
+      "sortOrder": 67
+    },
+    {
+      "id": "A-sus2",
+      "nameEn": "Asus2",
+      "nameHe": "Asus2",
+      "root": "A",
+      "quality": "sus2",
+      "aliases": [],
+      "notes": [
+        "A",
+        "B",
+        "E"
+      ],
+      "shapes": [
+        {
+          "frets": [
+            2,
+            4,
+            5,
+            2
+          ],
+          "fingers": [
+            1,
+            3,
+            4,
+            2
+          ],
+          "barre": null,
+          "baseFret": 1
+        }
+      ],
+      "difficulty": 4,
+      "category": "extended",
+      "sortOrder": 68
+    },
+    {
+      "id": "A-sus4",
+      "nameEn": "Asus4",
+      "nameHe": "Asus4",
+      "root": "A",
+      "quality": "sus4",
+      "aliases": [],
+      "notes": [
+        "A",
+        "D",
+        "E"
+      ],
+      "shapes": [
+        {
+          "frets": [
+            2,
+            2,
+            0,
+            0
+          ],
+          "fingers": [
+            1,
+            2,
+            0,
+            0
+          ],
+          "barre": null,
+          "baseFret": 1
+        }
+      ],
+      "difficulty": 2,
+      "category": "open",
+      "sortOrder": 69
+    },
+    {
+      "id": "A-aug",
+      "nameEn": "Aaug",
+      "nameHe": "Aaug",
+      "root": "A",
+      "quality": "aug",
+      "aliases": [],
+      "notes": [
+        "A",
+        "C#",
+        "E#"
+      ],
+      "shapes": [
+        {
+          "frets": [
+            2,
+            1,
+            1,
+            4
+          ],
+          "fingers": [
+            3,
+            1,
+            2,
+            4
+          ],
+          "barre": null,
+          "baseFret": 1
+        }
+      ],
+      "difficulty": 4,
+      "category": "open",
+      "sortOrder": 70
+    },
+    {
+      "id": "A-maj6",
+      "nameEn": "A6",
+      "nameHe": "A6",
+      "root": "A",
+      "quality": "maj6",
+      "aliases": [],
+      "notes": [
+        "A",
+        "C#",
+        "E",
+        "F#"
+      ],
+      "shapes": [
+        {
+          "frets": [
+            2,
+            4,
+            2,
+            4
+          ],
+          "fingers": [
+            1,
+            3,
+            2,
+            4
+          ],
+          "barre": null,
+          "baseFret": 1
+        }
+      ],
+      "difficulty": 3,
+      "category": "open",
+      "sortOrder": 71
+    },
+    {
+      "id": "A-min7b5",
+      "nameEn": "Am7b5",
+      "nameHe": "Am7b5",
+      "root": "A",
+      "quality": "min7b5",
+      "aliases": [],
+      "notes": [
+        "A",
+        "C",
+        "Eb",
+        "G"
+      ],
+      "shapes": [
+        {
+          "frets": [
+            2,
+            3,
+            3,
+            3
+          ],
+          "fingers": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "barre": null,
+          "baseFret": 1
+        }
+      ],
+      "difficulty": 3,
+      "category": "open",
+      "sortOrder": 72
+    },
+    {
+      "id": "Bb-maj",
+      "nameEn": "Bb",
+      "nameHe": "Bb",
+      "root": "Bb",
+      "quality": "maj",
+      "aliases": [
+        "A#"
+      ],
+      "notes": [
+        "Bb",
+        "D",
+        "F"
+      ],
+      "shapes": [
+        {
+          "frets": [
+            3,
+            2,
+            1,
+            1
+          ],
+          "fingers": [
+            3,
+            2,
+            1,
+            1
+          ],
+          "barre": {
+            "fret": 1,
+            "fromString": 2,
+            "toString": 3
+          },
+          "baseFret": 1
+        }
+      ],
+      "difficulty": 4,
+      "category": "barre",
+      "sortOrder": 73
+    },
+    {
+      "id": "Bb-min",
+      "nameEn": "Bbm",
+      "nameHe": "Bbm",
+      "root": "Bb",
+      "quality": "min",
+      "aliases": [
+        "A#m"
+      ],
+      "notes": [
+        "Bb",
+        "Db",
+        "F"
+      ],
+      "shapes": [
+        {
+          "frets": [
+            3,
+            1,
+            1,
+            1
+          ],
+          "fingers": [
+            2,
+            1,
+            1,
+            1
+          ],
+          "barre": {
+            "fret": 1,
+            "fromString": 1,
+            "toString": 3
+          },
+          "baseFret": 1
+        }
+      ],
+      "difficulty": 4,
+      "category": "barre",
+      "sortOrder": 74
+    },
+    {
+      "id": "Bb-dom7",
+      "nameEn": "Bb7",
+      "nameHe": "Bb7",
+      "root": "Bb",
+      "quality": "dom7",
+      "aliases": [
+        "A#7"
+      ],
+      "notes": [
+        "Bb",
+        "D",
+        "F",
+        "Ab"
+      ],
+      "shapes": [
+        {
+          "frets": [
+            1,
+            2,
+            1,
+            1
+          ],
+          "fingers": [
+            1,
+            2,
+            1,
+            1
+          ],
+          "barre": {
+            "fret": 1,
+            "fromString": 0,
+            "toString": 3
+          },
+          "baseFret": 1
+        }
+      ],
+      "difficulty": 4,
+      "category": "barre",
+      "sortOrder": 75
+    },
+    {
+      "id": "Bb-min7",
+      "nameEn": "Bbm7",
+      "nameHe": "Bbm7",
+      "root": "Bb",
+      "quality": "min7",
+      "aliases": [
+        "A#m7"
+      ],
+      "notes": [
+        "Bb",
+        "Db",
+        "F",
+        "Ab"
+      ],
+      "shapes": [
+        {
+          "frets": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "fingers": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "barre": {
+            "fret": 1,
+            "fromString": 0,
+            "toString": 3
+          },
+          "baseFret": 1
+        }
+      ],
+      "difficulty": 4,
+      "category": "barre",
+      "sortOrder": 76
+    },
+    {
+      "id": "Bb-maj7",
+      "nameEn": "Bbmaj7",
+      "nameHe": "Bbmaj7",
+      "root": "Bb",
+      "quality": "maj7",
+      "aliases": [
+        "A#maj7"
+      ],
+      "notes": [
+        "Bb",
+        "D",
+        "F",
+        "A"
+      ],
+      "shapes": [
+        {
+          "frets": [
+            3,
+            2,
+            1,
+            0
+          ],
+          "fingers": [
+            3,
+            2,
+            1,
+            0
+          ],
+          "barre": null,
+          "baseFret": 1
+        }
+      ],
+      "difficulty": 3,
+      "category": "open",
+      "sortOrder": 77
+    },
+    {
+      "id": "Bb-sus4",
+      "nameEn": "Bbsus4",
+      "nameHe": "Bbsus4",
+      "root": "Bb",
+      "quality": "sus4",
+      "aliases": [
+        "A#sus4"
+      ],
+      "notes": [
+        "Bb",
+        "Eb",
+        "F"
+      ],
+      "shapes": [
+        {
+          "frets": [
+            3,
+            3,
+            1,
+            1
+          ],
+          "fingers": [
+            3,
+            4,
+            1,
+            2
+          ],
+          "barre": null,
+          "baseFret": 1
+        }
+      ],
+      "difficulty": 3,
+      "category": "open",
+      "sortOrder": 78
+    },
+    {
+      "id": "B-maj",
+      "nameEn": "B",
+      "nameHe": "B",
+      "root": "B",
+      "quality": "maj",
+      "aliases": [],
+      "notes": [
+        "B",
+        "D#",
+        "F#"
+      ],
+      "shapes": [
+        {
+          "frets": [
+            4,
+            3,
+            2,
+            2
+          ],
+          "fingers": [
+            3,
+            2,
+            1,
+            1
+          ],
+          "barre": {
+            "fret": 2,
+            "fromString": 2,
+            "toString": 3
+          },
+          "baseFret": 1
+        }
+      ],
+      "difficulty": 4,
+      "category": "barre",
+      "sortOrder": 79
+    },
+    {
+      "id": "B-min",
+      "nameEn": "Bm",
+      "nameHe": "Bm",
+      "root": "B",
+      "quality": "min",
+      "aliases": [],
+      "notes": [
+        "B",
+        "D",
+        "F#"
+      ],
+      "shapes": [
+        {
+          "frets": [
+            4,
+            2,
+            2,
+            2
+          ],
+          "fingers": [
+            2,
+            1,
+            1,
+            1
+          ],
+          "barre": {
+            "fret": 2,
+            "fromString": 1,
+            "toString": 3
+          },
+          "baseFret": 1
+        }
+      ],
+      "difficulty": 4,
+      "category": "barre",
+      "sortOrder": 80
+    },
+    {
+      "id": "B-dom7",
+      "nameEn": "B7",
+      "nameHe": "B7",
+      "root": "B",
+      "quality": "dom7",
+      "aliases": [],
+      "notes": [
+        "B",
+        "D#",
+        "F#",
+        "A"
+      ],
+      "shapes": [
+        {
+          "frets": [
+            2,
+            3,
+            2,
+            2
+          ],
+          "fingers": [
+            1,
+            2,
+            1,
+            1
+          ],
+          "barre": {
+            "fret": 2,
+            "fromString": 0,
+            "toString": 3
+          },
+          "baseFret": 1
+        }
+      ],
+      "difficulty": 4,
+      "category": "barre",
+      "sortOrder": 81
+    },
+    {
+      "id": "B-min7",
+      "nameEn": "Bm7",
+      "nameHe": "Bm7",
+      "root": "B",
+      "quality": "min7",
+      "aliases": [],
+      "notes": [
+        "B",
+        "D",
+        "F#",
+        "A"
+      ],
+      "shapes": [
+        {
+          "frets": [
+            2,
+            2,
+            2,
+            2
+          ],
+          "fingers": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "barre": {
+            "fret": 2,
+            "fromString": 0,
+            "toString": 3
+          },
+          "baseFret": 1
+        }
+      ],
+      "difficulty": 4,
+      "category": "barre",
+      "sortOrder": 82
+    },
+    {
+      "id": "B-maj7",
+      "nameEn": "Bmaj7",
+      "nameHe": "Bmaj7",
+      "root": "B",
+      "quality": "maj7",
+      "aliases": [],
+      "notes": [
+        "B",
+        "D#",
+        "F#",
+        "A#"
+      ],
+      "shapes": [
+        {
+          "frets": [
+            4,
+            3,
+            2,
+            1
+          ],
+          "fingers": [
+            4,
+            3,
+            2,
+            1
+          ],
+          "barre": null,
+          "baseFret": 1
+        }
+      ],
+      "difficulty": 4,
+      "category": "open",
+      "sortOrder": 83
+    },
+    {
+      "id": "B-min7b5",
+      "nameEn": "Bm7b5",
+      "nameHe": "Bm7b5",
+      "root": "B",
+      "quality": "min7b5",
+      "aliases": [],
+      "notes": [
+        "B",
+        "D",
+        "F",
+        "A"
+      ],
+      "shapes": [
+        {
+          "frets": [
+            2,
+            2,
+            1,
+            2
+          ],
+          "fingers": [
+            2,
+            3,
+            1,
+            4
+          ],
+          "barre": null,
+          "baseFret": 1
+        }
+      ],
+      "difficulty": 3,
+      "category": "open",
+      "sortOrder": 84
+    }
+  ]
+}
