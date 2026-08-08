@@ -1,0 +1,29 @@
+node_modules/
+.expo/
+dist/
+web-build/
+*.log
+npm-debug.*
+yarn-debug.*
+yarn-error.*
+
+# Native build output (managed by prebuild)
+/ios
+/android
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+*.orig.*
+
+# macOS
+.DS_Store
+
+# Env
+.env
+.env.local
+
+# Test output
+coverage/
+/scripts/fixtures/generated/
