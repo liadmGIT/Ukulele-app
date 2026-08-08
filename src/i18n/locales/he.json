@@ -16,7 +16,8 @@
     "estimatedMinutes": "כ־{{count}} דקות",
     "streakDays_one": "יום אחד ברצף",
     "streakDays_other": "{{count}} ימים ברצף",
-    "emptyState": "עוד לא תרגלת. בוא נתחיל מהאקורד הראשון."
+    "emptyState": "עוד לא תרגלת. בוא נתחיל מהאקורד הראשון.",
+    "streakDays_two": "יומיים ברצף"
   },
   "chords": {
     "title": "אקורדים",
@@ -43,7 +44,8 @@
     "unlockHint_other": "למד עוד אקורד אחד ({{chords}}) ותפתח עוד {{count}} שירים",
     "tempo": "קצב",
     "play": "נגן",
-    "record": "הקלט"
+    "record": "הקלט",
+    "unlockHint_two": "למד עוד אקורד אחד ({{chords}}) ותפתח עוד שני שירים"
   },
   "practice": {
     "title": "תרגול",
@@ -83,5 +85,32 @@
     "done": "סיום",
     "retry": "נסה שוב",
     "loading": "טוען…"
+  },
+  "tuner": {
+    "title": "מכוון",
+    "listening": "מאזין…",
+    "playAString": "פרוט על מיתר",
+    "tooQuiet": "קרוב יותר למיקרופון, או פרוט חזק יותר",
+    "inTune": "מכוון!",
+    "flat": "נמוך מדי — הדק את המיתר",
+    "sharp": "גבוה מדי — שחרר את המיתר",
+    "permissionNeeded": "צריך גישה למיקרופון כדי לכוון",
+    "grantPermission": "אפשר גישה",
+    "micError": "לא הצלחנו לפתוח את המיקרופון",
+    "strings": "מיתרים",
+    "cents": "סנט"
+  },
+  "metronome": {
+    "title": "מטרונום",
+    "start": "הפעל",
+    "stop": "עצור",
+    "timeSignature": "משקל",
+    "countIn": "ספירה לפני",
+    "bars": "תיבות",
+    "noCountIn": "בלי ספירה",
+    "countInBars_one": "תיבה אחת",
+    "countInBars_other": "{{count}} תיבות",
+    "tapToChange": "הקש לשינוי",
+    "countInBars_two": "שתי תיבות"
   }
 }

@@ -83,5 +83,31 @@
     "done": "Done",
     "retry": "Retry",
     "loading": "Loading…"
+  },
+  "tuner": {
+    "title": "Tuner",
+    "listening": "Listening…",
+    "playAString": "Play a string",
+    "tooQuiet": "Move closer to the microphone, or play a little louder",
+    "inTune": "In tune!",
+    "flat": "Flat — tighten the string",
+    "sharp": "Sharp — loosen the string",
+    "permissionNeeded": "Microphone access is needed to tune",
+    "grantPermission": "Allow access",
+    "micError": "Could not open the microphone",
+    "strings": "Strings",
+    "cents": "cents"
+  },
+  "metronome": {
+    "title": "Metronome",
+    "start": "Start",
+    "stop": "Stop",
+    "timeSignature": "Time signature",
+    "countIn": "Count-in",
+    "bars": "Bars",
+    "noCountIn": "No count-in",
+    "countInBars_one": "1 bar",
+    "countInBars_other": "{{count}} bars",
+    "tapToChange": "Tap to change"
   }
 }
