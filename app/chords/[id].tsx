@@ -1,9 +1,9 @@
 import { Stack, useLocalSearchParams } from 'expo-router';
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { StyleSheet, View } from 'react-native';
+import { Pressable, StyleSheet, View } from 'react-native';
 
-import { getChordById } from '@/content';
+import { getChordById, getStrumPatternsUpToDifficulty } from '@/content';
 import { getChordMastery } from '@/db/mastery';
 import { CHORD_QUALITIES, type ChordQuality } from '@/music/chords';
 import { STANDARD_TUNING } from '@/music/notes';
@@ -12,7 +12,9 @@ import { Card } from '@/ui/components/Card';
 import { MasteryDots } from '@/ui/components/MasteryDots';
 import { Screen } from '@/ui/components/Screen';
 import { Text } from '@/ui/components/Text';
-import { spacing } from '@/ui/theme';
+import { musicalRow } from '@/ui/direction';
+import { PatternPlayerCard } from '@/ui/PatternPlayerCard';
+import { radius, spacing } from '@/ui/theme';
 import { useTheme } from '@/ui/ThemeProvider';
 
 export default function ChordDetailScreen() {
@@ -22,6 +24,11 @@ export default function ChordDetailScreen() {
 
   const chord = useMemo(() => (id ? getChordById(id) : undefined), [id]);
   const mastery = useMemo(() => (id ? getChordMastery(id) : null), [id]);
+
+  // Only patterns a beginner can actually attempt — the point here is to play
+  // the chord in time, not to take on a sixteenth-note funk groove.
+  const patterns = useMemo(() => getStrumPatternsUpToDifficulty(3), []);
+  const [patternIndex, setPatternIndex] = useState(0);
 
   if (!chord) {
     return (
@@ -113,6 +120,39 @@ export default function ChordDetailScreen() {
             {i18n.language === 'he' ? 'נקרא גם' : 'Also written'}: {chord.aliases.join(', ')}
           </Text>
         )}
+
+        <Text variant="heading">{t('patterns.strumThisChord')}</Text>
+
+        <View style={[styles.patternChips, musicalRow]}>
+          {patterns.map((option, index) => {
+            const active = index === patternIndex;
+            return (
+              <Pressable
+                key={option.id}
+                onPress={() => setPatternIndex(index)}
+                style={[
+                  styles.chip,
+                  {
+                    backgroundColor: active ? theme.colors.primary : 'transparent',
+                    borderColor: active ? theme.colors.primary : theme.colors.border,
+                  },
+                ]}
+              >
+                <Text variant="caption" tone={active ? 'inverse' : 'muted'}>
+                  {i18n.language === 'he' ? option.nameHe : option.nameEn}
+                </Text>
+              </Pressable>
+            );
+          })}
+        </View>
+
+        {patterns[patternIndex] && shape && (
+          <PatternPlayerCard
+            pattern={patterns[patternIndex]}
+            frets={shape.frets}
+            chordName={chord.nameEn}
+          />
+        )}
       </Screen>
     </>
   );
@@ -133,5 +173,12 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingVertical: spacing.xs,
+  },
+  patternChips: { gap: spacing.xs, flexWrap: 'wrap' },
+  chip: {
+    paddingHorizontal: spacing.md,
+    paddingVertical: spacing.xs + 2,
+    borderRadius: radius.pill,
+    borderWidth: StyleSheet.hairlineWidth,
   },
 });

@@ -37,6 +37,14 @@ const TOOLS: readonly Tool[] = [
     descriptionEn: 'Keep a steady beat',
   },
   {
+    key: 'patterns',
+    titleKey: 'patterns.title',
+    icon: 'gesture-swipe-vertical',
+    href: '/practice/patterns',
+    descriptionHe: 'מטה, מעלה, שקט או עמום — וכמה חזק',
+    descriptionEn: 'Down, up, silent or muted — and how hard',
+  },
+  {
     key: 'drill',
     titleKey: 'practice.chordChangeDrill',
     icon: 'swap-horizontal',

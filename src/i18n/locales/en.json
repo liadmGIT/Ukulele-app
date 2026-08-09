@@ -109,5 +109,24 @@
     "countInBars_one": "1 bar",
     "countInBars_other": "{{count}} bars",
     "tapToChange": "Tap to change"
+  },
+  "patterns": {
+    "title": "Strum patterns",
+    "subtitle": "Down, up, silent or muted — and how hard",
+    "play": "Play",
+    "stop": "Stop",
+    "tempo": "Practice speed",
+    "click": "Click",
+    "difficulty": "Difficulty",
+    "strumThisChord": "Strum this chord",
+    "choosePattern": "Choose a pattern",
+    "legend": "Legend",
+    "legendDown": "Down",
+    "legendUp": "Up",
+    "legendRest": "Silent — keep the hand moving, but do not touch the strings",
+    "legendMuted": "Muted — damp the strings with the palm",
+    "legendStrong": "Strong — a thick stroke",
+    "legendSoft": "Soft — a thin stroke",
+    "chooseChord": "Try it over a chord"
   }
 }

@@ -1,6 +1,6 @@
 import * as SQLite from 'expo-sqlite';
 
-import type { Chord } from '@/content/schemas';
+import type { Chord, StrumPatternData } from '@/content/schemas';
 
 import { MIGRATIONS } from './migrations';
 import type { ChordMastery, StorageDriver } from './types';
@@ -108,6 +108,35 @@ export class SqliteDriver implements StorageDriver {
          SELECT id FROM chords
          WHERE id NOT IN (SELECT chord_id FROM chord_mastery);`,
       );
+    });
+  }
+
+  replaceStrumPatterns(patterns: readonly StrumPatternData[]): void {
+    this.db.withTransactionSync(() => {
+      this.db.runSync('DELETE FROM strum_patterns;');
+
+      const statement = this.db.prepareSync(
+        `INSERT INTO strum_patterns
+           (id, name_en, name_he, beats_per_bar, beat_unit, subdivision, pattern, difficulty)
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?);`,
+      );
+
+      try {
+        for (const pattern of patterns) {
+          statement.executeSync(
+            pattern.id,
+            pattern.nameEn,
+            pattern.nameHe,
+            pattern.beatsPerBar,
+            pattern.beatUnit,
+            pattern.subdivision,
+            pattern.notation,
+            pattern.difficulty,
+          );
+        }
+      } finally {
+        statement.finalizeSync();
+      }
     });
   }
 

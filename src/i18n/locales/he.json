@@ -112,5 +112,24 @@
     "countInBars_other": "{{count}} תיבות",
     "tapToChange": "הקש לשינוי",
     "countInBars_two": "שתי תיבות"
+  },
+  "patterns": {
+    "title": "מקצבי פריטה",
+    "subtitle": "מטה, מעלה, שקט או עמום — וכמה חזק",
+    "play": "נגן",
+    "stop": "עצור",
+    "tempo": "מהירות תרגול",
+    "click": "מטרונום",
+    "difficulty": "רמת קושי",
+    "strumThisChord": "פרוט את האקורד הזה",
+    "choosePattern": "בחר מקצב",
+    "legend": "מקרא",
+    "legendDown": "מטה",
+    "legendUp": "מעלה",
+    "legendRest": "שקט — היד ממשיכה לנוע, בלי לגעת במיתרים",
+    "legendMuted": "עמום — עוצרים את המיתרים עם כף היד",
+    "legendStrong": "חזק — קו עבה",
+    "legendSoft": "עדין — קו דק",
+    "chooseChord": "בחר אקורד"
   }
 }

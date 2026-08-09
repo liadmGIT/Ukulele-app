@@ -5,7 +5,6 @@ import { FlatList, Pressable, StyleSheet, TextInput, View } from 'react-native';
 
 import { getChords, searchChords, type Chord } from '@/content';
 import { MASTERED_LEVEL, getAllChordMastery } from '@/db/mastery';
-import { syncContent } from '@/db/seed';
 import { ChordDiagram } from '@/ui/ChordDiagram';
 import { MasteryDots } from '@/ui/components/MasteryDots';
 import { Text } from '@/ui/components/Text';
@@ -24,12 +23,8 @@ export default function ChordsScreen() {
   const [query, setQuery] = useState('');
   const [filter, setFilter] = useState<Filter>('all');
 
-  // Seeding is idempotent and returns immediately once the bundled content
-  // version already matches what is in the database.
-  const mastery = useMemo(() => {
-    syncContent();
-    return getAllChordMastery();
-  }, []);
+  // Content is seeded once at startup in app/_layout.tsx.
+  const mastery = useMemo(() => getAllChordMastery(), []);
 
   const chords = useMemo(() => {
     const matching = query ? searchChords(query) : getChords();

@@ -52,3 +52,25 @@ export const chordLibrarySchema = z.object({
 export type Chord = z.infer<typeof chordSchema>;
 export type ChordShapeData = z.infer<typeof chordShapeSchema>;
 export type ChordLibrary = z.infer<typeof chordLibrarySchema>;
+
+export const strumPatternSchema = z.object({
+  id: z.string().min(1),
+  nameEn: z.string().min(1),
+  nameHe: z.string().min(1),
+  beatsPerBar: z.number().int().min(1).max(12),
+  beatUnit: z.union([z.literal(4), z.literal(8)]),
+  subdivision: z.union([z.literal(4), z.literal(8), z.literal(16)]),
+  /** Compact notation — see `src/music/strum.ts` for the grammar. */
+  notation: z.string().min(1),
+  difficulty: z.number().int().min(1).max(5),
+  descriptionEn: z.string().min(1),
+  descriptionHe: z.string().min(1),
+});
+
+export const strumPatternLibrarySchema = z.object({
+  version: z.number().int().min(1),
+  patterns: z.array(strumPatternSchema).min(1),
+});
+
+export type StrumPatternData = z.infer<typeof strumPatternSchema>;
+export type StrumPatternLibrary = z.infer<typeof strumPatternLibrarySchema>;

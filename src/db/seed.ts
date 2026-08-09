@@ -1,4 +1,4 @@
-import { getChordLibrary } from '@/content';
+import { getChordLibrary, getStrumPatterns } from '@/content';
 
 import { SETTING_KEYS, getSetting, getStorage, setSetting } from './index';
 
@@ -15,6 +15,22 @@ export function syncContent(): void {
 
   if (getSetting(SETTING_KEYS.contentVersion) === bundledVersion) return;
 
-  getStorage().replaceChords(library.chords);
+  const storage = getStorage();
+  storage.replaceChords(library.chords);
+  storage.replaceStrumPatterns(
+    getStrumPatterns().map((pattern) => ({
+      id: pattern.id,
+      nameEn: pattern.nameEn,
+      nameHe: pattern.nameHe,
+      beatsPerBar: pattern.timeSignature.beatsPerBar,
+      beatUnit: pattern.timeSignature.beatUnit as 4 | 8,
+      subdivision: pattern.subdivision,
+      notation: pattern.notation,
+      difficulty: pattern.difficulty,
+      descriptionEn: pattern.descriptionEn,
+      descriptionHe: pattern.descriptionHe,
+    })),
+  );
+
   setSetting(SETTING_KEYS.contentVersion, bundledVersion);
 }

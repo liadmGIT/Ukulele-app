@@ -1,27 +1,15 @@
-import type { GridOptions, PracticeGrid } from '@/music/grid';
+import type { BeatMark, GridOptions, PracticeGrid } from '@/music/grid';
 import { buildGrid } from '@/music/grid';
 
 import { audioNow, getAudioContext } from './engine';
+import { LookaheadScheduler } from './scheduler';
 
 /**
- * A metronome that does not drift.
+ * The metronome.
  *
- * The naive approach — `setInterval` firing a click every beat — drifts audibly
- * within a minute, because JS timers are best-effort and every scheduling delay
- * accumulates. That would be bad enough on its own, but here it would also
- * corrupt every timing score the app reports, since the analysis assumes the
- * clicks were where the grid says they were.
- *
- * So: a JS timer wakes up frequently and only *schedules* clicks, each one
- * pinned to an exact `AudioContext` time computed from the grid. The timer can
- * be late by tens of milliseconds without moving a single click, because the
- * audio thread renders them at the times they were booked for.
+ * All of the timing care lives in {@link LookaheadScheduler}; this class is the
+ * musical part — building the grid and making the click sound.
  */
-
-/** How often the scheduler wakes up. */
-const LOOKAHEAD_INTERVAL_MS = 25;
-/** How far ahead it books clicks. Must comfortably exceed the wake interval. */
-const SCHEDULE_AHEAD_SECONDS = 0.2;
 
 const CLICK_DURATION_SECONDS = 0.035;
 const ACCENT_FREQUENCY_HZ = 1600;
@@ -49,11 +37,6 @@ export type MetronomeCallbacks = {
   onFinish?: () => void;
 };
 
-/**
- * Seams for testing. The real implementations read the audio clock and build
- * oscillators; a test supplies a clock it controls and records the bookings,
- * which is how the no-drift guarantee is actually proved rather than asserted.
- */
 export type MetronomeDeps = {
   now: () => number;
   scheduleClick: (when: number, accented: boolean) => void;
@@ -68,13 +51,7 @@ export class Metronome {
   private grid: PracticeGrid;
   private readonly callbacks: MetronomeCallbacks;
   private readonly deps: MetronomeDeps;
-
-  private timer: ReturnType<typeof setInterval> | null = null;
-  private nextBeatIndex = 0;
-  private startTime = 0;
-  private running = false;
-  /** Set when the metronome repeats forever rather than for a fixed length. */
-  private looping = false;
+  private scheduler: LookaheadScheduler<BeatMark>;
 
   constructor(
     options: GridOptions,
@@ -84,6 +61,27 @@ export class Metronome {
     this.grid = buildGrid(options);
     this.callbacks = callbacks;
     this.deps = { ...defaultDeps, ...deps };
+    this.scheduler = this.buildScheduler();
+  }
+
+  private buildScheduler(): LookaheadScheduler<BeatMark> {
+    return new LookaheadScheduler<BeatMark>({
+      events: this.grid.beats.map((beat) => ({ time: beat.time, payload: beat })),
+      totalSeconds: this.grid.totalSeconds,
+      now: this.deps.now,
+      onFinish: () => this.callbacks.onFinish?.(),
+      onEvent: (beat, when, index) => {
+        this.deps.scheduleClick(when, beat.isDownbeat);
+        this.callbacks.onBeat?.({
+          index,
+          bar: beat.bar,
+          beat: beat.beat,
+          isDownbeat: beat.isDownbeat,
+          isCountIn: beat.isCountIn,
+          when,
+        });
+      },
+    });
   }
 
   /** The grid this metronome is playing — the same one the analysis aligns to. */
@@ -92,95 +90,37 @@ export class Metronome {
   }
 
   isRunning(): boolean {
-    return this.running;
+    return this.scheduler.isRunning();
   }
 
-  /**
-   * Audio-clock time the count-in began. Every expected beat and step time is
-   * this plus its offset in the grid, which is how a recording made during
-   * playback is aligned afterwards.
-   */
   getStartTime(): number {
-    return this.startTime;
+    return this.scheduler.getStartTime();
   }
 
-  /** Rebuilds the grid, e.g. after the learner moves the tempo slider. */
+  /** Rebuilds the grid, e.g. after the learner moves the tempo. */
   setOptions(options: GridOptions): void {
-    const wasRunning = this.running;
-    const wasLooping = this.looping;
-    if (wasRunning) this.stop();
+    const wasRunning = this.isRunning();
+    this.scheduler.stop();
     this.grid = buildGrid(options);
-    if (wasRunning) this.start({ loop: wasLooping });
+    this.scheduler = this.buildScheduler();
+    if (wasRunning) this.start();
   }
 
   start({ loop = false }: { loop?: boolean } = {}): number {
-    if (this.running) return this.startTime;
+    if (this.scheduler.isRunning()) return this.scheduler.getStartTime();
 
-    this.looping = loop;
-    this.nextBeatIndex = 0;
-    // A small offset so the first click is scheduled rather than already due.
-    this.startTime = this.deps.now() + 0.1;
-    this.running = true;
-
-    this.callbacks.onStart?.(this.startTime);
-    this.pump();
-    this.timer = setInterval(() => this.pump(), LOOKAHEAD_INTERVAL_MS);
-
-    return this.startTime;
+    const startTime = this.scheduler.start({ loop });
+    this.callbacks.onStart?.(startTime);
+    return startTime;
   }
 
   stop(): void {
-    if (this.timer !== null) {
-      clearInterval(this.timer);
-      this.timer = null;
-    }
-    this.running = false;
+    this.scheduler.stop();
   }
 
-  /**
-   * Books every click that falls inside the lookahead window.
-   *
-   * Public only so tests can drive it from a controlled clock instead of
-   * waiting on a real timer.
-   */
+  /** Drives the scheduler. Exposed so tests can run it from a controlled clock. */
   pump(): void {
-    if (!this.running) return;
-
-    const horizon = this.deps.now() + SCHEDULE_AHEAD_SECONDS;
-    const beats = this.grid.beats;
-
-    while (this.nextBeatIndex < beats.length) {
-      const beat = beats[this.nextBeatIndex]!;
-      const when = this.startTime + beat.time;
-      if (when > horizon) return;
-
-      this.deps.scheduleClick(when, beat.isDownbeat);
-      this.callbacks.onBeat?.({
-        index: this.nextBeatIndex,
-        bar: beat.bar,
-        beat: beat.beat,
-        isDownbeat: beat.isDownbeat,
-        isCountIn: beat.isCountIn,
-        when,
-      });
-
-      this.nextBeatIndex += 1;
-    }
-
-    if (this.looping) {
-      // Re-anchor to the end of the pattern rather than to "now". Anchoring to
-      // the current time would fold the scheduler's own lateness into the next
-      // repeat, reintroducing exactly the drift this class exists to avoid.
-      this.startTime += this.grid.totalSeconds;
-      this.nextBeatIndex = 0;
-      return;
-    }
-
-    // Let the last click actually sound before reporting completion.
-    if (this.deps.now() >= this.startTime + this.grid.totalSeconds) {
-      this.stop();
-      this.callbacks.onFinish?.();
-    }
+    this.scheduler.pump();
   }
 }
 

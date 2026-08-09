@@ -1,4 +1,4 @@
-import type { Chord } from '@/content/schemas';
+import type { Chord, StrumPatternData } from '@/content/schemas';
 
 export type ChordMastery = {
   chordId: string;
@@ -25,6 +25,7 @@ export interface StorageDriver {
 
   /** Replaces the stored copy of the bundled content. */
   replaceChords(chords: readonly Chord[]): void;
+  replaceStrumPatterns(patterns: readonly StrumPatternData[]): void;
 
   getAllChordMastery(): ChordMastery[];
   getChordMastery(chordId: string): ChordMastery | null;

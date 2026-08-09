@@ -7,8 +7,10 @@
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 
-import { chordLibrarySchema } from '../src/content/schemas';
+import { chordLibrarySchema, strumPatternLibrarySchema } from '../src/content/schemas';
 import { validateShape, type ChordQuality } from '../src/music/chords';
+import { stepsPerBar, type Subdivision } from '../src/music/grid';
+import { StrumNotationError, formatStrumPattern, parseStrumPattern } from '../src/music/strum';
 
 const problems: string[] = [];
 
@@ -49,8 +51,65 @@ function validateChords(): number {
   return library.chords.length;
 }
 
+function validateStrumPatterns(): number {
+  const raw = readFileSync(resolve(process.cwd(), 'content/strum-patterns.json'), 'utf8');
+  const parsed = strumPatternLibrarySchema.safeParse(JSON.parse(raw));
+
+  if (!parsed.success) {
+    for (const issue of parsed.error.issues) {
+      problems.push(`strum-patterns.json ${issue.path.join('.')}: ${issue.message}`);
+    }
+    return 0;
+  }
+
+  const seen = new Set<string>();
+  const notations = new Map<string, string>();
+
+  for (const pattern of parsed.data.patterns) {
+    if (seen.has(pattern.id)) problems.push(`Duplicate pattern id "${pattern.id}"`);
+    seen.add(pattern.id);
+
+    let steps;
+    try {
+      steps = parseStrumPattern(pattern.notation);
+    } catch (error) {
+      const detail = error instanceof StrumNotationError ? error.message : String(error);
+      problems.push(`${pattern.id}: ${detail}`);
+      continue;
+    }
+
+    const perBar = stepsPerBar(
+      { beatsPerBar: pattern.beatsPerBar, beatUnit: pattern.beatUnit },
+      pattern.subdivision as Subdivision,
+    );
+
+    if (steps.length % perBar !== 0) {
+      problems.push(
+        `${pattern.id}: ${steps.length} steps is not a whole number of bars ` +
+          `(${pattern.beatsPerBar}/${pattern.beatUnit} at ${pattern.subdivision}ths is ${perBar} per bar)`,
+      );
+    }
+
+    // A pattern that survives a round trip is one the app will redisplay
+    // exactly as it was authored.
+    const canonical = formatStrumPattern(steps);
+    if (canonical !== pattern.notation.trim().replace(/\s+/g, ' ')) {
+      problems.push(`${pattern.id}: notation "${pattern.notation}" is not canonical — write "${canonical}"`);
+    }
+
+    const duplicate = notations.get(canonical);
+    if (duplicate) {
+      problems.push(`${pattern.id} has the same notation as ${duplicate}: "${canonical}"`);
+    }
+    notations.set(canonical, pattern.id);
+  }
+
+  return parsed.data.patterns.length;
+}
+
 function main(): void {
   const chordCount = validateChords();
+  const patternCount = validateStrumPatterns();
 
   if (problems.length > 0) {
     console.error(`\n✖ Content validation failed with ${problems.length} problem(s):\n`);
@@ -58,7 +117,7 @@ function main(): void {
     process.exit(1);
   }
 
-  console.log(`✓ Content valid — ${chordCount} chords`);
+  console.log(`✓ Content valid — ${chordCount} chords, ${patternCount} strum patterns`);
 }
 
 main();

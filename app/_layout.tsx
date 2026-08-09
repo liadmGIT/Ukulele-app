@@ -5,6 +5,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import { getStorage } from '@/db';
+import { syncContent } from '@/db/seed';
 import { initI18n } from '@/i18n';
 import { ThemeProvider, useTheme } from '@/ui/ThemeProvider';
 
@@ -12,6 +13,7 @@ import { ThemeProvider, useTheme } from '@/ui/ThemeProvider';
 // has to exist before i18n can read the stored language, and the language has
 // to be known before React lays anything out (RTL is decided at that moment).
 getStorage();
+syncContent();
 initI18n();
 
 function RootStack() {

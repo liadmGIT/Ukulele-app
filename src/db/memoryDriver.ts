@@ -38,6 +38,11 @@ export class MemoryDriver implements StorageDriver {
     }
   }
 
+  replaceStrumPatterns(): void {
+    // Nothing to do: the browser preview reads patterns straight from the
+    // bundled JSON, and holds no user data that needs joining against them.
+  }
+
   getAllChordMastery(): ChordMastery[] {
     return [...this.mastery.values()];
   }

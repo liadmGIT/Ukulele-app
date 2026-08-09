@@ -1,21 +1,31 @@
+import type { Subdivision, TimeSignature } from '@/music/grid';
+import { parseStrumPattern, type StrumStep } from '@/music/strum';
 import chordsJson from '@content/chords.json';
+import patternsJson from '@content/strum-patterns.json';
 
-import { chordLibrarySchema, type Chord, type ChordLibrary } from './schemas';
 
-let library: ChordLibrary | null = null;
+import {
+  chordLibrarySchema,
+  strumPatternLibrarySchema,
+  type Chord,
+  type ChordLibrary,
+  type StrumPatternData,
+} from './schemas';
+
+let chordLibrary: ChordLibrary | null = null;
 
 /**
- * The bundled chord library, validated once on first access.
+ * The bundled content, validated once on first access.
  *
- * Content is shipped as JSON rather than read from SQLite because it never
- * changes at runtime; SQLite only holds a copy of it so that user progress can
- * be joined against it in a single query.
+ * Content ships as JSON rather than being read from SQLite because it never
+ * changes at runtime; SQLite only holds a copy so that user progress can be
+ * joined against it in a single query.
  */
 export function getChordLibrary(): ChordLibrary {
-  if (!library) {
-    library = chordLibrarySchema.parse(chordsJson);
+  if (!chordLibrary) {
+    chordLibrary = chordLibrarySchema.parse(chordsJson);
   }
-  return library;
+  return chordLibrary;
 }
 
 export function getChords(): Chord[] {
@@ -37,4 +47,50 @@ export function searchChords(query: string): Chord[] {
   });
 }
 
-export type { Chord, ChordShapeData, ChordLibrary } from './schemas';
+// ---------------------------------------------------------- strum patterns --
+
+/**
+ * A pattern with its notation already parsed.
+ *
+ * Parsing happens once at load rather than per render: the strip redraws on
+ * every playhead move, and re-parsing a string each time would be wasted work
+ * on the exact frames that need to be smooth.
+ */
+export type StrumPattern = Omit<StrumPatternData, 'beatsPerBar' | 'beatUnit'> & {
+  timeSignature: TimeSignature;
+  subdivision: Subdivision;
+  steps: StrumStep[];
+};
+
+let strumPatterns: StrumPattern[] | null = null;
+
+export function getStrumPatterns(): StrumPattern[] {
+  if (!strumPatterns) {
+    const library = strumPatternLibrarySchema.parse(patternsJson);
+
+    strumPatterns = library.patterns.map((pattern) => {
+      const { beatsPerBar, beatUnit, ...rest } = pattern;
+      return {
+        ...rest,
+        timeSignature: { beatsPerBar, beatUnit },
+        subdivision: pattern.subdivision as Subdivision,
+        steps: parseStrumPattern(pattern.notation),
+      };
+    });
+  }
+
+  return strumPatterns;
+}
+
+export function getStrumPatternById(id: string): StrumPattern | undefined {
+  return getStrumPatterns().find((pattern) => pattern.id === id);
+}
+
+/** Patterns a learner at this level can reasonably attempt, easiest first. */
+export function getStrumPatternsUpToDifficulty(maxDifficulty: number): StrumPattern[] {
+  return getStrumPatterns()
+    .filter((pattern) => pattern.difficulty <= maxDifficulty)
+    .sort((a, b) => a.difficulty - b.difficulty);
+}
+
+export type { Chord, ChordShapeData, ChordLibrary, StrumPatternData } from './schemas';
