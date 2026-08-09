@@ -11,6 +11,7 @@ import { changesPerMinute, countChordChanges } from '@/dsp/changes';
 import { ChordDiagram } from '@/ui/ChordDiagram';
 import { Button } from '@/ui/components/Button';
 import { Card } from '@/ui/components/Card';
+import { MicNotice } from '@/ui/components/MicNotice';
 import { Screen } from '@/ui/components/Screen';
 import { Text } from '@/ui/components/Text';
 import { musicalRow } from '@/ui/direction';
@@ -18,10 +19,9 @@ import { radius, spacing } from '@/ui/theme';
 import { useTheme } from '@/ui/ThemeProvider';
 
 const DRILL_SECONDS = 60;
-const SAMPLE_RATE = 44100;
 const CHOICES = ['C-maj', 'A-min', 'F-maj', 'G-maj', 'D-min', 'E-dom7'];
 
-type Phase = 'idle' | 'running' | 'analysing' | 'done';
+type Phase = 'idle' | 'running' | 'analysing' | 'done' | 'denied';
 
 export default function DrillScreen() {
   const { a, b } = useLocalSearchParams<{ a?: string; b?: string }>();
@@ -63,10 +63,15 @@ export default function DrillScreen() {
     setPhase('analysing');
     await mic.stop();
 
-    const samples = mic.takeRecording();
+    const recording = mic.takeRecording();
     const elapsed = Math.min(DRILL_SECONDS, audioNow() - startedAt.current);
 
-    const { changes } = countChordChanges(samples, { sampleRate: SAMPLE_RATE });
+    // The rate the hardware chose, not one we assumed: counting 48 kHz audio as
+    // 44.1 kHz would report a changes-per-minute figure 8.8% too low, and the
+    // personal best it is compared against would drift with it.
+    const { changes } = countChordChanges(recording.samples, {
+      sampleRate: recording.sampleRate,
+    });
     const rate = changesPerMinute(changes, elapsed);
 
     saveDrillResult({ chordA, chordB, changes, durationSeconds: elapsed });
@@ -78,6 +83,9 @@ export default function DrillScreen() {
 
   const begin = useCallback(async () => {
     if (chordA === chordB) return;
+    // The mic is acquired asynchronously, so without this a second tap starts a
+    // second recorder and orphans the first.
+    if (microphone.current) return;
 
     setResult(null);
     setRemaining(DRILL_SECONDS);
@@ -85,9 +93,16 @@ export default function DrillScreen() {
     const mic = new Microphone();
     microphone.current = mic;
 
-    const status = await mic.start({ capture: true, bufferLength: 1024 });
+    const status = await mic.start({
+      capture: true,
+      bufferLength: 1024,
+      maxCaptureSeconds: DRILL_SECONDS + 30,
+    });
     if (status !== 'running') {
-      setPhase('idle');
+      // Saying nothing here made the Start button look broken: it is the mic
+      // that was refused, and only the learner can undo that.
+      microphone.current = null;
+      setPhase(status === 'denied' ? 'denied' : 'idle');
       return;
     }
 
@@ -182,6 +197,7 @@ export default function DrillScreen() {
             </Text>
           )}
           {phase === 'analysing' && <Text variant="heading">{t('record.analysing')}</Text>}
+          {phase === 'denied' && <MicNotice status="denied" />}
 
           {phase === 'done' && result && (
             <View style={styles.result}>

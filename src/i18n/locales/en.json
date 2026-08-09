@@ -119,7 +119,14 @@
     "cancel": "Cancel",
     "done": "Done",
     "retry": "Retry",
-    "loading": "Loading…"
+    "loading": "Loading…",
+    "micDenied": "No microphone access",
+    "micDeniedBody": "Without the microphone the app cannot listen to you play. Open Settings to allow access.",
+    "micOpenSettings": "Open Settings",
+    "micError": "Could not open the microphone. Another app may be using it.",
+    "notFound": "Not found",
+    "notFoundBody": "This item is no longer part of the app.",
+    "goBack": "Back"
   },
   "tuner": {
     "title": "Tuner",

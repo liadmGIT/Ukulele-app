@@ -130,22 +130,43 @@ export function alignToGrid(
  * mean deviation there would erase the very "you are consistently rushing"
  * finding the review exists to report.
  */
+export type ConstantOffset = {
+  offsetSeconds: number;
+  /** How many expected times found a distinct onset of their own. */
+  matchedCount: number;
+};
+
 export function estimateConstantOffset(
   onsets: readonly Onset[],
   expectedTimes: readonly number[],
   searchWindowSeconds = 0.25,
-): number | null {
+): ConstantOffset | null {
   if (onsets.length === 0 || expectedTimes.length === 0) return null;
 
   const deviations: number[] = [];
+  const used = new Set<number>();
 
   for (const time of expectedTimes) {
     let best = Infinity;
-    for (const onset of onsets) {
-      const delta = onset.time - time;
-      if (Math.abs(delta) < Math.abs(best)) best = delta;
+    let bestIndex = -1;
+
+    for (let i = 0; i < onsets.length; i += 1) {
+      // Each onset may answer for one expected time only. Without this a single
+      // stray detection matches every click in the take, and the caller sees a
+      // confident measurement backed by what looks like eight agreeing samples
+      // but is really one — in the one place a wrong number silently biases
+      // every future take.
+      if (used.has(i)) continue;
+
+      const delta = onsets[i]!.time - time;
+      if (Math.abs(delta) < Math.abs(best)) {
+        best = delta;
+        bestIndex = i;
+      }
     }
-    if (Number.isFinite(best) && Math.abs(best) <= searchWindowSeconds) {
+
+    if (bestIndex >= 0 && Math.abs(best) <= searchWindowSeconds) {
+      used.add(bestIndex);
       deviations.push(best);
     }
   }
@@ -157,7 +178,9 @@ export function estimateConstantOffset(
   const sorted = [...deviations].sort((a, b) => a - b);
   const middle = Math.floor(sorted.length / 2);
 
-  return sorted.length % 2 === 1
-    ? sorted[middle]!
-    : (sorted[middle - 1]! + sorted[middle]!) / 2;
+  return {
+    offsetSeconds:
+      sorted.length % 2 === 1 ? sorted[middle]! : (sorted[middle - 1]! + sorted[middle]!) / 2,
+    matchedCount: deviations.length,
+  };
 }

@@ -1,5 +1,5 @@
 import { Stack } from 'expo-router';
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
 
@@ -12,6 +12,7 @@ import { detectOnsets } from '@/dsp/onset';
 import { COMMON_TIME } from '@/music/grid';
 import { Button } from '@/ui/components/Button';
 import { Card } from '@/ui/components/Card';
+import { MicNotice } from '@/ui/components/MicNotice';
 import { Screen } from '@/ui/components/Screen';
 import { Text } from '@/ui/components/Text';
 import { spacing } from '@/ui/theme';
@@ -27,9 +28,18 @@ import { spacing } from '@/ui/theme';
 
 const BPM = 100;
 const BARS = 2;
-const SAMPLE_RATE = 44100;
 
-type Phase = 'idle' | 'measuring' | 'done' | 'failed';
+/**
+ * How many clicks must be individually heard before the result is believed.
+ *
+ * Every future take subtracts this number, so a measurement resting on one or
+ * two detections is worse than no measurement at all: it converts a hardware
+ * delay the app could have ignored into a confident, permanent bias that gets
+ * blamed on the learner's timing.
+ */
+const MINIMUM_CLICKS_HEARD = 4;
+
+type Phase = 'idle' | 'measuring' | 'done' | 'failed' | 'denied';
 
 export default function CalibrateScreen() {
   const { t } = useTranslation();
@@ -38,56 +48,103 @@ export default function CalibrateScreen() {
   const [measuredMs, setMeasuredMs] = useState<number | null>(null);
   const stored = useMemo(() => getMicLatencySeconds() * 1000, []);
 
+  // Everything the run owns, so leaving the screen can tear it down. Without
+  // this, walking away mid-calibration left the metronome clicking over
+  // whatever screen came next and still wrote a latency at the end — from a
+  // measurement nobody was present for.
+  const microphone = useRef<Microphone | null>(null);
+  const metronome = useRef<Metronome | null>(null);
+  const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const cancelled = useRef(false);
+
+  const teardown = useCallback(() => {
+    if (timer.current !== null) {
+      clearTimeout(timer.current);
+      timer.current = null;
+    }
+    metronome.current?.stop();
+    metronome.current = null;
+    void microphone.current?.stop();
+    microphone.current = null;
+  }, []);
+
+  useEffect(() => {
+    cancelled.current = false;
+    return () => {
+      cancelled.current = true;
+      teardown();
+    };
+  }, [teardown]);
+
   const run = useCallback(async () => {
+    if (microphone.current) return;
+
     setPhase('measuring');
     setMeasuredMs(null);
 
-    const microphone = new Microphone();
-    const status = await microphone.start({ capture: true, bufferLength: 1024 });
+    const mic = new Microphone();
+    microphone.current = mic;
 
+    const status = await mic.start({ capture: true, bufferLength: 1024, maxCaptureSeconds: 30 });
+
+    if (cancelled.current) return;
     if (status !== 'running') {
-      setPhase('failed');
+      microphone.current = null;
+      setPhase(status === 'denied' ? 'denied' : 'failed');
       return;
     }
 
     const recordingStart = audioNow();
-    const metronome = new Metronome({
+    const clicks = new Metronome({
       bpm: BPM,
       timeSignature: COMMON_TIME,
       bars: BARS,
       countInBars: 0,
       subdivision: 4,
     });
+    metronome.current = clicks;
 
-    const clickStart = metronome.start({ loop: false });
-    const grid = metronome.getGrid();
+    const clickStart = clicks.start({ loop: false });
+    const grid = clicks.getGrid();
 
-    await new Promise((resolve) =>
-      setTimeout(resolve, (grid.totalSeconds + 0.6) * 1000),
-    );
+    await new Promise<void>((resolve) => {
+      timer.current = setTimeout(resolve, (grid.totalSeconds + 0.6) * 1000);
+    });
 
-    metronome.stop();
-    await microphone.stop();
+    if (cancelled.current) return;
 
-    const samples = microphone.takeRecording();
-    if (samples.length === 0) {
+    clicks.stop();
+    metronome.current = null;
+    await mic.stop();
+
+    if (cancelled.current) return;
+
+    const recording = mic.takeRecording();
+    microphone.current = null;
+
+    if (recording.samples.length === 0) {
       setPhase('failed');
       return;
     }
 
-    const { onsets } = detectOnsets(samples, { sampleRate: SAMPLE_RATE });
+    const { onsets } = detectOnsets(recording.samples, { sampleRate: recording.sampleRate });
     // Click times as offsets into the recording.
     const expected = grid.beats.map((beat) => clickStart - recordingStart + beat.time);
-    const offset = estimateConstantOffset(onsets, expected);
+    const estimate = estimateConstantOffset(onsets, expected);
 
     // A negative or implausibly large result means the clicks were not heard
     // and something else was; saving it would be worse than not calibrating.
-    if (offset === null || offset < 0 || offset > 0.5) {
+    if (
+      estimate === null ||
+      estimate.matchedCount < MINIMUM_CLICKS_HEARD ||
+      estimate.offsetSeconds < 0 ||
+      estimate.offsetSeconds > 0.5
+    ) {
       setPhase('failed');
       return;
     }
 
-    const milliseconds = offset * 1000;
+    const milliseconds = estimate.offsetSeconds * 1000;
     setMicLatencyMs(milliseconds);
     setMeasuredMs(milliseconds);
     setPhase('done');
@@ -126,6 +183,8 @@ export default function CalibrateScreen() {
               {t('calibration.failed')}
             </Text>
           )}
+
+          {phase === 'denied' && <MicNotice status="denied" />}
 
           {phase === 'idle' && (
             <Text variant="caption" tone="muted">

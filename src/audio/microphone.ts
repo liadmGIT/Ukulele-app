@@ -32,6 +32,10 @@ export type MicrophoneOptions = {
    * hand back a different size, so nothing downstream may assume this value.
    */
   bufferLength?: number;
+  /**
+   * *Preferred* capture rate. The hardware decides the real one — see
+   * `Recording.sampleRate`, which is the only rate anything downstream may use.
+   */
   sampleRate?: number;
   /** Keep every frame so the whole take can be analysed after the fact. */
   capture?: boolean;
@@ -40,18 +44,48 @@ export type MicrophoneOptions = {
    * of audio per callback regardless of the hardware's chunk size.
    */
   windowSize?: number;
+  /**
+   * Hard ceiling on a captured take. Nothing in the app asks the learner to
+   * play for this long, so hitting it means something went wrong — and an
+   * uncapped buffer would grow until iOS kills the app and takes the take with
+   * it. Ten minutes at 48 kHz is ~115 MB, which is already past reasonable.
+   */
+  maxCaptureSeconds?: number;
 };
 
 export type MicrophoneStatus = 'idle' | 'starting' | 'running' | 'denied' | 'error';
+
+/**
+ * A finished take: the samples *and* the rate they were captured at.
+ *
+ * These travel together deliberately. The hardware picks the rate — 48 kHz on
+ * every current iPhone, whatever we asked for — and analysing 48 kHz samples as
+ * though they were 44.1 kHz stretches every measured time by 8.8%, which reads
+ * as a performance that drags further behind with every strum. A take that
+ * cannot say what rate it was recorded at is a take that cannot be trusted.
+ */
+export type Recording = {
+  samples: Float32Array;
+  sampleRate: number;
+  /** True when the take hit `maxCaptureSeconds` and was cut short. */
+  truncated: boolean;
+};
 
 export class Microphone {
   private recorder: AudioRecorder | null = null;
   private window: RollingWindow | null = null;
   private captured: Float32Array[] = [];
+  private capturedLength = 0;
+  private maxCaptureSeconds = Infinity;
+  private truncated = false;
   private capturing = false;
   private status: MicrophoneStatus = 'idle';
   private listeners = new Set<(frame: MicFrame) => void>();
-  private startedAt = 0;
+  private startedAt: number | null = null;
+  /** Bumped by every `stop()`, so a `start()` still in flight knows to abandon. */
+  private generation = 0;
+  /** The rate the hardware actually gave us, learned from the first frame. */
+  private captureRate = 0;
 
   getStatus(): MicrophoneStatus {
     return this.status;
@@ -59,7 +93,7 @@ export class Microphone {
 
   /** Audio-clock time capture began, for aligning a take against a grid. */
   getStartTime(): number {
-    return this.startedAt;
+    return this.startedAt ?? 0;
   }
 
   onFrame(listener: (frame: MicFrame) => void): () => void {
@@ -70,9 +104,11 @@ export class Microphone {
   async start(options: MicrophoneOptions = {}): Promise<MicrophoneStatus> {
     if (this.status === 'running' || this.status === 'starting') return this.status;
 
+    const generation = ++this.generation;
     this.status = 'starting';
 
     const permission = await requestMicrophonePermission();
+    if (generation !== this.generation) return this.status;
     if (permission !== 'granted') {
       this.status = 'denied';
       return this.status;
@@ -83,42 +119,83 @@ export class Microphone {
       sampleRate = getSampleRate(),
       capture = false,
       windowSize = 2048,
+      maxCaptureSeconds = 600,
     } = options;
 
     configureAudioSession('record');
     await activateAudioSession();
+    if (generation !== this.generation) return this.status;
 
     this.window = new RollingWindow(windowSize);
     this.captured = [];
+    this.capturedLength = 0;
+    this.truncated = false;
     this.capturing = capture;
+    this.captureRate = 0;
+    this.startedAt = null;
+    this.maxCaptureSeconds = maxCaptureSeconds;
 
+    let recorder: AudioRecorder;
     try {
-      const recorder = new AudioRecorder();
+      recorder = new AudioRecorder();
       recorder.onAudioReady({ sampleRate, bufferLength, channelCount: 1 }, (event) => {
         this.handleFrame(event.buffer.getChannelData(0), event.buffer.sampleRate, event.when);
       });
       recorder.onError(() => {
         this.status = 'error';
       });
-
-      await recorder.start();
-      this.recorder = recorder;
-      this.startedAt = 0;
-      this.status = 'running';
     } catch {
       this.status = 'error';
+      return this.status;
     }
+
+    // `start` resolves with a Result rather than throwing, so a try/catch here
+    // would never fire and every failure — the mic held by another app, a
+    // session that would not activate — would look like success and leave the
+    // screen waiting for frames that never come.
+    const result = await recorder.start();
+
+    if (generation !== this.generation) {
+      // Stopped while we were starting. Tear down rather than leaving a live
+      // recorder nothing holds a reference to; on iOS that keeps the orange
+      // microphone indicator lit until the app is killed.
+      recorder.clearOnAudioReady();
+      recorder.clearOnError();
+      await recorder.stop().catch(() => undefined);
+      return this.status;
+    }
+
+    if (result.status === 'error') {
+      recorder.clearOnAudioReady();
+      recorder.clearOnError();
+      this.status = 'error';
+      return this.status;
+    }
+
+    this.recorder = recorder;
+    this.status = 'running';
 
     return this.status;
   }
 
   private handleFrame(samples: Float32Array, sampleRate: number, when: number): void {
-    if (this.startedAt === 0) this.startedAt = when;
+    if (this.startedAt === null) this.startedAt = when;
+
+    if (this.captureRate === 0 && sampleRate > 0) this.captureRate = sampleRate;
 
     if (this.capturing) {
-      // The event's buffer is reused by the native side, so a take has to own
-      // its own copy rather than hold a reference.
-      this.captured.push(Float32Array.from(samples));
+      // Derived from the rate the hardware actually chose, not the one we asked
+      // for, so the ceiling really is the number of seconds it claims to be.
+      const limit = this.maxCaptureSeconds * (this.captureRate || sampleRate);
+      if (this.capturedLength + samples.length > limit) {
+        this.truncated = true;
+        this.capturing = false;
+      } else {
+        // The event's buffer is reused by the native side, so a take has to own
+        // its own copy rather than hold a reference.
+        this.captured.push(Float32Array.from(samples));
+        this.capturedLength += samples.length;
+      }
     }
 
     const window = this.window;
@@ -132,6 +209,8 @@ export class Microphone {
   }
 
   async stop(): Promise<void> {
+    this.generation += 1;
+
     const recorder = this.recorder;
     this.recorder = null;
     this.status = 'idle';
@@ -139,16 +218,27 @@ export class Microphone {
     if (recorder) {
       recorder.clearOnAudioReady();
       recorder.clearOnError();
-      await recorder.stop();
+      await recorder.stop().catch(() => undefined);
     }
 
     this.window?.clear();
   }
 
-  /** The whole take as one buffer. Empty unless started with `capture: true`. */
-  takeRecording(): Float32Array {
-    const joined = concatFrames(this.captured);
+  /** The whole take. Empty unless started with `capture: true`. */
+  takeRecording(): Recording {
+    const samples = concatFrames(this.captured);
+    const truncated = this.truncated;
+
     this.captured = [];
-    return joined;
+    this.capturedLength = 0;
+    this.truncated = false;
+
+    return {
+      samples,
+      // Falling back to the context rate keeps this defined for an empty take;
+      // with no frames there is nothing to be wrong about.
+      sampleRate: this.captureRate || getSampleRate(),
+      truncated,
+    };
   }
 }

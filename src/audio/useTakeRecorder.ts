@@ -76,7 +76,10 @@ export function useTakeRecorder({
   }, []);
 
   const start = useCallback(async () => {
-    if (isRecording) return;
+    // `isRecording` is only set after the await below, so an impatient double
+    // tap would otherwise build a second Microphone and orphan the first —
+    // leaving a recorder nothing can stop and the mic indicator lit.
+    if (isRecording || microphone.current) return;
 
     setAnalysis(null);
     setReview(null);
@@ -88,7 +91,10 @@ export function useTakeRecorder({
 
     const result = await mic.start({ capture: true, bufferLength: 1024, windowSize: 2048 });
     setStatus(result);
-    if (result !== 'running') return;
+    if (result !== 'running') {
+      microphone.current = null;
+      return;
+    }
 
     recordingStartedAt.current = audioNow();
     setIsRecording(true);
@@ -110,10 +116,10 @@ export function useTakeRecorder({
     await mic.stop();
     setIsRecording(false);
 
-    const samples = mic.takeRecording();
+    const recording = mic.takeRecording();
     microphone.current = null;
 
-    if (samples.length === 0) return;
+    if (recording.samples.length === 0) return;
 
     // Where the grid sits inside the recording. The two clocks are the same
     // clock, so this is a subtraction rather than an estimate.
@@ -121,8 +127,12 @@ export function useTakeRecorder({
 
     const shifted = shiftGrid(grid, gridOffset);
     const result = analyseTake({
-      samples,
-      sampleRate: 44100,
+      samples: recording.samples,
+      // The rate the hardware actually used. Assuming 44.1 kHz here while the
+      // phone records at 48 kHz stretches every onset time by 8.8%, which turns
+      // a metronome-perfect take into one that appears to drag further behind
+      // with every strum.
+      sampleRate: recording.sampleRate,
       steps,
       grid: shifted,
       latencySeconds,
