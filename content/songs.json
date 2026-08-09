@@ -1,0 +1,2579 @@
+{
+  "version": 1,
+  "songs": [
+    {
+      "id": "frere-jacques",
+      "titleHe": "אחינו יעקב",
+      "titleEn": "Frère Jacques",
+      "artistHe": "מסורתי",
+      "artistEn": "Traditional",
+      "language": "en",
+      "songKey": "C",
+      "bpm": 100,
+      "beatsPerBar": 4,
+      "beatUnit": 4,
+      "difficulty": 1,
+      "defaultPatternId": "all-downs",
+      "sections": [
+        {
+          "kind": "verse",
+          "measures": [
+            {
+              "chordId": "C-maj",
+              "beats": 4,
+              "cueWord": "Frère"
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 4,
+              "cueWord": "Jacques"
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 4,
+              "cueWord": "Dormez"
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 4,
+              "cueWord": "vous"
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 4,
+              "cueWord": "Sonnez"
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 4,
+              "cueWord": "matines"
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 4,
+              "cueWord": "Ding dang"
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 4,
+              "cueWord": "dong"
+            }
+          ]
+        }
+      ],
+      "source": "Traditional round, single-chord arrangement",
+      "publicDomain": true
+    },
+    {
+      "id": "row-your-boat",
+      "titleHe": "שיר המשוטים",
+      "titleEn": "Row, Row, Row Your Boat",
+      "artistHe": "מסורתי",
+      "artistEn": "Traditional",
+      "language": "en",
+      "songKey": "C",
+      "bpm": 96,
+      "beatsPerBar": 4,
+      "beatUnit": 4,
+      "difficulty": 1,
+      "defaultPatternId": "all-downs",
+      "sections": [
+        {
+          "kind": "verse",
+          "measures": [
+            {
+              "chordId": "C-maj",
+              "beats": 4,
+              "cueWord": "Row"
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 4,
+              "cueWord": "boat"
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 4,
+              "cueWord": "Gently"
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 4,
+              "cueWord": "stream"
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 4,
+              "cueWord": "Merrily"
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 4,
+              "cueWord": "merrily"
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 2,
+              "cueWord": "Life is"
+            },
+            {
+              "chordId": "G-dom7",
+              "beats": 2
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 4,
+              "cueWord": "dream"
+            }
+          ]
+        }
+      ],
+      "source": "Traditional round, two-chord arrangement",
+      "publicDomain": true
+    },
+    {
+      "id": "david-melech",
+      "titleHe": "דוד מלך ישראל",
+      "titleEn": "David Melech Yisrael",
+      "artistHe": "מסורתי",
+      "artistEn": "Traditional",
+      "language": "he",
+      "songKey": "Am",
+      "bpm": 120,
+      "beatsPerBar": 4,
+      "beatUnit": 4,
+      "difficulty": 1,
+      "defaultPatternId": "down-up",
+      "sections": [
+        {
+          "kind": "verse",
+          "measures": [
+            {
+              "chordId": "A-min",
+              "beats": 4,
+              "cueWord": "דוד"
+            },
+            {
+              "chordId": "A-min",
+              "beats": 4,
+              "cueWord": "מלך"
+            },
+            {
+              "chordId": "E-dom7",
+              "beats": 4,
+              "cueWord": "ישראל"
+            },
+            {
+              "chordId": "E-dom7",
+              "beats": 4,
+              "cueWord": "חי"
+            },
+            {
+              "chordId": "E-dom7",
+              "beats": 4,
+              "cueWord": "חי"
+            },
+            {
+              "chordId": "E-dom7",
+              "beats": 4,
+              "cueWord": "וקיים"
+            },
+            {
+              "chordId": "A-min",
+              "beats": 4,
+              "cueWord": "דוד"
+            },
+            {
+              "chordId": "A-min",
+              "beats": 4,
+              "cueWord": "מלך"
+            }
+          ]
+        }
+      ],
+      "source": "Traditional, two-chord arrangement",
+      "publicDomain": true
+    },
+    {
+      "id": "shalom-chaverim",
+      "titleHe": "שלום חברים",
+      "titleEn": "Shalom Chaverim",
+      "artistHe": "מסורתי",
+      "artistEn": "Traditional",
+      "language": "he",
+      "songKey": "Am",
+      "bpm": 84,
+      "beatsPerBar": 4,
+      "beatUnit": 4,
+      "difficulty": 2,
+      "defaultPatternId": "ballad",
+      "sections": [
+        {
+          "kind": "verse",
+          "measures": [
+            {
+              "chordId": "A-min",
+              "beats": 4,
+              "cueWord": "שלום"
+            },
+            {
+              "chordId": "A-min",
+              "beats": 4,
+              "cueWord": "חברים"
+            },
+            {
+              "chordId": "D-min",
+              "beats": 4,
+              "cueWord": "שלום"
+            },
+            {
+              "chordId": "E-dom7",
+              "beats": 4,
+              "cueWord": "חברים"
+            },
+            {
+              "chordId": "A-min",
+              "beats": 4,
+              "cueWord": "שלום"
+            },
+            {
+              "chordId": "A-min",
+              "beats": 4,
+              "cueWord": "שלום"
+            },
+            {
+              "chordId": "E-dom7",
+              "beats": 4,
+              "cueWord": "להתראות"
+            },
+            {
+              "chordId": "A-min",
+              "beats": 4,
+              "cueWord": "שלום"
+            }
+          ]
+        }
+      ],
+      "source": "Traditional round",
+      "publicDomain": true
+    },
+    {
+      "id": "twinkle-twinkle",
+      "titleHe": "כוכב קטן",
+      "titleEn": "Twinkle, Twinkle, Little Star",
+      "artistHe": "מסורתי",
+      "artistEn": "Traditional",
+      "language": "en",
+      "songKey": "C",
+      "bpm": 92,
+      "beatsPerBar": 4,
+      "beatUnit": 4,
+      "difficulty": 1,
+      "defaultPatternId": "all-downs",
+      "sections": [
+        {
+          "kind": "verse",
+          "measures": [
+            {
+              "chordId": "C-maj",
+              "beats": 4,
+              "cueWord": "Twinkle"
+            },
+            {
+              "chordId": "F-maj",
+              "beats": 2,
+              "cueWord": "star"
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 2
+            },
+            {
+              "chordId": "G-dom7",
+              "beats": 2,
+              "cueWord": "what you"
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 2
+            },
+            {
+              "chordId": "G-dom7",
+              "beats": 2,
+              "cueWord": "are"
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 2
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 4,
+              "cueWord": "Up a-"
+            },
+            {
+              "chordId": "F-maj",
+              "beats": 2,
+              "cueWord": "high"
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 2
+            },
+            {
+              "chordId": "G-dom7",
+              "beats": 2,
+              "cueWord": "diamond"
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 2
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 4,
+              "cueWord": "sky"
+            }
+          ]
+        }
+      ],
+      "source": "Traditional, standard three-chord arrangement",
+      "publicDomain": true
+    },
+    {
+      "id": "when-the-saints",
+      "titleHe": "כשהקדושים צועדים",
+      "titleEn": "When the Saints Go Marching In",
+      "artistHe": "מסורתי",
+      "artistEn": "Traditional",
+      "language": "en",
+      "songKey": "C",
+      "bpm": 116,
+      "beatsPerBar": 4,
+      "beatUnit": 4,
+      "difficulty": 2,
+      "defaultPatternId": "boom-chnk",
+      "sections": [
+        {
+          "kind": "verse",
+          "measures": [
+            {
+              "chordId": "C-maj",
+              "beats": 4
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 4
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 4
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 4
+            },
+            {
+              "chordId": "F-maj",
+              "beats": 4
+            },
+            {
+              "chordId": "F-maj",
+              "beats": 4
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 4
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 4
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 4
+            },
+            {
+              "chordId": "G-dom7",
+              "beats": 4
+            },
+            {
+              "chordId": "G-dom7",
+              "beats": 4
+            },
+            {
+              "chordId": "G-dom7",
+              "beats": 4
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 2
+            },
+            {
+              "chordId": "F-maj",
+              "beats": 2
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 2
+            },
+            {
+              "chordId": "G-dom7",
+              "beats": 2
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 4
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 4
+            }
+          ]
+        }
+      ],
+      "source": "Traditional spiritual, standard three-chord arrangement",
+      "publicDomain": true
+    },
+    {
+      "id": "he-got-the-whole-world",
+      "titleHe": "כל העולם בידיו",
+      "titleEn": "He's Got the Whole World",
+      "artistHe": "מסורתי",
+      "artistEn": "Traditional",
+      "language": "en",
+      "songKey": "C",
+      "bpm": 104,
+      "beatsPerBar": 4,
+      "beatUnit": 4,
+      "difficulty": 1,
+      "defaultPatternId": "down-up",
+      "sections": [
+        {
+          "kind": "verse",
+          "measures": [
+            {
+              "chordId": "C-maj",
+              "beats": 4
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 4
+            },
+            {
+              "chordId": "G-dom7",
+              "beats": 4
+            },
+            {
+              "chordId": "G-dom7",
+              "beats": 4
+            },
+            {
+              "chordId": "G-dom7",
+              "beats": 4
+            },
+            {
+              "chordId": "G-dom7",
+              "beats": 4
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 4
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 4
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 4
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 4
+            },
+            {
+              "chordId": "G-dom7",
+              "beats": 4
+            },
+            {
+              "chordId": "G-dom7",
+              "beats": 4
+            },
+            {
+              "chordId": "G-dom7",
+              "beats": 4
+            },
+            {
+              "chordId": "G-dom7",
+              "beats": 4
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 4
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 4
+            }
+          ]
+        }
+      ],
+      "source": "Traditional spiritual",
+      "publicDomain": true
+    },
+    {
+      "id": "michael-row",
+      "titleHe": "מיכאל חתור לחוף",
+      "titleEn": "Michael, Row the Boat Ashore",
+      "artistHe": "מסורתי",
+      "artistEn": "Traditional",
+      "language": "en",
+      "songKey": "C",
+      "bpm": 96,
+      "beatsPerBar": 4,
+      "beatUnit": 4,
+      "difficulty": 2,
+      "defaultPatternId": "island",
+      "sections": [
+        {
+          "kind": "verse",
+          "measures": [
+            {
+              "chordId": "C-maj",
+              "beats": 4,
+              "cueWord": "Michael"
+            },
+            {
+              "chordId": "F-maj",
+              "beats": 4,
+              "cueWord": "row the"
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 4,
+              "cueWord": "boat a-"
+            },
+            {
+              "chordId": "A-min",
+              "beats": 4,
+              "cueWord": "shore"
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 4,
+              "cueWord": "Halle-"
+            },
+            {
+              "chordId": "F-maj",
+              "beats": 4,
+              "cueWord": "lu"
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 2,
+              "cueWord": "jah"
+            },
+            {
+              "chordId": "G-dom7",
+              "beats": 2
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 4
+            }
+          ]
+        }
+      ],
+      "source": "Traditional spiritual",
+      "publicDomain": true
+    },
+    {
+      "id": "swing-low",
+      "titleHe": "מרכבה מתוקה",
+      "titleEn": "Swing Low, Sweet Chariot",
+      "artistHe": "מסורתי",
+      "artistEn": "Traditional",
+      "language": "en",
+      "songKey": "C",
+      "bpm": 72,
+      "beatsPerBar": 4,
+      "beatUnit": 4,
+      "difficulty": 2,
+      "defaultPatternId": "ballad",
+      "sections": [
+        {
+          "kind": "chorus",
+          "measures": [
+            {
+              "chordId": "C-maj",
+              "beats": 4,
+              "cueWord": "Swing"
+            },
+            {
+              "chordId": "F-maj",
+              "beats": 4,
+              "cueWord": "low"
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 4,
+              "cueWord": "chariot"
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 4
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 4,
+              "cueWord": "Coming"
+            },
+            {
+              "chordId": "A-min",
+              "beats": 4,
+              "cueWord": "carry"
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 2,
+              "cueWord": "me"
+            },
+            {
+              "chordId": "G-dom7",
+              "beats": 2
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 4,
+              "cueWord": "home"
+            }
+          ]
+        }
+      ],
+      "source": "Traditional spiritual",
+      "publicDomain": true
+    },
+    {
+      "id": "kumbaya",
+      "titleHe": "קום ביה",
+      "titleEn": "Kum Ba Yah",
+      "artistHe": "מסורתי",
+      "artistEn": "Traditional",
+      "language": "en",
+      "songKey": "C",
+      "bpm": 76,
+      "beatsPerBar": 4,
+      "beatUnit": 4,
+      "difficulty": 2,
+      "defaultPatternId": "ballad",
+      "sections": [
+        {
+          "kind": "verse",
+          "measures": [
+            {
+              "chordId": "C-maj",
+              "beats": 4,
+              "cueWord": "Kum ba"
+            },
+            {
+              "chordId": "F-maj",
+              "beats": 4,
+              "cueWord": "yah"
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 4,
+              "cueWord": "Lord"
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 4
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 4,
+              "cueWord": "Kum ba"
+            },
+            {
+              "chordId": "F-maj",
+              "beats": 4,
+              "cueWord": "yah"
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 2,
+              "cueWord": "Oh"
+            },
+            {
+              "chordId": "G-dom7",
+              "beats": 2
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 4,
+              "cueWord": "Lord"
+            }
+          ]
+        }
+      ],
+      "source": "Traditional spiritual",
+      "publicDomain": true
+    },
+    {
+      "id": "oh-susanna",
+      "titleHe": "הו סוזנה",
+      "titleEn": "Oh! Susanna",
+      "artistHe": "סטיבן פוסטר",
+      "artistEn": "Stephen Foster",
+      "language": "en",
+      "songKey": "C",
+      "bpm": 120,
+      "beatsPerBar": 4,
+      "beatUnit": 4,
+      "difficulty": 2,
+      "defaultPatternId": "boom-chnk",
+      "sections": [
+        {
+          "kind": "verse",
+          "measures": [
+            {
+              "chordId": "C-maj",
+              "beats": 4
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 4
+            },
+            {
+              "chordId": "G-dom7",
+              "beats": 4
+            },
+            {
+              "chordId": "G-dom7",
+              "beats": 4
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 4
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 4
+            },
+            {
+              "chordId": "G-dom7",
+              "beats": 4
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 4
+            }
+          ]
+        },
+        {
+          "kind": "chorus",
+          "measures": [
+            {
+              "chordId": "F-maj",
+              "beats": 4
+            },
+            {
+              "chordId": "F-maj",
+              "beats": 4
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 4
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 4
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 4
+            },
+            {
+              "chordId": "G-dom7",
+              "beats": 4
+            },
+            {
+              "chordId": "G-dom7",
+              "beats": 4
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 4
+            }
+          ]
+        }
+      ],
+      "source": "Public domain (1848)",
+      "publicDomain": true
+    },
+    {
+      "id": "jingle-bells",
+      "titleHe": "פעמוני חג",
+      "titleEn": "Jingle Bells",
+      "artistHe": "ג'יימס פירפונט",
+      "artistEn": "James Pierpont",
+      "language": "en",
+      "songKey": "C",
+      "bpm": 132,
+      "beatsPerBar": 4,
+      "beatUnit": 4,
+      "difficulty": 2,
+      "defaultPatternId": "down-up",
+      "sections": [
+        {
+          "kind": "chorus",
+          "measures": [
+            {
+              "chordId": "C-maj",
+              "beats": 4
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 4
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 4
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 4
+            },
+            {
+              "chordId": "F-maj",
+              "beats": 4
+            },
+            {
+              "chordId": "F-maj",
+              "beats": 4
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 4
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 4
+            },
+            {
+              "chordId": "G-dom7",
+              "beats": 4
+            },
+            {
+              "chordId": "G-dom7",
+              "beats": 4
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 4
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 4
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 4
+            },
+            {
+              "chordId": "F-maj",
+              "beats": 4
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 2
+            },
+            {
+              "chordId": "G-dom7",
+              "beats": 2
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 4
+            }
+          ]
+        }
+      ],
+      "source": "Public domain (1857)",
+      "publicDomain": true
+    },
+    {
+      "id": "la-cucaracha",
+      "titleHe": "לה קוקרצ׳ה",
+      "titleEn": "La Cucaracha",
+      "artistHe": "מסורתי",
+      "artistEn": "Traditional",
+      "language": "en",
+      "songKey": "C",
+      "bpm": 126,
+      "beatsPerBar": 4,
+      "beatUnit": 4,
+      "difficulty": 2,
+      "defaultPatternId": "boom-chnk",
+      "sections": [
+        {
+          "kind": "verse",
+          "measures": [
+            {
+              "chordId": "C-maj",
+              "beats": 4
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 4
+            },
+            {
+              "chordId": "G-dom7",
+              "beats": 4
+            },
+            {
+              "chordId": "G-dom7",
+              "beats": 4
+            },
+            {
+              "chordId": "G-dom7",
+              "beats": 4
+            },
+            {
+              "chordId": "G-dom7",
+              "beats": 4
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 4
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 4
+            }
+          ]
+        }
+      ],
+      "source": "Traditional Mexican folk song",
+      "publicDomain": true
+    },
+    {
+      "id": "down-in-the-valley",
+      "titleHe": "למטה בעמק",
+      "titleEn": "Down in the Valley",
+      "artistHe": "מסורתי",
+      "artistEn": "Traditional",
+      "language": "en",
+      "songKey": "C",
+      "bpm": 88,
+      "beatsPerBar": 3,
+      "beatUnit": 4,
+      "difficulty": 2,
+      "defaultPatternId": "waltz",
+      "sections": [
+        {
+          "kind": "verse",
+          "measures": [
+            {
+              "chordId": "C-maj",
+              "beats": 3
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 3
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 3
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 3
+            },
+            {
+              "chordId": "G-dom7",
+              "beats": 3
+            },
+            {
+              "chordId": "G-dom7",
+              "beats": 3
+            },
+            {
+              "chordId": "G-dom7",
+              "beats": 3
+            },
+            {
+              "chordId": "G-dom7",
+              "beats": 3
+            },
+            {
+              "chordId": "G-dom7",
+              "beats": 3
+            },
+            {
+              "chordId": "G-dom7",
+              "beats": 3
+            },
+            {
+              "chordId": "G-dom7",
+              "beats": 3
+            },
+            {
+              "chordId": "G-dom7",
+              "beats": 3
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 3
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 3
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 3
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 3
+            }
+          ]
+        }
+      ],
+      "source": "Traditional Appalachian folk song",
+      "publicDomain": true
+    },
+    {
+      "id": "hava-nagila",
+      "titleHe": "הבה נגילה",
+      "titleEn": "Hava Nagila",
+      "artistHe": "מסורתי",
+      "artistEn": "Traditional",
+      "language": "he",
+      "songKey": "Dm",
+      "bpm": 120,
+      "beatsPerBar": 4,
+      "beatUnit": 4,
+      "difficulty": 3,
+      "defaultPatternId": "down-up",
+      "sections": [
+        {
+          "kind": "verse",
+          "measures": [
+            {
+              "chordId": "D-min",
+              "beats": 4,
+              "cueWord": "הבה"
+            },
+            {
+              "chordId": "D-min",
+              "beats": 4,
+              "cueWord": "נגילה"
+            },
+            {
+              "chordId": "G-min",
+              "beats": 4,
+              "cueWord": "הבה"
+            },
+            {
+              "chordId": "G-min",
+              "beats": 4,
+              "cueWord": "נגילה"
+            },
+            {
+              "chordId": "D-min",
+              "beats": 4,
+              "cueWord": "הבה"
+            },
+            {
+              "chordId": "D-min",
+              "beats": 4,
+              "cueWord": "נגילה"
+            },
+            {
+              "chordId": "A-dom7",
+              "beats": 4,
+              "cueWord": "ונשמחה"
+            },
+            {
+              "chordId": "A-dom7",
+              "beats": 4
+            }
+          ]
+        },
+        {
+          "kind": "chorus",
+          "measures": [
+            {
+              "chordId": "D-min",
+              "beats": 4,
+              "cueWord": "עורו"
+            },
+            {
+              "chordId": "D-min",
+              "beats": 4,
+              "cueWord": "אחים"
+            },
+            {
+              "chordId": "G-min",
+              "beats": 4,
+              "cueWord": "עורו"
+            },
+            {
+              "chordId": "G-min",
+              "beats": 4,
+              "cueWord": "אחים"
+            },
+            {
+              "chordId": "A-dom7",
+              "beats": 4,
+              "cueWord": "בלב"
+            },
+            {
+              "chordId": "A-dom7",
+              "beats": 4,
+              "cueWord": "שמח"
+            },
+            {
+              "chordId": "D-min",
+              "beats": 4,
+              "cueWord": "עורו"
+            },
+            {
+              "chordId": "D-min",
+              "beats": 4,
+              "cueWord": "אחים"
+            }
+          ]
+        }
+      ],
+      "source": "Traditional, standard Dm arrangement",
+      "publicDomain": true
+    },
+    {
+      "id": "hevenu-shalom",
+      "titleHe": "הבאנו שלום עליכם",
+      "titleEn": "Hevenu Shalom Aleichem",
+      "artistHe": "מסורתי",
+      "artistEn": "Traditional",
+      "language": "he",
+      "songKey": "Dm",
+      "bpm": 128,
+      "beatsPerBar": 4,
+      "beatUnit": 4,
+      "difficulty": 3,
+      "defaultPatternId": "down-up",
+      "sections": [
+        {
+          "kind": "verse",
+          "measures": [
+            {
+              "chordId": "D-min",
+              "beats": 4,
+              "cueWord": "הבאנו"
+            },
+            {
+              "chordId": "D-min",
+              "beats": 4,
+              "cueWord": "שלום"
+            },
+            {
+              "chordId": "A-dom7",
+              "beats": 4,
+              "cueWord": "עליכם"
+            },
+            {
+              "chordId": "A-dom7",
+              "beats": 4
+            },
+            {
+              "chordId": "A-dom7",
+              "beats": 4,
+              "cueWord": "הבאנו"
+            },
+            {
+              "chordId": "A-dom7",
+              "beats": 4,
+              "cueWord": "שלום"
+            },
+            {
+              "chordId": "D-min",
+              "beats": 4,
+              "cueWord": "עליכם"
+            },
+            {
+              "chordId": "D-min",
+              "beats": 4
+            }
+          ]
+        },
+        {
+          "kind": "chorus",
+          "measures": [
+            {
+              "chordId": "D-min",
+              "beats": 4
+            },
+            {
+              "chordId": "G-min",
+              "beats": 4
+            },
+            {
+              "chordId": "D-min",
+              "beats": 4
+            },
+            {
+              "chordId": "A-dom7",
+              "beats": 4
+            },
+            {
+              "chordId": "D-min",
+              "beats": 4
+            },
+            {
+              "chordId": "G-min",
+              "beats": 4
+            },
+            {
+              "chordId": "A-dom7",
+              "beats": 4
+            },
+            {
+              "chordId": "D-min",
+              "beats": 4
+            }
+          ]
+        }
+      ],
+      "source": "Traditional",
+      "publicDomain": true
+    },
+    {
+      "id": "hine-ma-tov",
+      "titleHe": "הנה מה טוב",
+      "titleEn": "Hine Ma Tov",
+      "artistHe": "מסורתי",
+      "artistEn": "Traditional",
+      "language": "he",
+      "songKey": "Am",
+      "bpm": 108,
+      "beatsPerBar": 4,
+      "beatUnit": 4,
+      "difficulty": 2,
+      "defaultPatternId": "island",
+      "sections": [
+        {
+          "kind": "verse",
+          "measures": [
+            {
+              "chordId": "A-min",
+              "beats": 4,
+              "cueWord": "הנה"
+            },
+            {
+              "chordId": "A-min",
+              "beats": 4,
+              "cueWord": "מה טוב"
+            },
+            {
+              "chordId": "D-min",
+              "beats": 4,
+              "cueWord": "ומה"
+            },
+            {
+              "chordId": "D-min",
+              "beats": 4,
+              "cueWord": "נעים"
+            },
+            {
+              "chordId": "E-dom7",
+              "beats": 4,
+              "cueWord": "שבת"
+            },
+            {
+              "chordId": "E-dom7",
+              "beats": 4,
+              "cueWord": "אחים"
+            },
+            {
+              "chordId": "A-min",
+              "beats": 4,
+              "cueWord": "גם"
+            },
+            {
+              "chordId": "A-min",
+              "beats": 4,
+              "cueWord": "יחד"
+            }
+          ]
+        }
+      ],
+      "source": "Traditional, Psalm 133 setting",
+      "publicDomain": true
+    },
+    {
+      "id": "siman-tov",
+      "titleHe": "סימן טוב ומזל טוב",
+      "titleEn": "Siman Tov u Mazal Tov",
+      "artistHe": "מסורתי",
+      "artistEn": "Traditional",
+      "language": "he",
+      "songKey": "Am",
+      "bpm": 132,
+      "beatsPerBar": 4,
+      "beatUnit": 4,
+      "difficulty": 2,
+      "defaultPatternId": "down-up",
+      "sections": [
+        {
+          "kind": "chorus",
+          "measures": [
+            {
+              "chordId": "A-min",
+              "beats": 4,
+              "cueWord": "סימן"
+            },
+            {
+              "chordId": "A-min",
+              "beats": 4,
+              "cueWord": "טוב"
+            },
+            {
+              "chordId": "E-dom7",
+              "beats": 4,
+              "cueWord": "ומזל"
+            },
+            {
+              "chordId": "E-dom7",
+              "beats": 4,
+              "cueWord": "טוב"
+            },
+            {
+              "chordId": "E-dom7",
+              "beats": 4,
+              "cueWord": "יהא"
+            },
+            {
+              "chordId": "E-dom7",
+              "beats": 4,
+              "cueWord": "לנו"
+            },
+            {
+              "chordId": "A-min",
+              "beats": 4,
+              "cueWord": "ולכל"
+            },
+            {
+              "chordId": "A-min",
+              "beats": 4,
+              "cueWord": "ישראל"
+            }
+          ]
+        }
+      ],
+      "source": "Traditional celebration song",
+      "publicDomain": true
+    },
+    {
+      "id": "sevivon",
+      "titleHe": "סביבון סוב סוב סוב",
+      "titleEn": "Sevivon Sov Sov Sov",
+      "artistHe": "מסורתי",
+      "artistEn": "Traditional",
+      "language": "he",
+      "songKey": "C",
+      "bpm": 116,
+      "beatsPerBar": 4,
+      "beatUnit": 4,
+      "difficulty": 2,
+      "defaultPatternId": "down-up",
+      "sections": [
+        {
+          "kind": "verse",
+          "measures": [
+            {
+              "chordId": "C-maj",
+              "beats": 4,
+              "cueWord": "סביבון"
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 4,
+              "cueWord": "סוב"
+            },
+            {
+              "chordId": "G-dom7",
+              "beats": 4,
+              "cueWord": "חנוכה"
+            },
+            {
+              "chordId": "G-dom7",
+              "beats": 4,
+              "cueWord": "הוא"
+            },
+            {
+              "chordId": "G-dom7",
+              "beats": 4,
+              "cueWord": "חג"
+            },
+            {
+              "chordId": "G-dom7",
+              "beats": 4,
+              "cueWord": "טוב"
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 4,
+              "cueWord": "חנוכה"
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 4,
+              "cueWord": "הוא"
+            },
+            {
+              "chordId": "F-maj",
+              "beats": 4,
+              "cueWord": "חג"
+            },
+            {
+              "chordId": "F-maj",
+              "beats": 4,
+              "cueWord": "טוב"
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 4,
+              "cueWord": "סביבון"
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 4,
+              "cueWord": "סוב"
+            },
+            {
+              "chordId": "G-dom7",
+              "beats": 4,
+              "cueWord": "סוב"
+            },
+            {
+              "chordId": "G-dom7",
+              "beats": 4,
+              "cueWord": "סוב"
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 4,
+              "cueWord": "סוב"
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 4
+            }
+          ]
+        }
+      ],
+      "source": "Traditional Hanukkah song",
+      "publicDomain": true
+    },
+    {
+      "id": "mi-yemalel",
+      "titleHe": "מי ימלל",
+      "titleEn": "Mi Yemalel",
+      "artistHe": "מסורתי",
+      "artistEn": "Traditional",
+      "language": "he",
+      "songKey": "Am",
+      "bpm": 112,
+      "beatsPerBar": 4,
+      "beatUnit": 4,
+      "difficulty": 2,
+      "defaultPatternId": "down-up",
+      "sections": [
+        {
+          "kind": "verse",
+          "measures": [
+            {
+              "chordId": "A-min",
+              "beats": 4,
+              "cueWord": "מי"
+            },
+            {
+              "chordId": "A-min",
+              "beats": 4,
+              "cueWord": "ימלל"
+            },
+            {
+              "chordId": "D-min",
+              "beats": 4,
+              "cueWord": "גבורות"
+            },
+            {
+              "chordId": "A-min",
+              "beats": 4,
+              "cueWord": "ישראל"
+            },
+            {
+              "chordId": "A-min",
+              "beats": 4,
+              "cueWord": "אותן"
+            },
+            {
+              "chordId": "E-dom7",
+              "beats": 4,
+              "cueWord": "מי"
+            },
+            {
+              "chordId": "A-min",
+              "beats": 4,
+              "cueWord": "ימנה"
+            },
+            {
+              "chordId": "A-min",
+              "beats": 4
+            }
+          ]
+        }
+      ],
+      "source": "Traditional Hanukkah song",
+      "publicDomain": true
+    },
+    {
+      "id": "banu-choshech",
+      "titleHe": "באנו חושך לגרש",
+      "titleEn": "Banu Choshech Legaresh",
+      "artistHe": "מסורתי",
+      "artistEn": "Traditional",
+      "language": "he",
+      "songKey": "Am",
+      "bpm": 124,
+      "beatsPerBar": 4,
+      "beatUnit": 4,
+      "difficulty": 2,
+      "defaultPatternId": "down-up",
+      "sections": [
+        {
+          "kind": "verse",
+          "measures": [
+            {
+              "chordId": "A-min",
+              "beats": 4,
+              "cueWord": "באנו"
+            },
+            {
+              "chordId": "A-min",
+              "beats": 4,
+              "cueWord": "חושך"
+            },
+            {
+              "chordId": "E-dom7",
+              "beats": 4,
+              "cueWord": "לגרש"
+            },
+            {
+              "chordId": "A-min",
+              "beats": 4
+            },
+            {
+              "chordId": "A-min",
+              "beats": 4,
+              "cueWord": "בידינו"
+            },
+            {
+              "chordId": "E-dom7",
+              "beats": 4,
+              "cueWord": "אור"
+            },
+            {
+              "chordId": "A-min",
+              "beats": 4,
+              "cueWord": "ואש"
+            },
+            {
+              "chordId": "A-min",
+              "beats": 4
+            }
+          ]
+        }
+      ],
+      "source": "Traditional Hanukkah song",
+      "publicDomain": true
+    },
+    {
+      "id": "zum-gali-gali",
+      "titleHe": "זום גלי גלי",
+      "titleEn": "Zum Gali Gali",
+      "artistHe": "מסורתי",
+      "artistEn": "Traditional",
+      "language": "he",
+      "songKey": "Am",
+      "bpm": 116,
+      "beatsPerBar": 4,
+      "beatUnit": 4,
+      "difficulty": 1,
+      "defaultPatternId": "down-up",
+      "sections": [
+        {
+          "kind": "verse",
+          "measures": [
+            {
+              "chordId": "A-min",
+              "beats": 4,
+              "cueWord": "זום"
+            },
+            {
+              "chordId": "A-min",
+              "beats": 4,
+              "cueWord": "גלי"
+            },
+            {
+              "chordId": "A-min",
+              "beats": 4,
+              "cueWord": "גלי"
+            },
+            {
+              "chordId": "A-min",
+              "beats": 4
+            },
+            {
+              "chordId": "E-dom7",
+              "beats": 4,
+              "cueWord": "זום"
+            },
+            {
+              "chordId": "E-dom7",
+              "beats": 4,
+              "cueWord": "גלי"
+            },
+            {
+              "chordId": "A-min",
+              "beats": 4,
+              "cueWord": "גלי"
+            },
+            {
+              "chordId": "A-min",
+              "beats": 4
+            }
+          ]
+        }
+      ],
+      "source": "Traditional pioneer song, two-chord arrangement",
+      "publicDomain": true
+    },
+    {
+      "id": "eretz-zavat-chalav",
+      "titleHe": "ארץ זבת חלב",
+      "titleEn": "Eretz Zavat Chalav",
+      "artistHe": "מסורתי",
+      "artistEn": "Traditional",
+      "language": "he",
+      "songKey": "Am",
+      "bpm": 120,
+      "beatsPerBar": 4,
+      "beatUnit": 4,
+      "difficulty": 2,
+      "defaultPatternId": "island",
+      "sections": [
+        {
+          "kind": "verse",
+          "measures": [
+            {
+              "chordId": "A-min",
+              "beats": 4,
+              "cueWord": "ארץ"
+            },
+            {
+              "chordId": "A-min",
+              "beats": 4,
+              "cueWord": "זבת"
+            },
+            {
+              "chordId": "D-min",
+              "beats": 4,
+              "cueWord": "חלב"
+            },
+            {
+              "chordId": "A-min",
+              "beats": 4,
+              "cueWord": "ודבש"
+            },
+            {
+              "chordId": "D-min",
+              "beats": 4,
+              "cueWord": "ארץ"
+            },
+            {
+              "chordId": "A-min",
+              "beats": 4,
+              "cueWord": "זבת"
+            },
+            {
+              "chordId": "E-dom7",
+              "beats": 4,
+              "cueWord": "חלב"
+            },
+            {
+              "chordId": "A-min",
+              "beats": 4,
+              "cueWord": "ודבש"
+            }
+          ]
+        }
+      ],
+      "source": "Traditional",
+      "publicDomain": true
+    },
+    {
+      "id": "house-of-the-rising-sun",
+      "titleHe": "בית השמש העולה",
+      "titleEn": "The House of the Rising Sun",
+      "artistHe": "מסורתי",
+      "artistEn": "Traditional",
+      "language": "en",
+      "songKey": "Am",
+      "bpm": 72,
+      "beatsPerBar": 6,
+      "beatUnit": 8,
+      "difficulty": 3,
+      "defaultPatternId": "six-eight",
+      "sections": [
+        {
+          "kind": "verse",
+          "measures": [
+            {
+              "chordId": "A-min",
+              "beats": 6
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 6
+            },
+            {
+              "chordId": "D-maj",
+              "beats": 6
+            },
+            {
+              "chordId": "F-maj",
+              "beats": 6
+            },
+            {
+              "chordId": "A-min",
+              "beats": 6
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 6
+            },
+            {
+              "chordId": "E-dom7",
+              "beats": 6
+            },
+            {
+              "chordId": "E-dom7",
+              "beats": 6
+            },
+            {
+              "chordId": "A-min",
+              "beats": 6
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 6
+            },
+            {
+              "chordId": "D-maj",
+              "beats": 6
+            },
+            {
+              "chordId": "F-maj",
+              "beats": 6
+            },
+            {
+              "chordId": "A-min",
+              "beats": 6
+            },
+            {
+              "chordId": "E-dom7",
+              "beats": 6
+            },
+            {
+              "chordId": "A-min",
+              "beats": 6
+            },
+            {
+              "chordId": "A-min",
+              "beats": 6
+            }
+          ]
+        }
+      ],
+      "source": "Traditional folk ballad",
+      "publicDomain": true
+    },
+    {
+      "id": "scarborough-fair",
+      "titleHe": "יריד סקארבורו",
+      "titleEn": "Scarborough Fair",
+      "artistHe": "מסורתי",
+      "artistEn": "Traditional",
+      "language": "en",
+      "songKey": "Am",
+      "bpm": 84,
+      "beatsPerBar": 3,
+      "beatUnit": 4,
+      "difficulty": 3,
+      "defaultPatternId": "waltz",
+      "sections": [
+        {
+          "kind": "verse",
+          "measures": [
+            {
+              "chordId": "A-min",
+              "beats": 3
+            },
+            {
+              "chordId": "G-maj",
+              "beats": 3
+            },
+            {
+              "chordId": "A-min",
+              "beats": 3
+            },
+            {
+              "chordId": "A-min",
+              "beats": 3
+            },
+            {
+              "chordId": "A-min",
+              "beats": 3
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 3
+            },
+            {
+              "chordId": "D-maj",
+              "beats": 3
+            },
+            {
+              "chordId": "A-min",
+              "beats": 3
+            },
+            {
+              "chordId": "A-min",
+              "beats": 3
+            },
+            {
+              "chordId": "G-maj",
+              "beats": 3
+            },
+            {
+              "chordId": "A-min",
+              "beats": 3
+            },
+            {
+              "chordId": "A-min",
+              "beats": 3
+            }
+          ]
+        }
+      ],
+      "source": "Traditional English ballad",
+      "publicDomain": true
+    },
+    {
+      "id": "greensleeves",
+      "titleHe": "שרוולים ירוקים",
+      "titleEn": "Greensleeves",
+      "artistHe": "מסורתי",
+      "artistEn": "Traditional",
+      "language": "en",
+      "songKey": "Am",
+      "bpm": 92,
+      "beatsPerBar": 3,
+      "beatUnit": 4,
+      "difficulty": 3,
+      "defaultPatternId": "waltz",
+      "sections": [
+        {
+          "kind": "verse",
+          "measures": [
+            {
+              "chordId": "A-min",
+              "beats": 3
+            },
+            {
+              "chordId": "A-min",
+              "beats": 3
+            },
+            {
+              "chordId": "G-maj",
+              "beats": 3
+            },
+            {
+              "chordId": "G-maj",
+              "beats": 3
+            },
+            {
+              "chordId": "A-min",
+              "beats": 3
+            },
+            {
+              "chordId": "A-min",
+              "beats": 3
+            },
+            {
+              "chordId": "E-dom7",
+              "beats": 3
+            },
+            {
+              "chordId": "E-dom7",
+              "beats": 3
+            },
+            {
+              "chordId": "A-min",
+              "beats": 3
+            },
+            {
+              "chordId": "A-min",
+              "beats": 3
+            },
+            {
+              "chordId": "G-maj",
+              "beats": 3
+            },
+            {
+              "chordId": "G-maj",
+              "beats": 3
+            },
+            {
+              "chordId": "A-min",
+              "beats": 2
+            },
+            {
+              "chordId": "E-dom7",
+              "beats": 1
+            },
+            {
+              "chordId": "A-min",
+              "beats": 3
+            }
+          ]
+        }
+      ],
+      "source": "Traditional English ballad, simple Am arrangement",
+      "publicDomain": true
+    },
+    {
+      "id": "amazing-grace",
+      "titleHe": "חסד מופלא",
+      "titleEn": "Amazing Grace",
+      "artistHe": "מסורתי",
+      "artistEn": "Traditional",
+      "language": "en",
+      "songKey": "C",
+      "bpm": 76,
+      "beatsPerBar": 3,
+      "beatUnit": 4,
+      "difficulty": 2,
+      "defaultPatternId": "waltz",
+      "sections": [
+        {
+          "kind": "verse",
+          "measures": [
+            {
+              "chordId": "C-maj",
+              "beats": 3,
+              "cueWord": "A-"
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 3,
+              "cueWord": "mazing"
+            },
+            {
+              "chordId": "F-maj",
+              "beats": 3,
+              "cueWord": "grace"
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 3,
+              "cueWord": "sound"
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 3,
+              "cueWord": "saved"
+            },
+            {
+              "chordId": "A-min",
+              "beats": 3,
+              "cueWord": "wretch"
+            },
+            {
+              "chordId": "G-dom7",
+              "beats": 3,
+              "cueWord": "like"
+            },
+            {
+              "chordId": "G-dom7",
+              "beats": 3,
+              "cueWord": "me"
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 3,
+              "cueWord": "I"
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 3,
+              "cueWord": "once"
+            },
+            {
+              "chordId": "F-maj",
+              "beats": 3,
+              "cueWord": "was"
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 3,
+              "cueWord": "lost"
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 2,
+              "cueWord": "now am"
+            },
+            {
+              "chordId": "G-dom7",
+              "beats": 1
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 3,
+              "cueWord": "found"
+            }
+          ]
+        }
+      ],
+      "source": "Public domain hymn (1779)",
+      "publicDomain": true
+    },
+    {
+      "id": "auld-lang-syne",
+      "titleHe": "ימים עברו",
+      "titleEn": "Auld Lang Syne",
+      "artistHe": "מסורתי",
+      "artistEn": "Traditional",
+      "language": "en",
+      "songKey": "C",
+      "bpm": 88,
+      "beatsPerBar": 4,
+      "beatUnit": 4,
+      "difficulty": 2,
+      "defaultPatternId": "ballad",
+      "sections": [
+        {
+          "kind": "verse",
+          "measures": [
+            {
+              "chordId": "C-maj",
+              "beats": 4
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 4
+            },
+            {
+              "chordId": "F-maj",
+              "beats": 4
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 4
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 4
+            },
+            {
+              "chordId": "F-maj",
+              "beats": 4
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 2
+            },
+            {
+              "chordId": "G-dom7",
+              "beats": 2
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 4
+            }
+          ]
+        }
+      ],
+      "source": "Traditional Scots song",
+      "publicDomain": true
+    },
+    {
+      "id": "silent-night",
+      "titleHe": "ליל דממה",
+      "titleEn": "Silent Night",
+      "artistHe": "פרנץ גרובר",
+      "artistEn": "Franz Gruber",
+      "language": "en",
+      "songKey": "C",
+      "bpm": 68,
+      "beatsPerBar": 3,
+      "beatUnit": 4,
+      "difficulty": 2,
+      "defaultPatternId": "waltz",
+      "sections": [
+        {
+          "kind": "verse",
+          "measures": [
+            {
+              "chordId": "C-maj",
+              "beats": 3
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 3
+            },
+            {
+              "chordId": "G-dom7",
+              "beats": 3
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 3
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 3
+            },
+            {
+              "chordId": "G-dom7",
+              "beats": 3
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 3
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 3
+            },
+            {
+              "chordId": "F-maj",
+              "beats": 3
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 3
+            },
+            {
+              "chordId": "F-maj",
+              "beats": 3
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 3
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 3
+            },
+            {
+              "chordId": "G-dom7",
+              "beats": 3
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 3
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 3
+            }
+          ]
+        }
+      ],
+      "source": "Public domain carol (1818)",
+      "publicDomain": true
+    },
+    {
+      "id": "ode-to-joy",
+      "titleHe": "אודה לשמחה",
+      "titleEn": "Ode to Joy",
+      "artistHe": "בטהובן",
+      "artistEn": "Beethoven",
+      "language": "en",
+      "songKey": "C",
+      "bpm": 108,
+      "beatsPerBar": 4,
+      "beatUnit": 4,
+      "difficulty": 1,
+      "defaultPatternId": "all-downs",
+      "sections": [
+        {
+          "kind": "verse",
+          "measures": [
+            {
+              "chordId": "C-maj",
+              "beats": 4
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 4
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 4
+            },
+            {
+              "chordId": "G-dom7",
+              "beats": 4
+            },
+            {
+              "chordId": "G-dom7",
+              "beats": 4
+            },
+            {
+              "chordId": "G-dom7",
+              "beats": 4
+            },
+            {
+              "chordId": "G-dom7",
+              "beats": 4
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 4
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 4
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 4
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 4
+            },
+            {
+              "chordId": "G-dom7",
+              "beats": 4
+            },
+            {
+              "chordId": "G-dom7",
+              "beats": 4
+            },
+            {
+              "chordId": "G-dom7",
+              "beats": 4
+            },
+            {
+              "chordId": "G-dom7",
+              "beats": 4
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 4
+            }
+          ]
+        }
+      ],
+      "source": "Public domain, simple two-chord arrangement",
+      "publicDomain": true
+    },
+    {
+      "id": "molly-malone",
+      "titleHe": "מולי מאלון",
+      "titleEn": "Molly Malone",
+      "artistHe": "מסורתי",
+      "artistEn": "Traditional",
+      "language": "en",
+      "songKey": "C",
+      "bpm": 96,
+      "beatsPerBar": 3,
+      "beatUnit": 4,
+      "difficulty": 3,
+      "defaultPatternId": "waltz",
+      "sections": [
+        {
+          "kind": "verse",
+          "measures": [
+            {
+              "chordId": "C-maj",
+              "beats": 3
+            },
+            {
+              "chordId": "A-min",
+              "beats": 3
+            },
+            {
+              "chordId": "D-min",
+              "beats": 3
+            },
+            {
+              "chordId": "G-dom7",
+              "beats": 3
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 3
+            },
+            {
+              "chordId": "A-min",
+              "beats": 3
+            },
+            {
+              "chordId": "D-min",
+              "beats": 2
+            },
+            {
+              "chordId": "G-dom7",
+              "beats": 1
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 3
+            }
+          ]
+        },
+        {
+          "kind": "chorus",
+          "measures": [
+            {
+              "chordId": "C-maj",
+              "beats": 3
+            },
+            {
+              "chordId": "A-min",
+              "beats": 3
+            },
+            {
+              "chordId": "D-min",
+              "beats": 3
+            },
+            {
+              "chordId": "G-dom7",
+              "beats": 3
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 3
+            },
+            {
+              "chordId": "A-min",
+              "beats": 3
+            },
+            {
+              "chordId": "D-min",
+              "beats": 2
+            },
+            {
+              "chordId": "G-dom7",
+              "beats": 1
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 3
+            }
+          ]
+        }
+      ],
+      "source": "Traditional Irish ballad",
+      "publicDomain": true
+    },
+    {
+      "id": "red-river-valley",
+      "titleHe": "עמק הנהר האדום",
+      "titleEn": "Red River Valley",
+      "artistHe": "מסורתי",
+      "artistEn": "Traditional",
+      "language": "en",
+      "songKey": "C",
+      "bpm": 92,
+      "beatsPerBar": 4,
+      "beatUnit": 4,
+      "difficulty": 2,
+      "defaultPatternId": "boom-chnk",
+      "sections": [
+        {
+          "kind": "verse",
+          "measures": [
+            {
+              "chordId": "C-maj",
+              "beats": 4
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 4
+            },
+            {
+              "chordId": "G-dom7",
+              "beats": 4
+            },
+            {
+              "chordId": "G-dom7",
+              "beats": 4
+            },
+            {
+              "chordId": "G-dom7",
+              "beats": 4
+            },
+            {
+              "chordId": "G-dom7",
+              "beats": 4
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 4
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 4
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 4
+            },
+            {
+              "chordId": "C-dom7",
+              "beats": 4
+            },
+            {
+              "chordId": "F-maj",
+              "beats": 4
+            },
+            {
+              "chordId": "F-maj",
+              "beats": 4
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 4
+            },
+            {
+              "chordId": "G-dom7",
+              "beats": 4
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 4
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 4
+            }
+          ]
+        }
+      ],
+      "source": "Traditional folk song",
+      "publicDomain": true
+    },
+    {
+      "id": "guantanamera",
+      "titleHe": "גואנטנמרה",
+      "titleEn": "Guantanamera",
+      "artistHe": "מסורתי",
+      "artistEn": "Traditional",
+      "language": "en",
+      "songKey": "C",
+      "bpm": 108,
+      "beatsPerBar": 4,
+      "beatUnit": 4,
+      "difficulty": 2,
+      "defaultPatternId": "island",
+      "sections": [
+        {
+          "kind": "verse",
+          "measures": [
+            {
+              "chordId": "C-maj",
+              "beats": 4
+            },
+            {
+              "chordId": "F-maj",
+              "beats": 4
+            },
+            {
+              "chordId": "G-dom7",
+              "beats": 4
+            },
+            {
+              "chordId": "G-dom7",
+              "beats": 4
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 4
+            },
+            {
+              "chordId": "F-maj",
+              "beats": 4
+            },
+            {
+              "chordId": "G-dom7",
+              "beats": 4
+            },
+            {
+              "chordId": "G-dom7",
+              "beats": 4
+            }
+          ]
+        },
+        {
+          "kind": "chorus",
+          "measures": [
+            {
+              "chordId": "C-maj",
+              "beats": 4
+            },
+            {
+              "chordId": "F-maj",
+              "beats": 4
+            },
+            {
+              "chordId": "G-dom7",
+              "beats": 4
+            },
+            {
+              "chordId": "G-dom7",
+              "beats": 4
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 4
+            },
+            {
+              "chordId": "F-maj",
+              "beats": 4
+            },
+            {
+              "chordId": "G-dom7",
+              "beats": 4
+            },
+            {
+              "chordId": "C-maj",
+              "beats": 4
+            }
+          ]
+        }
+      ],
+      "source": "Traditional Cuban melody; verses from José Martí (public domain)",
+      "publicDomain": true
+    }
+  ]
+}

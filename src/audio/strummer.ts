@@ -13,19 +13,28 @@ import { getAudioContext } from './engine';
  * synthesised per strum: a pattern fires up to four notes every eighth note,
  * and re-running Karplus-Strong each time would stutter the JS thread exactly
  * when the beat needs to be steady.
+ *
+ * Several chords are held at once, because a song moves between them every bar
+ * or two and re-rendering on each change would put a gap in the music at every
+ * chord change — the one place a learner is already struggling.
  */
 
 const RING_SECONDS = 2.2;
 const MUTE_SECONDS = 0.22;
-/** Slight per-string detune, so a chord does not sound like one filtered tone. */
+/** Per-string seed variation, so a chord is not one filtered tone. */
 const SEEDS = [11, 29, 53, 97];
 
+/**
+ * How many chords to keep rendered. Songs in the library use at most five, and
+ * each costs roughly 1.5 MB of buffers.
+ */
+const MAX_CACHED_SHAPES = 8;
+
 type Voice = { ringing: AudioBuffer; muted: AudioBuffer };
+type Shape = { frets: readonly number[]; voices: Map<number, Voice> };
 
 export class Strummer {
-  private voices = new Map<number, Voice>();
-  private shapeKey = '';
-  private frets: readonly number[] = [];
+  private shapes = new Map<string, Shape>();
   private master = 0.5;
 
   /** Overall level, so a four-note chord does not clip against the metronome. */
@@ -33,24 +42,17 @@ export class Strummer {
     this.master = Math.max(0, Math.min(1, level));
   }
 
-  getFrets(): readonly number[] {
-    return this.frets;
-  }
-
   /**
-   * Renders the chord's notes. Cheap to call repeatedly with the same shape —
-   * it returns immediately when nothing has changed.
+   * Renders a chord's notes. Cheap to call repeatedly with the same shape — it
+   * returns immediately once that shape is cached.
    */
   prepare(frets: readonly number[]): void {
     const key = frets.join(',');
-    if (key === this.shapeKey) return;
+    if (this.shapes.has(key)) return;
 
     const context = getAudioContext();
     const sampleRate = context.sampleRate;
-
-    this.voices.clear();
-    this.frets = [...frets];
-    this.shapeKey = key;
+    const voices = new Map<number, Voice>();
 
     // Rendered per string rather than per pitch: two strings sounding the same
     // note (A minor doubles A4) should not be bit-identical, or the chord
@@ -58,7 +60,7 @@ export class Strummer {
     strumNotes(frets, 'D').forEach((note) => {
       const seed = SEEDS[note.stringIndex % SEEDS.length]!;
 
-      this.voices.set(note.stringIndex, {
+      voices.set(note.stringIndex, {
         ringing: toAudioBuffer(
           applyFades(
             pluckedString({
@@ -88,16 +90,30 @@ export class Strummer {
         ),
       });
     });
+
+    if (this.shapes.size >= MAX_CACHED_SHAPES) {
+      // Oldest out. Map preserves insertion order, so the first key is it.
+      const oldest = this.shapes.keys().next().value;
+      if (oldest !== undefined) this.shapes.delete(oldest);
+    }
+
+    this.shapes.set(key, { frets: [...frets], voices });
   }
 
   /**
    * Schedules one stroke.
    *
    * @param when audio-clock time the *first* string is struck.
+   * @param frets the chord to sound. Prepared on demand if not already cached.
    */
-  strum(when: number, step: StrumStep): void {
+  strum(when: number, step: StrumStep, frets: readonly number[]): void {
     if (step.dir === 'rest') return;
-    if (this.voices.size === 0) return;
+
+    const key = frets.join(',');
+    if (!this.shapes.has(key)) this.prepare(frets);
+
+    const shape = this.shapes.get(key);
+    if (!shape || shape.voices.size === 0) return;
 
     const context = getAudioContext();
     const gain = accentGain(step.accent) * this.master;
@@ -106,8 +122,8 @@ export class Strummer {
     // dynamics sound like dynamics rather than a volume knob.
     const spread = step.accent === 'soft' ? 0.007 : step.accent === 'strong' ? 0.014 : 0.011;
 
-    for (const note of strumNotes(this.frets, step.dir, spread)) {
-      const voice = this.voices.get(note.stringIndex);
+    for (const note of strumNotes(shape.frets, step.dir, spread)) {
+      const voice = shape.voices.get(note.stringIndex);
       if (!voice) continue;
 
       const source = context.createBufferSource();
@@ -123,8 +139,7 @@ export class Strummer {
   }
 
   dispose(): void {
-    this.voices.clear();
-    this.shapeKey = '';
+    this.shapes.clear();
   }
 }
 

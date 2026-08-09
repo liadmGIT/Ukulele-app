@@ -7,6 +7,8 @@ An offline-first, Hebrew-default (RTL) mobile app for learning ukulele from scra
   muted "chnk" strokes, and accent (strong/normal/soft).
 - **Listen & review** — records you playing, then reviews your **timing** and **dynamics** against
   the metronome grid and tells you what to improve.
+- **Songs** — a library of arrangements in Hebrew and English, with an auto-scrolling chord
+  chart, the strum pattern playing underneath, and practice speeds from 50%.
 - **Progress** — mastery levels 0–5 per chord and song, earned from measured performance.
 - **Songs I can play now** — the library filters to songs using only chords you've mastered.
 
@@ -43,6 +45,7 @@ native-only. See `src/db/memoryDriver.ts`.
 | `npm run lint` | ESLint |
 | `npm run validate:content` | Validates every chord and song file against its schema and against music theory |
 | `npm run gen:chords` | Regenerates `content/chords.json` from the curated fingerings |
+| `npm run gen:songs` | Regenerates `content/songs.json` from the compact arrangements |
 
 ## Content policy
 

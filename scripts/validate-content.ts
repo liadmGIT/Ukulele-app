@@ -7,12 +7,28 @@
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 
-import { chordLibrarySchema, strumPatternLibrarySchema } from '../src/content/schemas';
+import {
+  chordLibrarySchema,
+  songLibrarySchema,
+  strumPatternLibrarySchema,
+} from '../src/content/schemas';
 import { validateShape, type ChordQuality } from '../src/music/chords';
 import { stepsPerBar, type Subdivision } from '../src/music/grid';
 import { StrumNotationError, formatStrumPattern, parseStrumPattern } from '../src/music/strum';
 
 const problems: string[] = [];
+
+function shippedChordIds(): Set<string> {
+  const raw = readFileSync(resolve(process.cwd(), 'content/chords.json'), 'utf8');
+  const parsed = chordLibrarySchema.safeParse(JSON.parse(raw));
+  return new Set(parsed.success ? parsed.data.chords.map((chord) => chord.id) : []);
+}
+
+function shippedPatternIds(): Set<string> {
+  const raw = readFileSync(resolve(process.cwd(), 'content/strum-patterns.json'), 'utf8');
+  const parsed = strumPatternLibrarySchema.safeParse(JSON.parse(raw));
+  return new Set(parsed.success ? parsed.data.patterns.map((pattern) => pattern.id) : []);
+}
 
 function validateChords(): number {
   const raw = readFileSync(resolve(process.cwd(), 'content/chords.json'), 'utf8');
@@ -107,9 +123,61 @@ function validateStrumPatterns(): number {
   return parsed.data.patterns.length;
 }
 
+function validateSongs(chordIds: Set<string>, patternIds: Set<string>): number {
+  const raw = readFileSync(resolve(process.cwd(), 'content/songs.json'), 'utf8');
+  const parsed = songLibrarySchema.safeParse(JSON.parse(raw));
+
+  if (!parsed.success) {
+    for (const issue of parsed.error.issues) {
+      problems.push(`songs.json ${issue.path.join('.')}: ${issue.message}`);
+    }
+    return 0;
+  }
+
+  const seen = new Set<string>();
+
+  for (const song of parsed.data.songs) {
+    if (seen.has(song.id)) problems.push(`Duplicate song id "${song.id}"`);
+    seen.add(song.id);
+
+    if (!patternIds.has(song.defaultPatternId)) {
+      problems.push(`${song.id}: unknown strum pattern "${song.defaultPatternId}"`);
+    }
+
+    song.sections.forEach((section, index) => {
+      if (section.patternId && !patternIds.has(section.patternId)) {
+        problems.push(`${song.id}: section ${index + 1} uses unknown pattern "${section.patternId}"`);
+      }
+
+      const beats = section.measures.reduce((sum, measure) => sum + measure.beats, 0);
+      if (beats % song.beatsPerBar !== 0) {
+        problems.push(
+          `${song.id}: section ${index + 1} is ${beats} beats, not a whole number of ` +
+            `${song.beatsPerBar}-beat bars`,
+        );
+      }
+
+      for (const measure of section.measures) {
+        if (!chordIds.has(measure.chordId)) {
+          problems.push(`${song.id}: unknown chord "${measure.chordId}"`);
+        }
+        // The content policy, enforced at build time rather than trusted.
+        if (measure.cueWord && !song.publicDomain) {
+          problems.push(
+            `${song.id}: cue words are only permitted on public-domain songs — see CONTENT.md`,
+          );
+        }
+      }
+    });
+  }
+
+  return parsed.data.songs.length;
+}
+
 function main(): void {
   const chordCount = validateChords();
   const patternCount = validateStrumPatterns();
+  const songCount = validateSongs(shippedChordIds(), shippedPatternIds());
 
   if (problems.length > 0) {
     console.error(`\n✖ Content validation failed with ${problems.length} problem(s):\n`);
@@ -117,7 +185,9 @@ function main(): void {
     process.exit(1);
   }
 
-  console.log(`✓ Content valid — ${chordCount} chords, ${patternCount} strum patterns`);
+  console.log(
+    `✓ Content valid — ${chordCount} chords, ${patternCount} strum patterns, ${songCount} songs`,
+  );
 }
 
 main();

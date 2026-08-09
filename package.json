@@ -11,7 +11,8 @@
     "typecheck": "tsc --noEmit",
     "lint": "eslint .",
     "validate:content": "tsx scripts/validate-content.ts",
-    "gen:chords": "tsx scripts/gen-chords.ts"
+    "gen:chords": "tsx scripts/gen-chords.ts",
+    "gen:songs": "tsx scripts/gen-songs.ts"
   },
   "dependencies": {
     "@expo/metro-runtime": "^57.0.8",

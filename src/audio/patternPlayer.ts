@@ -32,6 +32,14 @@ export type PatternPlayerOptions = {
   subdivision: Subdivision;
   /** Chord shape to strum, in diagram order (G C E A). */
   frets: readonly number[];
+  /**
+   * Chord to strum at a given step, overriding `frets`.
+   *
+   * A song changes chord every bar or two, so the shape is a function of
+   * position rather than a constant. Patterns leave this unset and strum one
+   * chord throughout.
+   */
+  fretsForStep?: (mark: StepMark) => readonly number[];
   countInBars?: number;
   /** 0.5 = practise at half speed. */
   tempoFraction?: number;
@@ -91,7 +99,7 @@ export class PatternPlayer {
           return;
         }
 
-        this.deps.strummer.strum(when, event.step);
+        this.deps.strummer.strum(when, event.step, this.fretsAt(event.mark));
         this.callbacks.onStep?.(event.step, event.mark, when);
       },
     });
@@ -124,6 +132,11 @@ export class PatternPlayer {
     });
   }
 
+  /** The chord sounding at a step. */
+  private fretsAt(mark: StepMark): readonly number[] {
+    return this.options.fretsForStep?.(mark) ?? this.options.frets;
+  }
+
   getGrid(): PracticeGrid {
     return this.grid;
   }
@@ -148,10 +161,25 @@ export class PatternPlayer {
   start({ loop = true }: { loop?: boolean } = {}): number {
     if (this.scheduler.isRunning()) return this.scheduler.getStartTime();
 
-    this.deps.strummer.prepare(this.options.frets);
+    // Render every chord the run will need before the first click, so a chord
+    // change mid-song never lands on a buffer that is still being synthesised.
+    for (const frets of this.shapesUsed()) this.deps.strummer.prepare(frets);
+
     const startTime = this.scheduler.start({ loop });
     this.callbacks.onStart?.(startTime);
     return startTime;
+  }
+
+  /** Every distinct chord shape this run will strum. */
+  private shapesUsed(): readonly (readonly number[])[] {
+    if (!this.options.fretsForStep) return [this.options.frets];
+
+    const seen = new Map<string, readonly number[]>();
+    for (const mark of this.grid.steps) {
+      const frets = this.options.fretsForStep(mark);
+      seen.set(frets.join(','), frets);
+    }
+    return [...seen.values()];
   }
 
   stop(): void {

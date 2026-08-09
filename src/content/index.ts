@@ -1,14 +1,18 @@
 import type { Subdivision, TimeSignature } from '@/music/grid';
+import { buildSongTimeline, type SongTimeline } from '@/music/song';
 import { parseStrumPattern, type StrumStep } from '@/music/strum';
 import chordsJson from '@content/chords.json';
+import songsJson from '@content/songs.json';
 import patternsJson from '@content/strum-patterns.json';
 
 
 import {
   chordLibrarySchema,
+  songLibrarySchema,
   strumPatternLibrarySchema,
   type Chord,
   type ChordLibrary,
+  type SongData,
   type StrumPatternData,
 } from './schemas';
 
@@ -93,4 +97,28 @@ export function getStrumPatternsUpToDifficulty(maxDifficulty: number): StrumPatt
     .sort((a, b) => a.difficulty - b.difficulty);
 }
 
-export type { Chord, ChordShapeData, ChordLibrary, StrumPatternData } from './schemas';
+// ------------------------------------------------------------------ songs --
+
+/** A song with its chart already flattened into timed bars. */
+export type Song = SongData & { timeline: SongTimeline };
+
+let songs: Song[] | null = null;
+
+export function getSongs(): Song[] {
+  if (!songs) {
+    const library = songLibrarySchema.parse(songsJson);
+    songs = library.songs.map((song) => ({ ...song, timeline: buildSongTimeline(song) }));
+  }
+  return songs;
+}
+
+export function getSongById(id: string): Song | undefined {
+  return getSongs().find((song) => song.id === id);
+}
+
+/** Distinct chords a song needs. */
+export function songChordIds(song: Song): string[] {
+  return song.timeline.chordIds;
+}
+
+export type { Chord, ChordShapeData, ChordLibrary, SongData, StrumPatternData } from './schemas';

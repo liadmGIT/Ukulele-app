@@ -40,8 +40,12 @@ export class MemoryDriver implements StorageDriver {
   }
 
   replaceStrumPatterns(): void {
-    // Nothing to do: the browser preview reads patterns straight from the
-    // bundled JSON, and holds no user data that needs joining against them.
+    // Nothing to do: the browser preview reads content straight from the
+    // bundled JSON, and holds no user data that needs joining against it.
+  }
+
+  replaceSongs(): void {
+    // As above.
   }
 
   getAllChordMastery(): ChordMastery[] {

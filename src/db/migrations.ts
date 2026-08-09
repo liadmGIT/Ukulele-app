@@ -65,6 +65,9 @@ export const MIGRATIONS: readonly string[] = [
     PRIMARY KEY (song_id, chord_id)
   );
 
+  -- Sections and measures are reserved. The chart itself is read from the
+  -- bundled JSON, which is where it can be validated at build time; these
+  -- tables exist for a future feature that needs to query inside a song.
   CREATE TABLE song_sections (
     id         TEXT PRIMARY KEY NOT NULL,
     song_id    TEXT NOT NULL REFERENCES songs(id) ON DELETE CASCADE,

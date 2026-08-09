@@ -1,4 +1,4 @@
-import { getChordLibrary, getStrumPatterns } from '@/content';
+import { getChordLibrary, getSongs, getStrumPatterns } from '@/content';
 
 import { SETTING_KEYS, getSetting, getStorage, setSetting } from './index';
 
@@ -30,6 +30,12 @@ export function syncContent(): void {
       descriptionEn: pattern.descriptionEn,
       descriptionHe: pattern.descriptionHe,
     })),
+  );
+
+  // Songs must exist before any song progress can reference them: song_progress
+  // has a foreign key onto this table and foreign keys are enforced.
+  storage.replaceSongs(
+    getSongs().map((song) => ({ ...song, chordIds: song.timeline.chordIds })),
   );
 
   setSetting(SETTING_KEYS.contentVersion, bundledVersion);

@@ -44,7 +44,7 @@ function harness(overrides: Partial<PatternPlayerOptions> = {}) {
       playClick: (when, accented) => bookings.push({ kind: 'click', when, accented }),
       strummer: {
         prepare: () => {},
-        strum: (when, step) => bookings.push({ kind: 'strum', when, step }),
+        strum: (when: number, step: StrumStep) => bookings.push({ kind: 'strum', when, step }),
       },
     },
   );

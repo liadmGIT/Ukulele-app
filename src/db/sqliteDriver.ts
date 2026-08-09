@@ -1,6 +1,6 @@
 import * as SQLite from 'expo-sqlite';
 
-import type { Chord, StrumPatternData } from '@/content/schemas';
+import type { Chord, SongData, StrumPatternData } from '@/content/schemas';
 
 import { MIGRATIONS } from './migrations';
 import type { ChordMastery, StorageDriver, StoredRecording } from './types';
@@ -136,6 +136,50 @@ export class SqliteDriver implements StorageDriver {
         }
       } finally {
         statement.finalizeSync();
+      }
+    });
+  }
+
+  replaceSongs(songs: readonly (SongData & { chordIds: readonly string[] })[]): void {
+    this.db.withTransactionSync(() => {
+      this.db.runSync('DELETE FROM song_chords;');
+      this.db.runSync('DELETE FROM songs;');
+
+      const insertSong = this.db.prepareSync(
+        `INSERT INTO songs
+           (id, title_he, title_en, artist, language, song_key, bpm, beats_per_bar, beat_unit,
+            difficulty, default_pattern_id, chord_count, source)
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`,
+      );
+      const insertChord = this.db.prepareSync(
+        'INSERT INTO song_chords (song_id, chord_id) VALUES (?, ?);',
+      );
+
+      try {
+        for (const song of songs) {
+          insertSong.executeSync(
+            song.id,
+            song.titleHe,
+            song.titleEn,
+            song.artistEn,
+            song.language,
+            song.songKey,
+            song.bpm,
+            song.beatsPerBar,
+            song.beatUnit,
+            song.difficulty,
+            song.defaultPatternId,
+            song.chordIds.length,
+            song.source,
+          );
+
+          for (const chordId of song.chordIds) {
+            insertChord.executeSync(song.id, chordId);
+          }
+        }
+      } finally {
+        insertSong.finalizeSync();
+        insertChord.finalizeSync();
       }
     });
   }
