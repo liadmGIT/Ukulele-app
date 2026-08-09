@@ -24,6 +24,14 @@ export type PatternPlayerState = {
   start: () => void;
   stop: () => void;
   toggle: () => void;
+  /**
+   * Audio-clock time the count-in began, or null when stopped.
+   *
+   * A function rather than state so a caller can read it at the moment it stops
+   * recording, without waiting for a re-render. This is the anchor that lets a
+   * take be aligned against the exact beats that were heard.
+   */
+  getStartTime: () => number | null;
 };
 
 export type UsePatternPlayerOptions = Omit<PatternPlayerOptions, 'steps' | 'frets'> & {
@@ -156,5 +164,12 @@ export function usePatternPlayer(options: UsePatternPlayerOptions): PatternPlaye
     else start();
   }, [start, stop]);
 
-  return { isPlaying, activeStep, start, stop, toggle };
+  const getStartTime = useCallback(() => {
+    const instance = player.current;
+    if (!instance) return null;
+    const startTime = instance.getStartTime();
+    return startTime > 0 ? startTime : null;
+  }, []);
+
+  return { isPlaying, activeStep, start, stop, toggle, getStartTime };
 }

@@ -6,7 +6,7 @@ module.exports = [
     ignores: ['node_modules/**', 'dist/**', '.expo/**', 'content/chords.json'],
   },
   {
-    files: ['src/i18n/**'],
+    files: ['src/i18n/**', 'src/analysis/__tests__/**'],
     rules: {
       // i18next's default export genuinely carries `use` and `changeLanguage`;
       // the rule cannot tell that apart from an accidental named import.

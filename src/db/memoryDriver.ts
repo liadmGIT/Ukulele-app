@@ -1,6 +1,6 @@
 import type { Chord } from '@/content/schemas';
 
-import type { ChordMastery, StorageDriver } from './types';
+import type { ChordMastery, StorageDriver, StoredRecording } from './types';
 
 /**
  * In-memory storage used by the web preview build.
@@ -16,6 +16,7 @@ export class MemoryDriver implements StorageDriver {
 
   private settings = new Map<string, string>();
   private mastery = new Map<string, ChordMastery>();
+  private recordings: StoredRecording[] = [];
 
   getSetting(key: string): string | null {
     return this.settings.get(key) ?? null;
@@ -55,5 +56,17 @@ export class MemoryDriver implements StorageDriver {
     return this.getAllChordMastery()
       .filter((entry) => entry.level >= level)
       .map((entry) => entry.chordId);
+  }
+
+  saveRecording(recording: StoredRecording): void {
+    this.recordings.unshift(recording);
+  }
+
+  listRecordings(limit: number): StoredRecording[] {
+    return this.recordings.slice(0, limit);
+  }
+
+  deleteRecording(id: string): void {
+    this.recordings = this.recordings.filter((recording) => recording.id !== id);
   }
 }

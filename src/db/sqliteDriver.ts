@@ -3,7 +3,7 @@ import * as SQLite from 'expo-sqlite';
 import type { Chord, StrumPatternData } from '@/content/schemas';
 
 import { MIGRATIONS } from './migrations';
-import type { ChordMastery, StorageDriver } from './types';
+import type { ChordMastery, StorageDriver, StoredRecording } from './types';
 
 const DATABASE_NAME = 'ukulele.db';
 
@@ -162,4 +162,63 @@ export class SqliteDriver implements StorageDriver {
       )
       .map((row) => row.chord_id);
   }
+
+  saveRecording(recording: StoredRecording): void {
+    this.db.runSync(
+      `INSERT INTO recordings
+         (id, created_at, file_uri, duration_ms, song_id, pattern_id, bpm, tempo_pct, metrics, review)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`,
+      recording.id,
+      recording.createdAt,
+      recording.fileUri,
+      recording.durationMs,
+      recording.songId,
+      recording.patternId,
+      recording.bpm,
+      recording.tempoPct,
+      recording.metrics,
+      recording.review,
+    );
+  }
+
+  listRecordings(limit: number): StoredRecording[] {
+    return this.db
+      .getAllSync<RecordingRow>(
+        'SELECT * FROM recordings ORDER BY created_at DESC LIMIT ?;',
+        limit,
+      )
+      .map(toStoredRecording);
+  }
+
+  deleteRecording(id: string): void {
+    this.db.runSync('DELETE FROM recordings WHERE id = ?;', id);
+  }
+}
+
+type RecordingRow = {
+  id: string;
+  created_at: number;
+  file_uri: string;
+  duration_ms: number;
+  song_id: string | null;
+  pattern_id: string | null;
+  bpm: number;
+  tempo_pct: number;
+  metrics: string;
+  review: string;
+};
+
+function toStoredRecording(row: RecordingRow): StoredRecording {
+  return {
+    id: row.id,
+    createdAt: row.created_at,
+    fileUri: row.file_uri,
+    durationMs: row.duration_ms,
+    songId: row.song_id,
+    patternId: row.pattern_id,
+    bpm: row.bpm,
+    tempoPct: row.tempo_pct,
+    metrics: row.metrics,
+    review: row.review,
+  };
 }

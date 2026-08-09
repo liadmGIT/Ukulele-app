@@ -45,6 +45,14 @@ const TOOLS: readonly Tool[] = [
     descriptionEn: 'Down, up, silent or muted — and how hard',
   },
   {
+    key: 'record',
+    titleKey: 'record.title',
+    icon: 'microphone-outline',
+    href: '/practice/record',
+    descriptionHe: 'נגן, ונשמע איפה התזמון והעוצמה שלך',
+    descriptionEn: 'Play, and hear how your timing and dynamics did',
+  },
+  {
     key: 'drill',
     titleKey: 'practice.chordChangeDrill',
     icon: 'swap-horizontal',
