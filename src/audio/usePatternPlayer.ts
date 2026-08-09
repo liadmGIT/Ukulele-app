@@ -76,6 +76,16 @@ export function usePatternPlayer(options: UsePatternPlayerOptions): PatternPlaye
   const fretsKey = frets.join(',');
   const stepsKey = steps.map((step) => `${step.dir}${step.accent}${step.muted ? 'x' : ''}`).join('');
 
+  /**
+   * Tempo, held outside the effect that builds the player.
+   *
+   * Moving the tempo used to be in that effect's dependencies, so every change
+   * tore the player down and the cleanup stopped it — reaching for the tempo
+   * chips mid-practice silenced the thing you were practising to. `setOptions`
+   * existed for exactly this and had no callers.
+   */
+  const tempo = useRef({ bpm, tempoFraction });
+
   useEffect(() => {
     if (!strummer.current) strummer.current = new Strummer();
 
@@ -83,11 +93,11 @@ export function usePatternPlayer(options: UsePatternPlayerOptions): PatternPlaye
       {
         steps,
         frets,
-        bpm,
+        bpm: tempo.current.bpm,
         timeSignature,
         subdivision,
         countInBars,
-        tempoFraction,
+        tempoFraction: tempo.current.tempoFraction,
         withClick,
       },
       {
@@ -128,17 +138,34 @@ export function usePatternPlayer(options: UsePatternPlayerOptions): PatternPlaye
   }, [
     stepsKey,
     fretsKey,
-    bpm,
     timeSignature.beatsPerBar,
     timeSignature.beatUnit,
     subdivision,
     countInBars,
-    tempoFraction,
     withClick,
     haptics,
     at,
     clearPending,
   ]);
+
+  // Tempo changes adjust the running player rather than replacing it, so the
+  // pattern carries on at the new speed instead of stopping.
+  useEffect(() => {
+    tempo.current = { bpm, tempoFraction };
+
+    player.current?.setOptions({
+      steps,
+      frets,
+      bpm,
+      timeSignature,
+      subdivision,
+      countInBars,
+      tempoFraction,
+      withClick,
+    });
+    // Same content-not-identity comparison as above.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [bpm, tempoFraction, stepsKey, fretsKey, subdivision, countInBars, withClick]);
 
   useEffect(() => {
     const instance = strummer.current;

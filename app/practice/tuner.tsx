@@ -1,12 +1,12 @@
 import { Stack } from 'expo-router';
-import React, { useState } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
 
 import { useTuner } from '@/audio/useTuner';
 import { STANDARD_TUNING } from '@/music/notes';
-import { Button } from '@/ui/components/Button';
 import { Card } from '@/ui/components/Card';
+import { MicNotice } from '@/ui/components/MicNotice';
 import { Screen } from '@/ui/components/Screen';
 import { Text } from '@/ui/components/Text';
 import { musicalRow } from '@/ui/direction';
@@ -20,9 +20,10 @@ const QUIET_LEVEL = 0.01;
 export default function TunerScreen() {
   const { t } = useTranslation();
   const theme = useTheme();
-  const [active, setActive] = useState(true);
-
-  const { reading, status, level } = useTuner(active);
+  // The tuner listens for as long as the screen is open; the hook stops the
+  // microphone on unmount. There is nothing left to toggle now that the
+  // permission buttons are gone.
+  const { reading, status, level } = useTuner(true);
 
   const cents = reading?.centsFromString ?? reading?.cents ?? null;
   const inTune = reading?.inTune ?? false;
@@ -95,12 +96,14 @@ export default function TunerScreen() {
           </View>
         </Card>
 
-        {status === 'denied' && (
-          <Button title={t('tuner.grantPermission')} onPress={() => setActive(false)} />
-        )}
-        {status === 'denied' && !active && (
-          <Button title={t('common.retry')} onPress={() => setActive(true)} variant="secondary" />
-        )}
+        {/*
+          iOS asks for the microphone once. After a refusal every later request
+          resolves "denied" without showing anything, so the old "Allow access"
+          button — which merely stopped the tuner, hiding itself in the process
+          — left the screen permanently blank with no controls at all. Settings
+          is the only route back.
+        */}
+        <MicNotice status={status} />
       </Screen>
     </>
   );

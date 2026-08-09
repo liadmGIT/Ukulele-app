@@ -219,6 +219,14 @@ export class Microphone {
       recorder.clearOnAudioReady();
       recorder.clearOnError();
       await recorder.stop().catch(() => undefined);
+
+      // Hand the session back to playback. `record` puts iOS into
+      // `playAndRecord` with `measurement` mode — which is right while
+      // listening, because it disables the automatic gain control that would
+      // flatten the very dynamics we measure, but it also attenuates output.
+      // Leaving it set meant that using the tuner once made the metronome
+      // quieter for the rest of the app's life.
+      configureAudioSession('playback');
     }
 
     this.window?.clear();

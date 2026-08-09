@@ -43,9 +43,19 @@ export function useMetronome(options: GridOptions, loop = true): MetronomeState 
     if (timeouts.current.length > 32) timeouts.current = timeouts.current.slice(-32);
   }, []);
 
-  // Rebuild whenever the grid changes — tempo slider, time signature, count-in.
+  /**
+   * Tempo, deliberately outside the effect below.
+   *
+   * It used to be a dependency, so nudging the BPM rebuilt the metronome and
+   * the cleanup stopped it — the click died the moment you adjusted it, which
+   * is precisely when you are listening. `Metronome.setOptions` was written for
+   * this and never called.
+   */
+  const tempo = useRef({ bpm: options.bpm, tempoFraction: options.tempoFraction });
+
+  // Rebuild when the shape of the grid changes — time signature, count-in.
   useEffect(() => {
-    const instance = new Metronome(options, {
+    const instance = new Metronome({ ...options, ...tempo.current }, {
       onBeat: handleBeat,
       onFinish: () => {
         setIsRunning(false);
@@ -61,18 +71,25 @@ export function useMetronome(options: GridOptions, loop = true): MetronomeState 
       setIsRunning(false);
       setCurrentBeat(null);
     };
+    // `options` is rebuilt each render; the fields below are what actually
+    // matter, and tempo is applied separately by the effect after this one.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
-    options.bpm,
     options.bars,
     options.countInBars,
     options.subdivision,
-    options.tempoFraction,
     options.timeSignature?.beatsPerBar,
     options.timeSignature?.beatUnit,
     handleBeat,
     clearPendingFlashes,
   ]);
+
+  // A tempo change adjusts the running metronome instead of replacing it.
+  useEffect(() => {
+    tempo.current = { bpm: options.bpm, tempoFraction: options.tempoFraction };
+    metronome.current?.setOptions({ ...options });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [options.bpm, options.tempoFraction]);
 
   const start = useCallback(() => {
     const instance = metronome.current;
