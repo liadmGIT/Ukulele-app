@@ -101,6 +101,22 @@ export default function TodayScreen() {
     return t('session.itemSong', { name: song ? (isHebrew ? song.titleHe : song.titleEn) : '' });
   };
 
+  /**
+   * What the button opens, said plainly.
+   *
+   * Every card used to offer "start practising" regardless of whether it led to
+   * the tuner, a chord, a drill or a song — five identical buttons doing five
+   * different things.
+   */
+  const actionFor = (item: SessionItem): string => {
+    if (item.kind === 'tune') {
+      return item.targetId === 'calibrate' ? t('today.openCalibrate') : t('today.openTune');
+    }
+    if (item.kind === 'chord') return t('today.openChord');
+    if (item.kind === 'drill') return t('today.openDrill');
+    return t('today.openSong');
+  };
+
   const routeFor = (item: SessionItem): string | null => {
     if (item.kind === 'tune') {
       return item.targetId === 'calibrate' ? '/settings/calibrate' : '/practice/tuner';
@@ -164,7 +180,7 @@ export default function TodayScreen() {
               <View style={styles.actions}>
                 {route && (
                   <Button
-                    title={t('today.startSession')}
+                    title={actionFor(item)}
                     onPress={() => router.push(route as never)}
                     style={styles.grow}
                   />

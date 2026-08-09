@@ -33,7 +33,7 @@ export function ReviewCard({ review, metrics }: ReviewCardProps) {
     review.score >= 85
       ? theme.colors.success
       : review.score >= 60
-        ? theme.colors.accent
+        ? theme.colors.accentText
         : theme.colors.danger;
 
   return (

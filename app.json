@@ -10,7 +10,14 @@
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.liadm.ukuleleapp"
+      "bundleIdentifier": "com.liadm.ukuleleapp",
+      "infoPlist": {
+        "CFBundleLocalizations": [
+          "he",
+          "en"
+        ],
+        "CFBundleDevelopmentRegion": "he"
+      }
     },
     "android": {
       "package": "com.liadm.ukuleleapp",
@@ -28,19 +35,40 @@
     },
     "plugins": [
       "expo-router",
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/splash-icon.png",
+          "imageWidth": 200,
+          "resizeMode": "contain",
+          "backgroundColor": "#FAF3E9",
+          "dark": {
+            "backgroundColor": "#2A1B12"
+          }
+        }
+      ],
       "expo-localization",
       "expo-sqlite",
       [
         "react-native-audio-api",
         {
           "iosMicrophonePermission": "האפליקציה משתמשת במיקרופון כדי להאזין לנגינה שלך, לכוון את האוקולילי ולתת לך משוב על הביצוע.",
-          "androidPermissions": ["MODIFY_AUDIO_SETTINGS"],
-          "androidForegroundService": false
+          "androidPermissions": [
+            "MODIFY_AUDIO_SETTINGS"
+          ],
+          "androidForegroundService": false,
+          "iosBackgroundMode": false
         }
       ]
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "localization": {
+      "supportedLocales": [
+        "he",
+        "en"
+      ]
     }
   }
 }

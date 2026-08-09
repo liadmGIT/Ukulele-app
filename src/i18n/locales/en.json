@@ -17,7 +17,12 @@
     "streakDays_other": "{{count}} day streak",
     "emptyState": "You haven't practised yet. Let's start with your first chord.",
     "estimatedMinutes_one": "About 1 minute",
-    "estimatedMinutes_other": "About {{count}} minutes"
+    "estimatedMinutes_other": "About {{count}} minutes",
+    "openTune": "Open the tuner",
+    "openChord": "Open the chord",
+    "openDrill": "Start the drill",
+    "openSong": "Play along",
+    "openCalibrate": "Calibrate"
   },
   "chords": {
     "title": "Chords",
@@ -31,7 +36,8 @@
     "playSound": "Play",
     "fingers": "Fingers",
     "openStrings": "Open strings",
-    "barre": "Barre"
+    "barre": "Barre",
+    "noResults": "No chords match this search"
   },
   "songs": {
     "title": "Songs",

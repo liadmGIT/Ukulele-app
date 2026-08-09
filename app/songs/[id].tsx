@@ -297,6 +297,11 @@ const styles = StyleSheet.create({
   chips: { gap: spacing.xs },
   chip: {
     paddingHorizontal: spacing.md,
+    // 44pt is Apple's minimum, and these are the controls a learner reaches for
+    // with an instrument in their hands — tempo, pattern, filter. At the old
+    // ~28pt they were a coin toss.
+    minHeight: 44,
+    justifyContent: 'center',
     paddingVertical: spacing.xs + 2,
     borderRadius: radius.pill,
     borderWidth: StyleSheet.hairlineWidth,

@@ -27,7 +27,10 @@ export default function SongsScreen() {
   const theme = useTheme();
   const router = useRouter();
 
-  const [filter, setFilter] = useState<Filter>('all');
+  // Matches the first chip, and the point of the screen: a beginner opening a
+  // list of 33 songs they cannot play is the third of the three things that
+  // make people quit.
+  const [filter, setFilter] = useState<Filter>('playable');
   const isHebrew = i18n.language === 'he';
 
   const known = useMemo(() => getPlayableChordIds(), []);
@@ -181,6 +184,11 @@ const styles = StyleSheet.create({
   filters: { flexDirection: 'row', flexWrap: 'wrap', gap: spacing.sm },
   chip: {
     paddingHorizontal: spacing.md,
+    // 44pt is Apple's minimum, and these are the controls a learner reaches for
+    // with an instrument in their hands — tempo, pattern, filter. At the old
+    // ~28pt they were a coin toss.
+    minHeight: 44,
+    justifyContent: 'center',
     paddingVertical: spacing.xs + 2,
     borderRadius: radius.pill,
     borderWidth: StyleSheet.hairlineWidth,

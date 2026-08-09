@@ -19,7 +19,12 @@
     "streakDays_two": "יומיים ברצף",
     "estimatedMinutes_one": "כדקה",
     "estimatedMinutes_two": "כשתי דקות",
-    "estimatedMinutes_other": "כ־{{count}} דקות"
+    "estimatedMinutes_other": "כ־{{count}} דקות",
+    "openTune": "פתח מכוון",
+    "openChord": "פתח אקורד",
+    "openDrill": "התחל תרגיל",
+    "openSong": "נגן יחד",
+    "openCalibrate": "כייל"
   },
   "chords": {
     "title": "אקורדים",
@@ -33,7 +38,8 @@
     "playSound": "השמע",
     "fingers": "אצבעות",
     "openStrings": "מיתרים פתוחים",
-    "barre": "באריה"
+    "barre": "באריה",
+    "noResults": "לא נמצאו אקורדים שמתאימים לחיפוש"
   },
   "songs": {
     "title": "שירים",

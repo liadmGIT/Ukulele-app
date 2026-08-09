@@ -6,6 +6,7 @@ import { FlatList, Pressable, StyleSheet, TextInput, View } from 'react-native';
 import { getChords, searchChords, type Chord } from '@/content';
 import { MASTERED_LEVEL, getAllChordMastery } from '@/db/mastery';
 import { ChordDiagram } from '@/ui/ChordDiagram';
+import { Card } from '@/ui/components/Card';
 import { MasteryDots } from '@/ui/components/MasteryDots';
 import { Text } from '@/ui/components/Text';
 import { radius, spacing } from '@/ui/theme';
@@ -14,6 +15,8 @@ import { useTheme } from '@/ui/ThemeProvider';
 type Filter = 'all' | 'mastered' | 'learning' | 'notStarted';
 
 const FILTERS: readonly Filter[] = ['all', 'mastered', 'learning', 'notStarted'];
+
+const COLUMNS = 3;
 
 export default function ChordsScreen() {
   const { t } = useTranslation();
@@ -37,6 +40,19 @@ export default function ChordsScreen() {
       return level === 0;
     });
   }, [query, filter, mastery]);
+
+  /**
+   * The grid, padded out to a whole number of rows.
+   *
+   * The tiles are `flex: 1`, so a final row holding one or two chords stretched
+   * them to full and half width, diagrams and all. Invisible spacers keep the
+   * last row the same shape as every other one.
+   */
+  const cells = useMemo(() => {
+    const remainder = chords.length % COLUMNS;
+    if (chords.length === 0 || remainder === 0) return chords;
+    return [...chords, ...Array.from({ length: COLUMNS - remainder }, () => null)];
+  }, [chords]);
 
   return (
     <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
@@ -81,18 +97,32 @@ export default function ChordsScreen() {
       </View>
 
       <FlatList
-        data={chords}
-        keyExtractor={(chord) => chord.id}
-        numColumns={3}
+        data={cells}
+        keyExtractor={(chord, index) => chord?.id ?? `spacer-${index}`}
+        numColumns={COLUMNS}
         columnWrapperStyle={styles.row}
         contentContainerStyle={styles.list}
-        renderItem={({ item }) => (
-          <ChordTile
-            chord={item}
-            level={mastery.get(item.id)?.level ?? 0}
-            onPress={() => router.push(`/chords/${item.id}`)}
-          />
-        )}
+        // Every other list screen handled empty; this one showed a blank white
+        // page — which a Hebrew learner reached simply by typing in the search
+        // box, or by choosing "mastered" on their first day.
+        ListEmptyComponent={
+          <Card>
+            <Text variant="body" tone="muted">
+              {t('chords.noResults')}
+            </Text>
+          </Card>
+        }
+        renderItem={({ item }) =>
+          item === null ? (
+            <View style={styles.spacer} />
+          ) : (
+            <ChordTile
+              chord={item}
+              level={mastery.get(item.id)?.level ?? 0}
+              onPress={() => router.push(`/chords/${item.id}`)}
+            />
+          )
+        }
       />
     </View>
   );
@@ -147,12 +177,19 @@ const styles = StyleSheet.create({
   },
   chip: {
     paddingHorizontal: spacing.md,
+    // 44pt is Apple's minimum, and these are the controls a learner reaches for
+    // with an instrument in their hands — tempo, pattern, filter. At the old
+    // ~28pt they were a coin toss.
+    minHeight: 44,
+    justifyContent: 'center',
     paddingVertical: spacing.xs + 2,
     borderRadius: radius.pill,
     borderWidth: StyleSheet.hairlineWidth,
   },
   list: { paddingVertical: spacing.lg, gap: spacing.md },
   row: { gap: spacing.md },
+  /** Holds a column open so the last row lines up with the ones above it. */
+  spacer: { flex: 1 },
   tile: {
     flex: 1,
     alignItems: 'center',

@@ -20,6 +20,13 @@ export const palette = {
   coral500: '#E4593F',
 
   sun500: '#E8A33D',
+  /**
+   * The amber above, dark enough to be read as text on a light background.
+   * `sun500` on white is 2.16:1, which fails even the large-text threshold —
+   * and the take score, the number a learner most wants to read, was drawn in
+   * it. This is 5.4:1 on white and 4.9:1 on the app background.
+   */
+  sun700: '#965E12',
 
   white: '#FFFFFF',
   black: '#000000',
@@ -40,6 +47,11 @@ export type Theme = {
     primary: string;
     onPrimary: string;
     accent: string;
+    /**
+     * `accent` when it is being *read* rather than filled. Separate because a
+     * colour bright enough to work as a filled pip is too bright to be text.
+     */
+    accentText: string;
     success: string;
     warning: string;
     danger: string;
@@ -61,7 +73,11 @@ export const lightTheme: Theme = {
     primary: palette.sea600,
     onPrimary: palette.white,
     accent: palette.sun500,
-    success: palette.sea500,
+    accentText: palette.sun700,
+    // sea500 under white text is 4.12:1, just under the readable threshold for
+    // the captions that sit on it — the "you can play this" badge and the
+    // settled-string tile. sea600 is 6.1:1.
+    success: palette.sea600,
     warning: palette.sun500,
     danger: palette.coral600,
     mastery: ['#E2D4C0', '#D8C6AC', '#C9A47B', '#8AB9A8', '#3E9E8C', '#146E63'],
@@ -81,6 +97,8 @@ export const darkTheme: Theme = {
     primary: palette.sea300,
     onPrimary: palette.koa900,
     accent: palette.sun500,
+    // On the dark background the bright amber is already 7.7:1.
+    accentText: palette.sun500,
     success: palette.sea300,
     warning: palette.sun500,
     danger: palette.coral500,

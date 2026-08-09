@@ -40,13 +40,21 @@ export function getChordById(id: string): Chord | undefined {
   return getChords().find((chord) => chord.id === id);
 }
 
-/** Case-insensitive match on the chord name and any alternate spelling. */
+/**
+ * Case-insensitive match on either name and any alternate spelling.
+ *
+ * The Hebrew name is searched too. The placeholder above the box is Hebrew, so
+ * a Hebrew learner typing what it invites them to type used to get an empty
+ * list — and, until this screen gained an empty state, a blank white page with
+ * nothing explaining why.
+ */
 export function searchChords(query: string): Chord[] {
   const needle = query.trim().toLowerCase();
   if (!needle) return getChords();
 
   return getChords().filter((chord) => {
     if (chord.nameEn.toLowerCase().startsWith(needle)) return true;
+    if (chord.nameHe.toLowerCase().startsWith(needle)) return true;
     return chord.aliases.some((alias) => alias.toLowerCase().startsWith(needle));
   });
 }
