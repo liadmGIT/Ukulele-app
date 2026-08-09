@@ -13,10 +13,11 @@
     "title": "What are we practising today?",
     "subtitle": "A short session built just for you",
     "startSession": "Start practising",
-    "estimatedMinutes": "About {{count}} minutes",
     "streakDays_one": "1 day streak",
     "streakDays_other": "{{count}} day streak",
-    "emptyState": "You haven't practised yet. Let's start with your first chord."
+    "emptyState": "You haven't practised yet. Let's start with your first chord.",
+    "estimatedMinutes_one": "About 1 minute",
+    "estimatedMinutes_other": "About {{count}} minutes"
   },
   "chords": {
     "title": "Chords",
@@ -77,7 +78,13 @@
     "metronome": "Metronome",
     "chordChangeDrill": "Chord change drill",
     "bpm": "BPM",
-    "countIn": "Count-in"
+    "countIn": "Count-in",
+    "toolTunerDescription": "Tune up before every session",
+    "toolMetronomeDescription": "Keep a steady beat",
+    "toolPatternsDescription": "Down, up, silent or muted — and how hard",
+    "toolRecordDescription": "Play, and hear how your timing and dynamics did",
+    "toolDrillDescription": "How many changes can you make in a minute?",
+    "toolSettingsDescription": "Language, haptics and microphone calibration"
   },
   "progress": {
     "title": "My progress",
@@ -114,7 +121,11 @@
     "hebrew": "עברית",
     "english": "English",
     "tuning": "Tuning",
-    "micCalibration": "Microphone calibration"
+    "micCalibration": "Microphone calibration",
+    "haptics": "Haptics",
+    "hapticsDescription": "A light tap on accented beats",
+    "languageRestart": "The writing direction will change when you reopen the app",
+    "calibrateDescription": "Measures your microphone's delay, so your timing is judged fairly"
   },
   "common": {
     "cancel": "Cancel",
@@ -209,14 +220,15 @@
     "subtitle": "Play the pattern along with the metronome, and we'll tell you what to work on",
     "startRecording": "Start recording",
     "stopRecording": "Done",
-    "recording": "Recording… {{seconds}}s",
     "analysing": "Analysing…",
     "tryAgain": "Try again",
     "needsMic": "Microphone access is needed to record",
     "notCalibrated": "Calibrate the microphone first — without it the hardware's delay looks like you playing late.",
     "calibrateNow": "Calibrate now",
     "chooseChord": "Chord",
-    "choosePattern": "Pattern"
+    "choosePattern": "Pattern",
+    "recording_one": "Recording… 1 second",
+    "recording_other": "Recording… {{count}} seconds"
   },
   "calibration": {
     "title": "Microphone calibration",
@@ -256,12 +268,13 @@
     "chooseChords": "Pick two chords",
     "start": "Start",
     "stop": "Stop",
-    "counting": "{{seconds}}s left",
     "changes": "changes",
     "perMinute": "changes per minute",
     "personalBest": "Your best: {{value}}",
     "newBest": "New personal best!",
     "again": "Go again",
-    "needTwo": "Pick two different chords"
+    "needTwo": "Pick two different chords",
+    "counting_one": "1 second left",
+    "counting_other": "{{count}} seconds left"
   }
 }

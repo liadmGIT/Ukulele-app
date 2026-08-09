@@ -8,7 +8,6 @@ import { getPlayableChordIds } from '@/db/mastery';
 import { missingChords, rankSongs, suggestNextChords } from '@/music/playable';
 import { Card } from '@/ui/components/Card';
 import { Text } from '@/ui/components/Text';
-import { musicalRow } from '@/ui/direction';
 import { radius, spacing } from '@/ui/theme';
 import { useTheme } from '@/ui/ThemeProvider';
 
@@ -168,7 +167,7 @@ function SongRow({
         </View>
       </View>
 
-      <View style={[styles.chords, musicalRow]}>
+      <View style={styles.chords}>
         <Text variant="caption" tone="muted">
           {t('songs.chordCount', { count: chordCount })}
         </Text>
@@ -194,5 +193,5 @@ const styles = StyleSheet.create({
     paddingVertical: spacing.xs,
     borderRadius: radius.pill,
   },
-  chords: { gap: spacing.xs, alignItems: 'center' },
+  chords: { flexDirection: 'row', gap: spacing.xs, alignItems: 'center' },
 });

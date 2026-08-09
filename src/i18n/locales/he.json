@@ -13,11 +13,13 @@
     "title": "מה מתרגלים היום?",
     "subtitle": "אימון קצר שנבנה במיוחד בשבילך",
     "startSession": "התחל תרגול",
-    "estimatedMinutes": "כ־{{count}} דקות",
     "streakDays_one": "יום אחד ברצף",
     "streakDays_other": "{{count}} ימים ברצף",
     "emptyState": "עוד לא תרגלת. בוא נתחיל מהאקורד הראשון.",
-    "streakDays_two": "יומיים ברצף"
+    "streakDays_two": "יומיים ברצף",
+    "estimatedMinutes_one": "כדקה",
+    "estimatedMinutes_two": "כשתי דקות",
+    "estimatedMinutes_other": "כ־{{count}} דקות"
   },
   "chords": {
     "title": "אקורדים",
@@ -82,7 +84,13 @@
     "metronome": "מטרונום",
     "chordChangeDrill": "תרגיל מעברי אקורדים",
     "bpm": "פעימות לדקה",
-    "countIn": "ספירה לפני התחלה"
+    "countIn": "ספירה לפני התחלה",
+    "toolTunerDescription": "כוון את האוקולילי לפני כל תרגול",
+    "toolMetronomeDescription": "שמור על קצב יציב",
+    "toolPatternsDescription": "מטה, מעלה, שקט או עמום — וכמה חזק",
+    "toolRecordDescription": "נגן, ונשמע איפה התזמון והעוצמה שלך",
+    "toolDrillDescription": "כמה מעברים תספיק בדקה?",
+    "toolSettingsDescription": "שפה, רטט וכיול מיקרופון"
   },
   "progress": {
     "title": "ההתקדמות שלי",
@@ -120,7 +128,11 @@
     "hebrew": "עברית",
     "english": "English",
     "tuning": "כיוון",
-    "micCalibration": "כיול מיקרופון"
+    "micCalibration": "כיול מיקרופון",
+    "haptics": "רטט",
+    "hapticsDescription": "רטט קל בפעימות המודגשות",
+    "languageRestart": "השינוי בכיוון הכתיבה יחול לאחר פתיחה מחדש של האפליקציה",
+    "calibrateDescription": "מודד את ההשהיה של המיקרופון, כדי שהתזמון שלך יימדד נכון"
   },
   "common": {
     "cancel": "ביטול",
@@ -216,14 +228,16 @@
     "subtitle": "נגן את המקצב יחד עם המטרונום, ונגיד לך מה לשפר",
     "startRecording": "התחל הקלטה",
     "stopRecording": "סיים",
-    "recording": "מקליט… {{seconds}} שניות",
     "analysing": "מנתח…",
     "tryAgain": "נסה שוב",
     "needsMic": "צריך גישה למיקרופון כדי להקליט",
     "notCalibrated": "כדאי לכייל את המיקרופון קודם — בלי זה השהיה של החומרה תיראה כאילו אתה מנגן מאוחר.",
     "calibrateNow": "כייל עכשיו",
     "chooseChord": "אקורד",
-    "choosePattern": "מקצב"
+    "choosePattern": "מקצב",
+    "recording_one": "מקליט… שנייה אחת",
+    "recording_two": "מקליט… שתי שניות",
+    "recording_other": "מקליט… {{count}} שניות"
   },
   "calibration": {
     "title": "כיול מיקרופון",
@@ -263,12 +277,14 @@
     "chooseChords": "בחר שני אקורדים",
     "start": "התחל",
     "stop": "עצור",
-    "counting": "{{seconds}} שניות נותרו",
     "changes": "מעברים",
     "perMinute": "מעברים לדקה",
     "personalBest": "השיא שלך: {{value}}",
     "newBest": "שיא חדש!",
     "again": "עוד פעם",
-    "needTwo": "בחר שני אקורדים שונים"
+    "needTwo": "בחר שני אקורדים שונים",
+    "counting_one": "נותרה שנייה אחת",
+    "counting_two": "נותרו שתי שניות",
+    "counting_other": "נותרו {{count}} שניות"
   }
 }

@@ -87,7 +87,6 @@ export default function RecordScreen() {
     subdivision: pattern.subdivision,
     countInBars: 1,
     withClick: true,
-    haptics: true,
   });
 
   // The timing tolerance tightens as a chord is mastered — 50 ms at level 0,
@@ -178,7 +177,7 @@ export default function RecordScreen() {
               <Text variant="label" tone="muted">
                 {t('record.choosePattern')}
               </Text>
-              <View style={[styles.chips, musicalRow]}>
+              <View style={styles.chips}>
                 {patterns.slice(0, 6).map((option) => {
                   const active = option.id === pattern.id;
                   return (
@@ -255,7 +254,7 @@ export default function RecordScreen() {
 
             {recorder.isRecording && (
               <Text variant="heading" tone="primary" style={styles.centred}>
-                {t('record.recording', { seconds: Math.floor(recorder.elapsed) })}
+                {t('record.recording', { count: Math.floor(recorder.elapsed) })}
               </Text>
             )}
 
@@ -293,7 +292,7 @@ export default function RecordScreen() {
 
 const styles = StyleSheet.create({
   centred: { textAlign: 'center' },
-  chips: { gap: spacing.xs, flexWrap: 'wrap' },
+  chips: { flexDirection: 'row', gap: spacing.xs, flexWrap: 'wrap' },
   chip: {
     paddingHorizontal: spacing.md,
     paddingVertical: spacing.xs + 2,

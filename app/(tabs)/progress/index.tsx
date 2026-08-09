@@ -66,7 +66,7 @@ export default function ProgressScreen() {
         {t('progress.subtitle')}
       </Text>
 
-      <View style={[styles.stats, musicalRow]}>
+      <View style={styles.stats}>
         <Stat label={t('progress.chordsMastered')} value={data.mastered} />
         <Stat label={t('progress.chordsLearning')} value={data.learning} />
         <Stat label={t('progress.minutesThisWeek')} value={weekMinutes} />
@@ -146,11 +146,19 @@ export default function ProgressScreen() {
                   ))}
                 </View>
 
-                <Text variant="caption" tone={entry.rusty ? 'danger' : 'muted'}>
+                {/*
+                  This printed "85 · 90%" — the two raw numbers with a dot
+                  between them. The translated sentence naming what they mean
+                  was already in both locale files, unused.
+                */}
+                <Text variant="caption" tone={entry.rusty ? 'danger' : 'muted'} style={styles.target}>
                   {entry.rusty
                     ? t('progress.rusty')
                     : target
-                      ? `${target.score} · ${Math.round(target.tempoFraction * 100)}%`
+                      ? t('progress.nextTarget', {
+                          score: target.score,
+                          tempo: Math.round(target.tempoFraction * 100),
+                        })
                       : '★'}
                 </Text>
               </Pressable>
@@ -219,7 +227,7 @@ function Stat({ label, value }: { label: string; value: number }) {
 }
 
 const styles = StyleSheet.create({
-  stats: { gap: spacing.sm },
+  stats: { flexDirection: 'row', gap: spacing.sm },
   stat: {
     flex: 1,
     alignItems: 'center',
@@ -240,6 +248,7 @@ const styles = StyleSheet.create({
     gap: spacing.sm,
   },
   chordName: { minWidth: 56 },
+  target: { flexShrink: 1, textAlign: 'right', maxWidth: 132 },
   levelBar: { gap: 3, flex: 1, justifyContent: 'center' },
   levelPip: { width: 18, height: 6, borderRadius: 3 },
   listRow: {

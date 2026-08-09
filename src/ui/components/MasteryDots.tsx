@@ -2,6 +2,8 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
 import { MAX_MASTERY_LEVEL } from '@/db/mastery';
+import { musicalRow } from '@/ui/direction';
+
 
 import { useTheme } from '../ThemeProvider';
 
@@ -17,7 +19,7 @@ export function MasteryDots({ level, size = 7 }: MasteryDotsProps) {
 
   return (
     <View
-      style={styles.row}
+      style={[styles.row, musicalRow]}
       accessibilityLabel={`${clamped} / ${MAX_MASTERY_LEVEL}`}
       accessibilityRole="progressbar"
     >
@@ -38,5 +40,7 @@ export function MasteryDots({ level, size = 7 }: MasteryDotsProps) {
 }
 
 const styles = StyleSheet.create({
-  row: { flexDirection: 'row', gap: 3, alignItems: 'center' },
+  // `musicalRow` supplies the direction: a mastery meter fills the same way
+  // whichever language the interface is in, like every other progress bar.
+  row: { gap: 3, alignItems: 'center' },
 });

@@ -46,6 +46,7 @@ export const SETTING_KEYS = {
   language: 'language',
   contentVersion: 'content_version',
   micLatencyMs: 'mic_latency_ms',
+  haptics: 'haptics',
   noiseFloorDb: 'noise_floor_db',
 } as const;
 

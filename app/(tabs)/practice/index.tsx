@@ -15,55 +15,57 @@ type Tool = {
   titleKey: string;
   icon: React.ComponentProps<typeof MaterialCommunityIcons>['name'];
   href?: string;
-  descriptionHe: string;
-  descriptionEn: string;
+  /** i18n key; these used to be Hebrew and English literals sitting in this file. */
+  descriptionKey: string;
 };
 
 const TOOLS: readonly Tool[] = [
   {
     key: 'tuner',
+    descriptionKey: 'practice.toolTunerDescription',
     titleKey: 'practice.tuner',
     icon: 'tune-vertical',
     href: '/practice/tuner',
-    descriptionHe: 'כוון את האוקולילי לפני כל תרגול',
-    descriptionEn: 'Tune up before every session',
   },
   {
     key: 'metronome',
+    descriptionKey: 'practice.toolMetronomeDescription',
     titleKey: 'practice.metronome',
     icon: 'metronome',
     href: '/practice/metronome',
-    descriptionHe: 'שמור על קצב יציב',
-    descriptionEn: 'Keep a steady beat',
   },
   {
     key: 'patterns',
+    descriptionKey: 'practice.toolPatternsDescription',
     titleKey: 'patterns.title',
     icon: 'gesture-swipe-vertical',
     href: '/practice/patterns',
-    descriptionHe: 'מטה, מעלה, שקט או עמום — וכמה חזק',
-    descriptionEn: 'Down, up, silent or muted — and how hard',
   },
   {
     key: 'record',
+    descriptionKey: 'practice.toolRecordDescription',
     titleKey: 'record.title',
     icon: 'microphone-outline',
     href: '/practice/record',
-    descriptionHe: 'נגן, ונשמע איפה התזמון והעוצמה שלך',
-    descriptionEn: 'Play, and hear how your timing and dynamics did',
   },
   {
     key: 'drill',
+    descriptionKey: 'practice.toolDrillDescription',
     titleKey: 'practice.chordChangeDrill',
     icon: 'swap-horizontal',
     href: '/practice/drill',
-    descriptionHe: 'כמה מעברים תספיק בדקה?',
-    descriptionEn: 'How many changes can you make in a minute?',
+  },
+  {
+    key: 'settings',
+    descriptionKey: 'practice.toolSettingsDescription',
+    titleKey: 'settings.title',
+    icon: 'cog-outline',
+    href: '/settings',
   },
 ];
 
 export default function PracticeScreen() {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const theme = useTheme();
   const router = useRouter();
 
@@ -84,7 +86,7 @@ export default function PracticeScreen() {
             <View style={styles.text}>
               <Text variant="heading">{t(tool.titleKey)}</Text>
               <Text variant="caption" tone="muted">
-                {i18n.language === 'he' ? tool.descriptionHe : tool.descriptionEn}
+                {t(tool.descriptionKey)}
               </Text>
             </View>
           </View>

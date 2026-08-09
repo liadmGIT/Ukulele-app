@@ -1,7 +1,9 @@
 import * as Haptics from 'expo-haptics';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
+import { getHapticsEnabled } from '@/db/settings';
 import type { StepMark } from '@/music/grid';
+
 
 import { audioNow } from './engine';
 import { PatternPlayer, type PatternPlayerOptions } from './patternPlayer';
@@ -58,7 +60,7 @@ export function usePatternPlayer(options: UsePatternPlayerOptions): PatternPlaye
     countInBars = 1,
     tempoFraction = 1,
     withClick = true,
-    haptics = true,
+    haptics = getHapticsEnabled(),
   } = options;
 
   const clearPending = useCallback(() => {

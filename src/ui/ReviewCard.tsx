@@ -8,7 +8,6 @@ import { reviewHeadlineKey, reviewNoteKey, type Review } from '@/analysis/review
 
 import { Card } from './components/Card';
 import { Text } from './components/Text';
-import { musicalRow } from './direction';
 import { radius, spacing } from './theme';
 import { useTheme } from './ThemeProvider';
 
@@ -57,12 +56,17 @@ export function ReviewCard({ review, metrics }: ReviewCardProps) {
           </View>
         </View>
 
-        <View style={[styles.scores, musicalRow]}>
+        <View style={styles.scores}>
           <ScorePill label={t('review.timingScore')} value={metrics.timing.score} />
+          {/*
+            A pattern with no accents, or a take too short to compare, cannot be
+            scored for dynamics. Showing the 0 that stands in for "not measured"
+            would read as a bad mark for something the learner never got wrong.
+          */}
           <ScorePill
             label={t('review.dynamicsScore')}
-            value={metrics.dynamics.score}
-            muted={metrics.dynamics.patternIsFlat}
+            value={metrics.dynamics.applicable ? metrics.dynamics.score : null}
+            muted={!metrics.dynamics.applicable}
           />
         </View>
       </Card>
@@ -113,7 +117,8 @@ function ScorePill({
   muted = false,
 }: {
   label: string;
-  value: number;
+  /** Null when the dimension could not be measured. */
+  value: number | null;
   muted?: boolean;
 }) {
   const theme = useTheme();
@@ -128,7 +133,7 @@ function ScorePill({
       <Text variant="caption" tone="muted">
         {label}
       </Text>
-      <Text variant="heading">{value}</Text>
+      <Text variant="heading">{value ?? '—'}</Text>
     </View>
   );
 }
@@ -145,7 +150,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  scores: { gap: spacing.sm, marginTop: spacing.sm },
+  scores: { flexDirection: 'row', gap: spacing.sm, marginTop: spacing.sm },
   pill: {
     flex: 1,
     alignItems: 'center',

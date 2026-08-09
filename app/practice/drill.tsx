@@ -193,7 +193,7 @@ export default function DrillScreen() {
 
           {phase === 'running' && (
             <Text variant="display" tone="primary">
-              {t('drill.counting', { seconds: remaining })}
+              {t('drill.counting', { count: remaining })}
             </Text>
           )}
           {phase === 'analysing' && <Text variant="heading">{t('record.analysing')}</Text>}

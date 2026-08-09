@@ -79,7 +79,9 @@ export default function ChordDetailScreen() {
           <Text variant="label" tone="muted">
             {t('chords.difficulty')}
           </Text>
-          <View style={styles.pips}>
+          {/* A meter, so it fills the same way in both languages — matching the
+              identical widget on the strum-pattern list, which already did. */}
+          <View style={[styles.pips, musicalRow]}>
             {Array.from({ length: 5 }, (_, index) => (
               <View
                 key={index}
@@ -141,7 +143,7 @@ export default function ChordDetailScreen() {
 
         <Text variant="heading">{t('patterns.strumThisChord')}</Text>
 
-        <View style={[styles.patternChips, musicalRow]}>
+        <View style={styles.patternChips}>
           {patterns.map((option, index) => {
             const active = index === patternIndex;
             return (
@@ -192,7 +194,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingVertical: spacing.xs,
   },
-  patternChips: { gap: spacing.xs, flexWrap: 'wrap' },
+  patternChips: { flexDirection: 'row', gap: spacing.xs, flexWrap: 'wrap' },
   chip: {
     paddingHorizontal: spacing.md,
     paddingVertical: spacing.xs + 2,
