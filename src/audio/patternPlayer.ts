@@ -192,7 +192,15 @@ export class PatternPlayer {
   }
 }
 
-function buildGridFor(options: PatternPlayerOptions): PracticeGrid {
+/**
+ * The grid a set of player options implies.
+ *
+ * Exported so a caller can obtain exactly the grid the player will use without
+ * constructing one — a take has to be measured against the beats that actually
+ * sounded, and two grids built separately from the same inputs are two things
+ * that can drift apart.
+ */
+export function buildGridFor(options: PatternPlayerOptions): PracticeGrid {
   const { steps, timeSignature, subdivision, bpm, countInBars = 1, tempoFraction = 1 } = options;
 
   return buildGrid({

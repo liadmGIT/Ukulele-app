@@ -1,13 +1,13 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import type { Song } from '@/content';
 import { getChordById } from '@/content';
-import type { StepMark } from '@/music/grid';
+import type { PracticeGrid, StepMark } from '@/music/grid';
 import { chordAtBeat, type SongBar } from '@/music/song';
 import { parseStrumPattern, type StrumStep } from '@/music/strum';
 
 import { audioNow } from './engine';
-import { PatternPlayer } from './patternPlayer';
+import { buildGridFor, PatternPlayer } from './patternPlayer';
 import { Strummer } from './strummer';
 
 /**
@@ -29,6 +29,15 @@ export type SongPlayerState = {
   nextChordId: string | null;
   /** Index within the strum pattern, for the rhythm strip's playhead. */
   activeStep: number | null;
+  /**
+   * The strums this song expects, and the grid they sit on.
+   *
+   * Exposed so a take can be analysed against exactly what was played rather
+   * than against a second grid rebuilt from the same inputs — two grids that
+   * agree today are two grids that can disagree later.
+   */
+  steps: readonly StrumStep[];
+  grid: PracticeGrid | null;
   start: () => void;
   stop: () => void;
   toggle: () => void;
@@ -58,7 +67,6 @@ export function useSongPlayer({
   const [currentChordId, setCurrentChordId] = useState<string | null>(null);
   const [nextChordId, setNextChordId] = useState<string | null>(null);
   const [activeStep, setActiveStep] = useState<number | null>(null);
-
   const player = useRef<PatternPlayer | null>(null);
   const strummer = useRef<Strummer | null>(null);
   const timeouts = useRef<ReturnType<typeof setTimeout>[]>([]);
@@ -78,14 +86,62 @@ export function useSongPlayer({
   const songId = song.id;
   const { timeline, beatsPerBar, beatUnit, bpm } = song;
 
+  /**
+   * The strums this song expects and the grid they sit on, derived rather than
+   * captured from the player, so a recorded take is measured against exactly
+   * what was scheduled.
+   *
+   * A song with no bars yields no grid instead of throwing. That case is real:
+   * opening the screen with an unknown id — a deep link to a renamed song —
+   * used to reach `buildGrid` with zero bars and take the app down, and the
+   * screen's own "not found" guard could not prevent it, because effects run
+   * regardless of what render returned.
+   */
+  const { steps, grid } = useMemo(() => {
+    if (timeline.totalBars === 0) {
+      return { steps: [] as readonly StrumStep[], grid: null };
+    }
+
+    const patternSteps = parseStrumPattern(patternNotation);
+    const songSteps = Array.from({ length: timeline.totalBars }, () => patternSteps).flat();
+
+    return {
+      steps: songSteps as readonly StrumStep[],
+      grid: buildGridFor({
+        steps: songSteps,
+        frets: [0, 0, 0, 0],
+        bpm,
+        timeSignature: { beatsPerBar, beatUnit },
+        subdivision: patternSubdivision,
+        countInBars,
+        tempoFraction,
+      }),
+    };
+  }, [
+    timeline.totalBars,
+    patternNotation,
+    patternSubdivision,
+    bpm,
+    beatsPerBar,
+    beatUnit,
+    countInBars,
+    tempoFraction,
+  ]);
+
   useEffect(() => {
+    // A song with no bars has nothing to schedule, and building a player for
+    // one throws: an empty step list means zero bars, and the grid refuses to
+    // be built from zero. That used to happen inside this effect whenever the
+    // screen was opened with an unknown song id — a deep link to a renamed
+    // song, say — and the screen's own "not found" guard could not prevent it,
+    // because effects run regardless of what render returned.
+    if (grid === null) return;
+
     if (!strummer.current) strummer.current = new Strummer();
 
-    const steps: StrumStep[] = parseStrumPattern(patternNotation);
     const stepsPerBeat = patternSubdivision / beatUnit;
-
-    // The pattern repeated for as many bars as the song has.
-    const songSteps = Array.from({ length: timeline.totalBars }, () => steps).flat();
+    const songSteps = steps;
+    const patternLength = parseStrumPattern(patternNotation).length;
 
     /** Which beat of the song a grid step falls on. */
     const beatOfStep = (mark: StepMark) => mark.index / stepsPerBeat;
@@ -111,7 +167,7 @@ export function useSongPlayer({
       {
         onStep: (_step, mark, when) => {
           at(when, () => {
-            setActiveStep(mark.index % steps.length);
+            setActiveStep(mark.index % patternLength);
 
             const beat = beatOfStep(mark);
             const slot = chordAtBeat(timeline, beat);
@@ -152,6 +208,8 @@ export function useSongPlayer({
   }, [
     songId,
     timeline,
+    steps,
+    grid,
     bpm,
     beatsPerBar,
     beatUnit,
@@ -200,6 +258,8 @@ export function useSongPlayer({
     currentChordId,
     nextChordId,
     activeStep,
+    steps,
+    grid,
     start,
     stop,
     toggle,

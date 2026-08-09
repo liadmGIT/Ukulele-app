@@ -1,18 +1,23 @@
 import { Stack, useLocalSearchParams } from 'expo-router';
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 
 import { useSongPlayer } from '@/audio/useSongPlayer';
+import { useTakeRecorder } from '@/audio/useTakeRecorder';
 import { getChordById, getSongById, getStrumPatternById } from '@/content';
 import { getPlayableChordIds } from '@/db/mastery';
+import { getSongMasteryState, recordPractice, recordSongAttempt } from '@/db/progress';
+import { getMicLatencySeconds, saveTake } from '@/db/recordings';
 import { missingChords } from '@/music/playable';
 import { ChordDiagram } from '@/ui/ChordDiagram';
 import { Button } from '@/ui/components/Button';
 import { Card } from '@/ui/components/Card';
+import { MicNotice } from '@/ui/components/MicNotice';
 import { Screen } from '@/ui/components/Screen';
 import { Text } from '@/ui/components/Text';
 import { musicalRow } from '@/ui/direction';
+import { ReviewCard } from '@/ui/ReviewCard';
 import { RhythmStrip } from '@/ui/RhythmStrip';
 import { SongChart } from '@/ui/SongChart';
 import { radius, spacing } from '@/ui/theme';
@@ -34,23 +39,92 @@ export default function SongPlayerScreen() {
 
   const player = useSongPlayer({
     // The hook needs a song; the guard below keeps this from ever rendering
-    // without one, and a stable fallback keeps the hook order fixed.
+    // without one, and a stable fallback keeps the hook order fixed. The
+    // fallback's empty timeline makes the player inert rather than throwing.
     song: song ?? FALLBACK_SONG,
     patternNotation: pattern?.notation ?? 'D D D D',
     patternSubdivision: pattern?.subdivision ?? 4,
     tempoFraction,
   });
 
+  const level = useMemo(() => (song ? getSongMasteryState(song.id).level : 0), [song]);
+  const latencySeconds = useMemo(() => getMicLatencySeconds(), []);
+
+  const recorder = useTakeRecorder({
+    steps: player.steps,
+    grid: player.grid,
+    latencySeconds,
+    level,
+  });
+
+  const savedTakeId = useRef<string | null>(null);
+
+  // A played-along take is the only honest source of song mastery. Until this
+  // existed `recordSongAttempt` had no callers at all, so no song could ever
+  // rise above level 0 no matter how well or how often it was played.
+  useEffect(() => {
+    if (!song || !recorder.review || !recorder.analysis || recorder.completedAt === null) return;
+
+    const takeKey = `${recorder.completedAt}`;
+    if (savedTakeId.current === takeKey) return;
+    savedTakeId.current = takeKey;
+
+    saveTake({
+      fileUri: '',
+      durationMs: Math.round(recorder.analysis.grid.totalSeconds * 1000),
+      patternId: song.defaultPatternId,
+      songId: song.id,
+      bpm: song.bpm,
+      tempoPct: Math.round(tempoFraction * 100),
+      metrics: recorder.analysis.metrics,
+      review: recorder.review,
+    });
+
+    recordSongAttempt(song.id, {
+      score: recorder.analysis.metrics.overallScore,
+      // The tempo it was actually played at. A level earned at 60% is a level
+      // earned at 60%, and the mastery rules refuse to award the higher ones
+      // until the speed comes up.
+      tempoFraction,
+      at: recorder.completedAt,
+    });
+    recordPractice(
+      Math.max(1, Math.round(recorder.analysis.grid.totalSeconds / 60)),
+      recorder.completedAt,
+    );
+  }, [song, recorder.review, recorder.analysis, recorder.completedAt, tempoFraction]);
+
   if (!song || !pattern) {
     return (
       <Screen>
-        <Text>{t('common.loading')}</Text>
+        <Card>
+          <Text variant="heading">{t('common.notFound')}</Text>
+          <Text variant="body" tone="muted">
+            {t('common.notFoundBody')}
+          </Text>
+        </Card>
       </Screen>
     );
   }
 
   const isHebrew = i18n.language === 'he';
   const missing = missingChords({ songId: song.id, chordIds: song.timeline.chordIds }, known);
+
+  const beginTake = async () => {
+    const status = await recorder.start();
+    // Only play if the microphone is genuinely live, so a refused permission
+    // cannot leave the song running with nothing listening to it.
+    if (status !== 'running') return;
+    player.start();
+  };
+
+  const finishTake = async () => {
+    // The player's anchor has to be read before stopping it, so the take is
+    // measured against the beats that actually sounded.
+    const startedAt = player.getStartTime() ?? undefined;
+    player.stop();
+    await recorder.stop(startedAt);
+  };
 
   // Before playback starts, show the song's opening chord rather than an empty
   // space — it is the shape the learner needs their hand on to begin.
@@ -108,11 +182,25 @@ export default function SongPlayerScreen() {
         )}
 
         <View style={styles.chart}>
-          <SongChart
-            timeline={song.timeline}
-            currentBarIndex={player.currentBar?.index ?? null}
-            height={260}
-          />
+          {recorder.review && recorder.analysis ? (
+            <ScrollView>
+              <ReviewCard review={recorder.review} metrics={recorder.analysis.metrics} />
+              <Button
+                title={t('record.tryAgain')}
+                variant="secondary"
+                onPress={() => {
+                  savedTakeId.current = null;
+                  recorder.clear();
+                }}
+              />
+            </ScrollView>
+          ) : (
+            <SongChart
+              timeline={song.timeline}
+              currentBarIndex={player.currentBar?.index ?? null}
+              height={260}
+            />
+          )}
         </View>
 
         <View style={styles.controls}>
@@ -144,10 +232,23 @@ export default function SongPlayerScreen() {
             </View>
           </ScrollView>
 
-          <Button
-            title={player.isPlaying ? t('songs.stop') : t('songs.playAlong')}
-            onPress={player.toggle}
-          />
+          <MicNotice status={recorder.status} />
+
+          <View style={styles.buttonRow}>
+            <Button
+              title={player.isPlaying && !recorder.isRecording ? t('songs.stop') : t('songs.playAlong')}
+              onPress={player.toggle}
+              disabled={recorder.isRecording}
+              style={styles.grow}
+            />
+            <Button
+              title={recorder.isRecording ? t('record.stopRecording') : t('songs.recordTake')}
+              variant="secondary"
+              onPress={recorder.isRecording ? finishTake : beginTake}
+              disabled={player.isPlaying && !recorder.isRecording}
+              style={styles.grow}
+            />
+          </View>
         </View>
       </Screen>
     </>
@@ -191,6 +292,8 @@ const styles = StyleSheet.create({
   stripRow: { justifyContent: 'center', marginTop: spacing.sm },
   chart: { flex: 1 },
   controls: { gap: spacing.sm },
+  buttonRow: { flexDirection: 'row', gap: spacing.sm },
+  grow: { flex: 1 },
   chips: { gap: spacing.xs },
   chip: {
     paddingHorizontal: spacing.md,

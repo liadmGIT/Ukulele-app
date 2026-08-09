@@ -29,6 +29,19 @@ export function resetStorage(): void {
   driver = null;
 }
 
+/**
+ * Test seam: installs a driver directly.
+ *
+ * Lets the progress and seeding logic be exercised against {@link MemoryDriver}
+ * without a device. The rules that decide when a level is earned are pure and
+ * tested separately; what this covers is the wiring between them and storage,
+ * which is where the loop from "practised a chord" to "a song unlocked" either
+ * works or silently does not.
+ */
+export function setStorage(next: StorageDriver | null): void {
+  driver = next;
+}
+
 export const SETTING_KEYS = {
   language: 'language',
   contentVersion: 'content_version',

@@ -1,4 +1,4 @@
-import { Stack, useLocalSearchParams } from 'expo-router';
+import { Stack, useLocalSearchParams, useRouter } from 'expo-router';
 import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Pressable, StyleSheet, View } from 'react-native';
@@ -8,6 +8,7 @@ import { getChordMastery } from '@/db/mastery';
 import { CHORD_QUALITIES, type ChordQuality } from '@/music/chords';
 import { STANDARD_TUNING } from '@/music/notes';
 import { ChordDiagram } from '@/ui/ChordDiagram';
+import { Button } from '@/ui/components/Button';
 import { Card } from '@/ui/components/Card';
 import { MasteryDots } from '@/ui/components/MasteryDots';
 import { Screen } from '@/ui/components/Screen';
@@ -21,6 +22,7 @@ export default function ChordDetailScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const { t, i18n } = useTranslation();
   const theme = useTheme();
+  const router = useRouter();
 
   const chord = useMemo(() => (id ? getChordById(id) : undefined), [id]);
   const mastery = useMemo(() => (id ? getChordMastery(id) : null), [id]);
@@ -33,7 +35,12 @@ export default function ChordDetailScreen() {
   if (!chord) {
     return (
       <Screen>
-        <Text>{t('common.loading')}</Text>
+        <Card>
+          <Text variant="heading">{t('common.notFound')}</Text>
+          <Text variant="body" tone="muted">
+            {t('common.notFoundBody')}
+          </Text>
+        </Card>
       </Screen>
     );
   }
@@ -56,6 +63,17 @@ export default function ChordDetailScreen() {
           </View>
           {shape && <ChordDiagram shape={shape} size={150} showStringLabels />}
         </View>
+
+        {/*
+          The only route by which a chord's mastery can ever move. Without it
+          the record screen offered four hardcoded chords and the other 81 were
+          frozen at level 0 for good — which in turn kept almost every song in
+          the library permanently locked, since songs unlock from chord level.
+        */}
+        <Button
+          title={t('chords.practice')}
+          onPress={() => router.push(`/practice/record?chordId=${chord.id}`)}
+        />
 
         <Card>
           <Text variant="label" tone="muted">

@@ -49,7 +49,12 @@ export type TakeRecorderState = {
 
 export type UseTakeRecorderOptions = {
   steps: readonly StrumStep[];
-  grid: PracticeGrid;
+  /**
+   * Null while the thing being played has no grid yet — a song screen opened
+   * with an unknown id, say. Recording is simply inert until there is something
+   * to measure against.
+   */
+  grid: PracticeGrid | null;
   /** Measured microphone latency in seconds; see the calibration screen. */
   latencySeconds?: number;
   level?: number;
@@ -125,7 +130,7 @@ export function useTakeRecorder({
     const recording = mic.takeRecording();
     microphone.current = null;
 
-    if (recording.samples.length === 0) return;
+    if (recording.samples.length === 0 || !grid) return;
 
     // Where the grid sits inside the recording. The two clocks are the same
     // clock, so this is a subtraction rather than an estimate.
