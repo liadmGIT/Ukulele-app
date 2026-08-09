@@ -56,8 +56,9 @@ const TOOLS: readonly Tool[] = [
     key: 'drill',
     titleKey: 'practice.chordChangeDrill',
     icon: 'swap-horizontal',
-    descriptionHe: 'בקרוב — כמה מעברים בדקה?',
-    descriptionEn: 'Coming soon — how many changes per minute?',
+    href: '/practice/drill',
+    descriptionHe: 'כמה מעברים תספיק בדקה?',
+    descriptionEn: 'How many changes can you make in a minute?',
   },
 ];
 

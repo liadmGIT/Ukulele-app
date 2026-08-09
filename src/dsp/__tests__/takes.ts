@@ -25,10 +25,27 @@ export type StrumSpec = {
   amplitude?: number;
   /** Damped "chnk" rather than a ringing chord. */
   muted?: boolean;
+  /** Which chord is strummed. Defaults to C major. */
+  chord?: ChordName;
 };
 
-/** C major on a re-entrant ukulele: G4, C4, E4, C5. */
-const C_MAJOR_FREQUENCIES = [392.0, 261.63, 329.63, 523.25];
+/**
+ * Chord voicings as they sound on a re-entrant ukulele, in string order
+ * (G C E A). Used to render takes that actually change chord, which is what
+ * the chord-change drill has to be able to tell apart from repeated strums.
+ */
+export const CHORD_VOICINGS = {
+  /** C major: G4, C4, E4, C5. */
+  C: [392.0, 261.63, 329.63, 523.25],
+  /** F major: A4, C4, F4, A4. */
+  F: [440.0, 261.63, 349.23, 440.0],
+  /** A minor: A4, C4, E4, A4. */
+  Am: [440.0, 261.63, 329.63, 440.0],
+  /** G major: G4, D4, G4, B4. */
+  G: [392.0, 293.66, 392.0, 493.88],
+} as const;
+
+export type ChordName = keyof typeof CHORD_VOICINGS;
 
 /**
  * Renders a series of strums at exact times.
@@ -55,14 +72,15 @@ export function renderTake(
 
   strums.forEach((strum, index) => {
     const amplitude = strum.amplitude ?? 0.7;
+    const voicing = CHORD_VOICINGS[strum.chord ?? 'C'];
 
-    C_MAJOR_FREQUENCIES.forEach((frequency, stringIndex) => {
+    voicing.forEach((frequency, stringIndex) => {
       const note = pluckedString({
         frequency,
         sampleRate,
         durationSeconds: strum.muted ? 0.12 : 1.6,
         decaySeconds: strum.muted ? 0.05 : 1.4,
-        amplitude: (amplitude / C_MAJOR_FREQUENCIES.length) * 1.6,
+        amplitude: (amplitude / voicing.length) * 1.6,
         seed: 17 + index * 7 + stringIndex,
       });
 
@@ -77,6 +95,28 @@ export function renderTake(
     amplitudes: strums.map((strum) => strum.amplitude ?? 0.7),
     sampleRate,
   };
+}
+
+/**
+ * Strums alternating between two chords, for the chord-change drill.
+ *
+ * @param changeEvery how many strums between chord changes. 1 alternates on
+ * every strum; a large number renders a take where the learner froze on one
+ * chord, which must count as no changes at all.
+ */
+export function alternatingTake(
+  count: number,
+  interval: number,
+  chords: readonly ChordName[] = ['C', 'F'],
+  changeEvery = 1,
+  startTime = 0.3,
+): SynthesisedTake {
+  const strums: StrumSpec[] = Array.from({ length: count }, (_, index) => ({
+    time: startTime + index * interval,
+    chord: chords[Math.floor(index / changeEvery) % chords.length]!,
+  }));
+
+  return renderTake(strums, { durationSeconds: startTime + count * interval + 1 });
 }
 
 /** An evenly spaced take: `count` strums, `interval` seconds apart. */

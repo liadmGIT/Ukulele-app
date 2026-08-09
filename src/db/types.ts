@@ -32,6 +32,16 @@ export type StoredRecording = {
   review: string;
 };
 
+export type StoredDrillResult = {
+  id: string;
+  createdAt: number;
+  chordA: string;
+  chordB: string;
+  changes: number;
+  durationMs: number;
+  changesPerMinute: number;
+};
+
 export interface StorageDriver {
   readonly persistent: boolean;
 
@@ -47,6 +57,20 @@ export interface StorageDriver {
   getAllChordMastery(): ChordMastery[];
   getChordMastery(chordId: string): ChordMastery | null;
   getChordIdsAtOrAboveLevel(level: number): string[];
+
+  /** Records an attempt against a chord or song and returns the new state. */
+  updateChordMastery(chordId: string, state: ChordMastery): void;
+  getSongMastery(songId: string): ChordMastery | null;
+  updateSongMastery(songId: string, state: ChordMastery): void;
+
+  saveDrillResult(result: StoredDrillResult): void;
+  listDrillResults(limit: number): StoredDrillResult[];
+  bestChangesPerMinute(chordA: string, chordB: string): number;
+
+  /** Timestamps of every practice session, for streaks and charts. */
+  listPracticeDays(limit: number): number[];
+  recordPracticeMinutes(at: number, minutes: number): void;
+  practiceMinutesSince(since: number): { day: number; minutes: number }[];
 
   saveRecording(recording: StoredRecording): void;
   listRecordings(limit: number): StoredRecording[];

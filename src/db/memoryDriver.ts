@@ -1,6 +1,11 @@
 import type { Chord } from '@/content/schemas';
 
-import type { ChordMastery, StorageDriver, StoredRecording } from './types';
+import type {
+  ChordMastery,
+  StorageDriver,
+  StoredDrillResult,
+  StoredRecording,
+} from './types';
 
 /**
  * In-memory storage used by the web preview build.
@@ -11,12 +16,21 @@ import type { ChordMastery, StorageDriver, StoredRecording } from './types';
  * native path, the browser build simply runs against memory: every screen
  * renders, nothing is saved.
  */
+function startOfDay(time: number): number {
+  const date = new Date(time);
+  date.setHours(0, 0, 0, 0);
+  return date.getTime();
+}
+
 export class MemoryDriver implements StorageDriver {
   readonly persistent = false;
 
   private settings = new Map<string, string>();
   private mastery = new Map<string, ChordMastery>();
   private recordings: StoredRecording[] = [];
+  private songMastery = new Map<string, ChordMastery>();
+  private drills: StoredDrillResult[] = [];
+  private practice = new Map<number, number>();
 
   getSetting(key: string): string | null {
     return this.settings.get(key) ?? null;
@@ -60,6 +74,49 @@ export class MemoryDriver implements StorageDriver {
     return this.getAllChordMastery()
       .filter((entry) => entry.level >= level)
       .map((entry) => entry.chordId);
+  }
+
+  updateChordMastery(chordId: string, state: ChordMastery): void {
+    this.mastery.set(chordId, { ...state, chordId });
+  }
+
+  getSongMastery(songId: string): ChordMastery | null {
+    return this.songMastery.get(songId) ?? null;
+  }
+
+  updateSongMastery(songId: string, state: ChordMastery): void {
+    this.songMastery.set(songId, { ...state, chordId: songId });
+  }
+
+  saveDrillResult(result: StoredDrillResult): void {
+    this.drills.unshift(result);
+  }
+
+  listDrillResults(limit: number): StoredDrillResult[] {
+    return this.drills.slice(0, limit);
+  }
+
+  bestChangesPerMinute(chordA: string, chordB: string): number {
+    const pair = [chordA, chordB].sort().join('|');
+    return this.drills
+      .filter((drill) => [drill.chordA, drill.chordB].sort().join('|') === pair)
+      .reduce((best, drill) => Math.max(best, drill.changesPerMinute), 0);
+  }
+
+  listPracticeDays(limit: number): number[] {
+    return [...this.practice.keys()].sort((a, b) => b - a).slice(0, limit);
+  }
+
+  recordPracticeMinutes(at: number, minutes: number): void {
+    const day = startOfDay(at);
+    this.practice.set(day, (this.practice.get(day) ?? 0) + minutes);
+  }
+
+  practiceMinutesSince(since: number): { day: number; minutes: number }[] {
+    return [...this.practice.entries()]
+      .filter(([day]) => day >= startOfDay(since))
+      .map(([day, minutes]) => ({ day, minutes }))
+      .sort((a, b) => a.day - b.day);
   }
 
   saveRecording(recording: StoredRecording): void {

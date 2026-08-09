@@ -7,6 +7,7 @@ import { gridForPattern } from '@/analysis/performance';
 import { usePatternPlayer } from '@/audio/usePatternPlayer';
 import { useTakeRecorder } from '@/audio/useTakeRecorder';
 import { getChordById, getStrumPatternById, getStrumPatterns } from '@/content';
+import { recordChordAttempt, recordPractice } from '@/db/progress';
 import { getMicLatencySeconds, hasCalibratedMicLatency, saveTake } from '@/db/recordings';
 import { ChordDiagram } from '@/ui/ChordDiagram';
 import { Button } from '@/ui/components/Button';
@@ -77,7 +78,7 @@ export default function RecordScreen() {
   // minutes of PCM per attempt would fill the device long before it earned its
   // keep.
   useEffect(() => {
-    if (!recorder.review || !recorder.analysis) return;
+    if (!recorder.review || !recorder.analysis || recorder.completedAt === null) return;
 
     const takeKey = `${recorder.analysis.metrics.overallScore}-${recorder.analysis.onsets.length}`;
     if (savedTakeId.current === takeKey) return;
@@ -93,7 +94,16 @@ export default function RecordScreen() {
       metrics: recorder.analysis.metrics,
       review: recorder.review,
     });
-  }, [recorder.review, recorder.analysis, pattern.id]);
+
+    // The take was played over one chord, so it is that chord's mastery that
+    // moves. The rules for whether it moves at all live in analysis/mastery.
+    recordChordAttempt(chordId, {
+      score: recorder.analysis.metrics.overallScore,
+      tempoFraction: 1,
+      at: recorder.completedAt,
+    });
+    recordPractice(Math.max(1, Math.round(recorder.analysis.grid.totalSeconds / 60)), recorder.completedAt);
+  }, [recorder.review, recorder.analysis, recorder.completedAt, pattern.id, chordId]);
 
   const begin = async () => {
     await recorder.start();

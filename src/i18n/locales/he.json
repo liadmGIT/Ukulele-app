@@ -89,7 +89,20 @@
     "practiceMinutes": "דקות תרגול",
     "recordings": "ההקלטות שלי",
     "personalBest": "שיא אישי",
-    "thisWeek": "השבוע"
+    "thisWeek": "השבוע",
+    "subtitle": "מה למדת, וכמה תרגלת",
+    "chordsMastered": "אקורדים בשליטה",
+    "chordsLearning": "בלימוד",
+    "minutesThisWeek": "דקות השבוע",
+    "noPracticeYet": "עוד לא תרגלת. התחל מ״היום״.",
+    "rusty": "החליד",
+    "nextTarget": "ליעד הבא: ציון {{score}} ב־{{tempo}}% מהמהירות",
+    "recentTakes": "הקלטות אחרונות",
+    "noTakes": "עוד לא הקלטת",
+    "level": "רמה {{level}}",
+    "streak_one": "יום אחד ברצף",
+    "streak_two": "יומיים ברצף",
+    "streak_other": "{{count}} ימים ברצף"
   },
   "rhythm": {
     "down": "מטה",
@@ -216,5 +229,38 @@
     "current": "כיול נוכחי: {{ms}} מ״ש",
     "notCalibrated": "עוד לא כויל",
     "reset": "אפס"
+  },
+  "session": {
+    "reasonTune": "כוון קודם — בלי זה כל השאר לא מדויק",
+    "reasonCalibrate": "כיול מיקרופון חד־פעמי",
+    "reasonNew": "אקורד חדש",
+    "reasonRusty": "לא תרגלת מזמן",
+    "reasonPolish": "כמעט שם",
+    "reasonDrill": "תרגיל מעברים בין שני האקורדים הקשים לך",
+    "reasonSong": "לסיים עם משהו שנשמע כמו מוזיקה",
+    "itemTune": "כוון את האוקולילי",
+    "itemCalibrate": "כייל את המיקרופון",
+    "itemChord": "אקורד {{name}}",
+    "itemDrill": "מעברים: {{a}} ↔ {{b}}",
+    "itemSong": "שיר: {{name}}",
+    "minutes": "{{count}} דק׳",
+    "done": "סיימתי",
+    "skip": "דלג",
+    "complete": "כל הכבוד! סיימת את התרגול של היום.",
+    "progressOf": "{{done}} מתוך {{total}}"
+  },
+  "drill": {
+    "title": "תרגיל מעברי אקורדים",
+    "explanation": "עבור בין שני האקורדים כמה פעמים שאתה יכול בדקה. אנחנו סופרים את המעברים עצמם — לא את הפריטות — אז לעצור על אקורד אחד לא ייחשב.",
+    "chooseChords": "בחר שני אקורדים",
+    "start": "התחל",
+    "stop": "עצור",
+    "counting": "{{seconds}} שניות נותרו",
+    "changes": "מעברים",
+    "perMinute": "מעברים לדקה",
+    "personalBest": "השיא שלך: {{value}}",
+    "newBest": "שיא חדש!",
+    "again": "עוד פעם",
+    "needTwo": "בחר שני אקורדים שונים"
   }
 }

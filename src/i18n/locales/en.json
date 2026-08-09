@@ -84,7 +84,19 @@
     "practiceMinutes": "Practice minutes",
     "recordings": "My recordings",
     "personalBest": "Personal best",
-    "thisWeek": "This week"
+    "thisWeek": "This week",
+    "subtitle": "What you've learned, and how much you've practised",
+    "chordsMastered": "Chords mastered",
+    "chordsLearning": "Learning",
+    "minutesThisWeek": "Minutes this week",
+    "noPracticeYet": "You haven't practised yet. Start from Today.",
+    "rusty": "Rusty",
+    "nextTarget": "Next level: score {{score}} at {{tempo}}% speed",
+    "recentTakes": "Recent takes",
+    "noTakes": "No recordings yet",
+    "level": "Level {{level}}",
+    "streak_one": "1 day streak",
+    "streak_other": "{{count}} day streak"
   },
   "rhythm": {
     "down": "Down",
@@ -210,5 +222,38 @@
     "current": "Current calibration: {{ms}} ms",
     "notCalibrated": "Not calibrated yet",
     "reset": "Reset"
+  },
+  "session": {
+    "reasonTune": "Tune first — nothing else is accurate without it",
+    "reasonCalibrate": "One-time microphone calibration",
+    "reasonNew": "New chord",
+    "reasonRusty": "You haven't played this in a while",
+    "reasonPolish": "Almost there",
+    "reasonDrill": "Switching between the two chords you find hardest",
+    "reasonSong": "Finish on something that sounds like music",
+    "itemTune": "Tune your ukulele",
+    "itemCalibrate": "Calibrate the microphone",
+    "itemChord": "{{name}} chord",
+    "itemDrill": "Changes: {{a}} ↔ {{b}}",
+    "itemSong": "Song: {{name}}",
+    "minutes": "{{count}} min",
+    "done": "Done",
+    "skip": "Skip",
+    "complete": "Nicely done — that's today's practice finished.",
+    "progressOf": "{{done}} of {{total}}"
+  },
+  "drill": {
+    "title": "Chord change drill",
+    "explanation": "Switch between two chords as many times as you can in a minute. We count the changes themselves, not the strums — so freezing on one chord won't score.",
+    "chooseChords": "Pick two chords",
+    "start": "Start",
+    "stop": "Stop",
+    "counting": "{{seconds}}s left",
+    "changes": "changes",
+    "perMinute": "changes per minute",
+    "personalBest": "Your best: {{value}}",
+    "newBest": "New personal best!",
+    "again": "Go again",
+    "needTwo": "Pick two different chords"
   }
 }

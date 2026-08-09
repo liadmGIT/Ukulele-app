@@ -23,6 +23,14 @@ export type TakeRecorderState = {
   /** Populated when a take has been analysed. */
   analysis: TakeAnalysis | null;
   review: Review | null;
+  /**
+   * Wall-clock time the take finished, or null before one has.
+   *
+   * A property of the take rather than of whoever reads it: mastery and the
+   * practice log both need to agree on when this happened, and reading the
+   * clock at render time would give each caller a slightly different answer.
+   */
+  completedAt: number | null;
   /** Seconds recorded so far. */
   elapsed: number;
   start: () => Promise<void>;
@@ -54,6 +62,7 @@ export function useTakeRecorder({
   const [analysis, setAnalysis] = useState<TakeAnalysis | null>(null);
   const [review, setReview] = useState<Review | null>(null);
   const [elapsed, setElapsed] = useState(0);
+  const [completedAt, setCompletedAt] = useState<number | null>(null);
 
   const microphone = useRef<Microphone | null>(null);
   const recordingStartedAt = useRef(0);
@@ -71,6 +80,7 @@ export function useTakeRecorder({
 
     setAnalysis(null);
     setReview(null);
+    setCompletedAt(null);
     setElapsed(0);
 
     const mic = new Microphone();
@@ -121,11 +131,13 @@ export function useTakeRecorder({
 
     setAnalysis(result);
     setReview(generateReview(result.metrics, result.toleranceMs));
+    setCompletedAt(Date.now());
   }, [grid, steps, latencySeconds, level, stopTicker]);
 
   const clear = useCallback(() => {
     setAnalysis(null);
     setReview(null);
+    setCompletedAt(null);
     setElapsed(0);
   }, []);
 
@@ -137,7 +149,7 @@ export function useTakeRecorder({
     };
   }, [stopTicker]);
 
-  return { status, isRecording, analysis, review, elapsed, start, stop, clear };
+  return { status, isRecording, analysis, review, completedAt, elapsed, start, stop, clear };
 }
 
 /** Moves every time in a grid by a constant, so it lines up with a recording. */

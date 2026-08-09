@@ -3,7 +3,12 @@ import * as SQLite from 'expo-sqlite';
 import type { Chord, SongData, StrumPatternData } from '@/content/schemas';
 
 import { MIGRATIONS } from './migrations';
-import type { ChordMastery, StorageDriver, StoredRecording } from './types';
+import type {
+  ChordMastery,
+  StorageDriver,
+  StoredDrillResult,
+  StoredRecording,
+} from './types';
 
 const DATABASE_NAME = 'ukulele.db';
 
@@ -207,6 +212,130 @@ export class SqliteDriver implements StorageDriver {
       .map((row) => row.chord_id);
   }
 
+  updateChordMastery(chordId: string, state: ChordMastery): void {
+    this.db.runSync(
+      `INSERT INTO chord_mastery
+         (chord_id, level, best_changes_per_minute, sessions_practised, last_practised_at)
+       VALUES (?, ?, ?, ?, ?)
+       ON CONFLICT(chord_id) DO UPDATE SET
+         level = excluded.level,
+         best_changes_per_minute = MAX(best_changes_per_minute, excluded.best_changes_per_minute),
+         sessions_practised = excluded.sessions_practised,
+         last_practised_at = excluded.last_practised_at;`,
+      chordId,
+      state.level,
+      state.bestChangesPerMinute,
+      state.sessionsPractised,
+      state.lastPractisedAt,
+    );
+  }
+
+  getSongMastery(songId: string): ChordMastery | null {
+    const row = this.db.getFirstSync<{
+      level: number;
+      sessions_practised: number;
+      last_practised_at: number | null;
+    }>('SELECT level, sessions_practised, last_practised_at FROM song_progress WHERE song_id = ?;', songId);
+
+    if (!row) return null;
+    return {
+      chordId: songId,
+      level: row.level,
+      bestChangesPerMinute: 0,
+      sessionsPractised: row.sessions_practised,
+      lastPractisedAt: row.last_practised_at,
+    };
+  }
+
+  updateSongMastery(songId: string, state: ChordMastery): void {
+    this.db.runSync(
+      `INSERT INTO song_progress (song_id, level, sessions_practised, last_practised_at, attempts)
+       VALUES (?, ?, ?, ?, 1)
+       ON CONFLICT(song_id) DO UPDATE SET
+         level = excluded.level,
+         sessions_practised = excluded.sessions_practised,
+         last_practised_at = excluded.last_practised_at,
+         attempts = attempts + 1;`,
+      songId,
+      state.level,
+      state.sessionsPractised,
+      state.lastPractisedAt,
+    );
+  }
+
+  saveDrillResult(result: StoredDrillResult): void {
+    this.db.runSync(
+      `INSERT INTO drill_results
+         (id, created_at, chord_a, chord_b, changes, duration_ms, changes_per_minute)
+       VALUES (?, ?, ?, ?, ?, ?, ?);`,
+      result.id,
+      result.createdAt,
+      result.chordA,
+      result.chordB,
+      result.changes,
+      result.durationMs,
+      result.changesPerMinute,
+    );
+  }
+
+  listDrillResults(limit: number): StoredDrillResult[] {
+    return this.db
+      .getAllSync<DrillRow>(
+        'SELECT * FROM drill_results ORDER BY created_at DESC LIMIT ?;',
+        limit,
+      )
+      .map(toDrillResult);
+  }
+
+  bestChangesPerMinute(chordA: string, chordB: string): number {
+    // The pair is unordered: drilling C to F is the same exercise as F to C.
+    const row = this.db.getFirstSync<{ best: number | null }>(
+      `SELECT MAX(changes_per_minute) AS best FROM drill_results
+       WHERE (chord_a = ? AND chord_b = ?) OR (chord_a = ? AND chord_b = ?);`,
+      chordA,
+      chordB,
+      chordB,
+      chordA,
+    );
+    return row?.best ?? 0;
+  }
+
+  listPracticeDays(limit: number): number[] {
+    return this.db
+      .getAllSync<{ started_at: number }>(
+        'SELECT started_at FROM practice_sessions ORDER BY started_at DESC LIMIT ?;',
+        limit,
+      )
+      .map((row) => row.started_at);
+  }
+
+  recordPracticeMinutes(at: number, minutes: number): void {
+    this.db.runSync(
+      'INSERT INTO practice_sessions (id, started_at, ended_at, active_ms) VALUES (?, ?, ?, ?);',
+      `session-${at}-${Math.random().toString(36).slice(2, 8)}`,
+      at,
+      at + minutes * 60_000,
+      Math.round(minutes * 60_000),
+    );
+  }
+
+  practiceMinutesSince(since: number): { day: number; minutes: number }[] {
+    const rows = this.db.getAllSync<{ started_at: number; active_ms: number }>(
+      'SELECT started_at, active_ms FROM practice_sessions WHERE started_at >= ?;',
+      since,
+    );
+
+    const byDay = new Map<number, number>();
+    for (const row of rows) {
+      const day = startOfDay(row.started_at);
+      byDay.set(day, (byDay.get(day) ?? 0) + row.active_ms / 60_000);
+    }
+
+    return [...byDay.entries()]
+      .map(([day, minutes]) => ({ day, minutes: Math.round(minutes) }))
+      .sort((a, b) => a.day - b.day);
+  }
+
   saveRecording(recording: StoredRecording): void {
     this.db.runSync(
       `INSERT INTO recordings
@@ -237,6 +366,34 @@ export class SqliteDriver implements StorageDriver {
   deleteRecording(id: string): void {
     this.db.runSync('DELETE FROM recordings WHERE id = ?;', id);
   }
+}
+
+function startOfDay(time: number): number {
+  const date = new Date(time);
+  date.setHours(0, 0, 0, 0);
+  return date.getTime();
+}
+
+type DrillRow = {
+  id: string;
+  created_at: number;
+  chord_a: string;
+  chord_b: string;
+  changes: number;
+  duration_ms: number;
+  changes_per_minute: number;
+};
+
+function toDrillResult(row: DrillRow): StoredDrillResult {
+  return {
+    id: row.id,
+    createdAt: row.created_at,
+    chordA: row.chord_a,
+    chordB: row.chord_b,
+    changes: row.changes,
+    durationMs: row.duration_ms,
+    changesPerMinute: row.changes_per_minute,
+  };
 }
 
 type RecordingRow = {

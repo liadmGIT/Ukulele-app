@@ -9,7 +9,10 @@ An offline-first, Hebrew-default (RTL) mobile app for learning ukulele from scra
   the metronome grid and tells you what to improve.
 - **Songs** — a library of arrangements in Hebrew and English, with an auto-scrolling chord
   chart, the strum pattern playing underneath, and practice speeds from 50%.
-- **Progress** — mastery levels 0–5 per chord and song, earned from measured performance.
+- **Practice today** — one tap builds a ten-minute session from your weakest material: tune,
+  chords, a chord-change drill, and a song to finish on.
+- **Progress** — mastery levels 0–5 per chord and song, earned from measured performance at
+  progressively higher tempos, and decaying if you stop playing.
 - **Songs I can play now** — the library filters to songs using only chords you've mastered.
 
 See [`docs/PLAN.md`](docs/PLAN.md) for the full design, architecture and milestones.
