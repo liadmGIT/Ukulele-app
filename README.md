@@ -32,6 +32,25 @@ npx expo run:ios      # or: npx expo run:android
 > **This app does not run in Expo Go.** Real-time microphone PCM access requires native code
 > (`react-native-audio-api`), so a development build is required. `expo run:*` creates one.
 
+### Installing it to actually use
+
+The command above builds in **debug**, which loads the JavaScript from a server on your computer:
+the machine has to stay awake on the same network, and the app reconnects constantly. For an app
+you can carry around, build in release instead:
+
+```bash
+npx expo run:ios --device --configuration Release
+```
+
+That bundles the JavaScript into the app. No computer, no network — everything here works in
+airplane mode, because nothing in it talks to the internet. Signed with a free Apple ID the app
+expires after seven days and the command has to be run again; a paid developer account extends
+that to a year.
+
+**Do not delete the app to reinstall it.** Mastery levels, practice streak and past reviews live
+in on-device SQLite with no cloud copy, so deleting is the one action that loses them. Installing
+over the top keeps everything.
+
 ### Web preview
 
 `npx expo export --platform web` produces a browser build that is useful for iterating on layout
