@@ -117,15 +117,15 @@ const TIMING_RULES: Rule[] = [
 
 const DYNAMICS_RULES: Rule[] = [
   (metrics) => {
-    const { patternIsFlat, accentContrast } = metrics.dynamics;
-    if (patternIsFlat || accentContrast >= 1.5) return null;
+    const { applicable, accentContrast } = metrics.dynamics;
+    if (!applicable || accentContrast >= 1.5) return null;
 
     return { id: 'noDynamics', kind: 'dynamics', severity: 60, params: {} };
   },
 
   (metrics) => {
-    const { patternIsFlat, accentCorrelation } = metrics.dynamics;
-    if (patternIsFlat || accentCorrelation >= -0.15) return null;
+    const { applicable, accentCorrelation } = metrics.dynamics;
+    if (!applicable || accentCorrelation >= -0.15) return null;
 
     return { id: 'accentsInverted', kind: 'dynamics', severity: 66, params: {} };
   },
@@ -174,8 +174,20 @@ const COMPLETION_RULES: Rule[] = [
  * The last entry always matches, so there is always something honest to say —
  * even if it is only that the learner finished the take.
  */
+/**
+ * Below this, a take was abandoned rather than played, and praising how it went
+ * is praising a fragment.
+ *
+ * `withinToleranceRatio` is computed over the strums that were *played*, so six
+ * well-timed strums out of thirty-two used to produce "excellent timing — 100%
+ * on the beat" printed directly underneath "you stopped after 6 of 32". Both
+ * numbers were true and the pairing was a lie.
+ */
+const ENOUGH_PLAYED_TO_PRAISE = 0.5;
+
 const POSITIVE_RULES: Rule[] = [
   (metrics) => {
+    if (metrics.completionRatio < ENOUGH_PLAYED_TO_PRAISE) return null;
     if (metrics.timing.withinToleranceRatio < 0.9 || metrics.playedCount < 4) return null;
     return {
       id: 'greatTiming',
@@ -186,13 +198,15 @@ const POSITIVE_RULES: Rule[] = [
   },
 
   (metrics) => {
-    const { patternIsFlat, accentCorrelation, score } = metrics.dynamics;
+    const { applicable, accentCorrelation, score } = metrics.dynamics;
+    if (metrics.completionRatio < ENOUGH_PLAYED_TO_PRAISE) return null;
     if (metrics.playedCount < 4) return null;
-    if (patternIsFlat || accentCorrelation < 0.6 || score < 65) return null;
+    if (!applicable || accentCorrelation < 0.6 || score < 65) return null;
     return { id: 'greatDynamics', kind: 'positive', severity: 0, params: {} };
   },
 
   (metrics) => {
+    if (metrics.completionRatio < ENOUGH_PLAYED_TO_PRAISE) return null;
     if (metrics.timing.tendency !== 'steady' || metrics.timing.standardDeviationMs > 35) {
       return null;
     }

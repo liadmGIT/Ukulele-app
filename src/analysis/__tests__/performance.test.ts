@@ -200,6 +200,22 @@ describe('analyseTake — dynamics', () => {
     expect(analysis.metrics.dynamics.score).toBeLessThan(60);
   });
 
+  it('is not fooled into full marks by one unusually quiet strum', () => {
+    // A flat performance with a single near-silent strum in it. The contrast
+    // used to be the loudest sample over the softest, so that one strum sent it
+    // to infinity, clamped to full marks, and suppressed the "everything sounds
+    // the same" note — telling the learner the opposite of what they needed.
+    const flatWithOneDropout = Array.from({ length: 16 }, (_, index) => ({
+      time: index * 0.5,
+      amplitude: index === 7 ? 0.02 : 0.7,
+    }));
+
+    const analysis = analyse(flatWithOneDropout, steps);
+
+    expect(Number.isFinite(analysis.metrics.dynamics.accentContrast)).toBe(true);
+    expect(analysis.metrics.dynamics.score).toBeLessThan(60);
+  });
+
   it('catches accents landing on the wrong strums', () => {
     const inverted = Array.from({ length: 16 }, (_, index) => ({
       time: index * 0.5,
@@ -223,7 +239,18 @@ describe('analyseTake — dynamics', () => {
     const analysis = analyse(onGrid(16));
 
     expect(analysis.metrics.dynamics.patternIsFlat).toBe(true);
-    expect(analysis.metrics.dynamics.score).toBe(100);
+    expect(analysis.metrics.dynamics.applicable).toBe(false);
+  });
+
+  it('does not hand out free marks for a pattern with no dynamics', () => {
+    // This used to award a flat pattern 100 for dynamics, which is a quarter of
+    // the overall score for playing the easiest pattern in the library. Two
+    // performances of equal quality should score the same whether or not the
+    // pattern they were playing asked for accents.
+    const flat = analyse(onGrid(16));
+    const accented = analyse(withAccents(0.9, 0.3), repeat(ACCENTED, 4));
+
+    expect(Math.abs(flat.metrics.overallScore - accented.metrics.overallScore)).toBeLessThan(12);
   });
 });
 

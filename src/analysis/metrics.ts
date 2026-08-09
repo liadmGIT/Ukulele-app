@@ -43,16 +43,31 @@ export type DynamicsMetrics = {
    */
   accentCorrelation: number;
   /**
-   * Measured loudest-to-softest ratio. Near 1 means every strum was hit
-   * identically, which is the classic beginner failure the score exists to
-   * catch.
+   * How much louder the strums meant to be loud actually were, as a ratio of
+   * group averages. Near 1 means every strum was hit identically, which is the
+   * classic beginner failure this score exists to catch.
+   *
+   * Averaged within each accent group rather than taken as the loudest single
+   * strum over the softest. A max-over-min ratio is decided entirely by two
+   * samples, so one unusually quiet strum — a muted stroke, a string not
+   * properly caught — used to report enormous contrast and earn full marks for
+   * a performance that was in fact perfectly flat.
    */
   accentContrast: number;
   /** The contrast the pattern asks for, for comparison. */
   intendedContrast: number;
   /** True when the pattern has no dynamics to speak of, so there is nothing to score. */
   patternIsFlat: boolean;
-  /** 0..100. */
+  /**
+   * Whether dynamics could be judged at all.
+   *
+   * False when the pattern asks for no contrast, or too few strums landed to
+   * compare. A dimension that cannot be measured must not be scored: awarding
+   * full marks made the easiest patterns score highest, and awarding zero
+   * punished the learner for the pattern they were told to play.
+   */
+  applicable: boolean;
+  /** 0..100. Meaningless unless `applicable`. */
   score: number;
 };
 
@@ -141,27 +156,28 @@ export function computeDynamicsMetrics(alignment: Alignment): DynamicsMetrics {
   const intended = played.map((match) => accentGain(match.step.accent as StrumAccent));
   const measured = played.map((match) => match.onset.peakAmplitude);
 
-  const intendedContrast = ratio(intended);
+  const intendedContrast = groupContrast(intended, intended);
   const patternIsFlat = intendedContrast < FLAT_PATTERN_CONTRAST;
 
-  if (played.length < 3) {
-    return {
-      accentCorrelation: 0,
-      accentContrast: 1,
-      intendedContrast,
-      patternIsFlat,
-      score: 0,
-    };
-  }
+  const notApplicable = (accentCorrelation = 0, accentContrast = 1): DynamicsMetrics => ({
+    accentCorrelation,
+    accentContrast,
+    intendedContrast,
+    patternIsFlat,
+    applicable: false,
+    score: 0,
+  });
 
-  const accentContrast = ratio(measured);
+  if (played.length < 3) return notApplicable();
+
+  const accentContrast = groupContrast(intended, measured);
   const accentCorrelation = correlation(intended, measured);
 
-  if (patternIsFlat) {
-    // Nothing to grade: the pattern asks for every strum to be the same. Full
-    // marks rather than a meaningless correlation of near-constant values.
-    return { accentCorrelation, accentContrast, intendedContrast, patternIsFlat, score: 100 };
-  }
+  // The pattern asks for every strum to be the same, so there is no shape to
+  // get right or wrong. Reporting the measurements but scoring nothing keeps
+  // the overall score meaning the same thing on every pattern — full marks here
+  // used to make all-downs the fastest route to a mastery level.
+  if (patternIsFlat) return notApplicable(accentCorrelation, accentContrast);
 
   // Correlation says the accents are in the right places; contrast says they
   // are actually different from each other. Both are needed: a performance can
@@ -170,7 +186,14 @@ export function computeDynamicsMetrics(alignment: Alignment): DynamicsMetrics {
   const contrastScore = clamp01((accentContrast - 1) / (intendedContrast - 1)) * 100;
   const score = Math.round(shapeScore * 0.6 + contrastScore * 0.4);
 
-  return { accentCorrelation, accentContrast, intendedContrast, patternIsFlat, score };
+  return {
+    accentCorrelation,
+    accentContrast,
+    intendedContrast,
+    patternIsFlat,
+    applicable: true,
+    score,
+  };
 }
 
 export function computePerformanceMetrics(
@@ -183,13 +206,25 @@ export function computePerformanceMetrics(
   const completionRatio =
     alignment.expectedCount === 0 ? 0 : alignment.playedCount / alignment.expectedCount;
 
+  // Dynamics only counts when there were dynamics to play. On a pattern with no
+  // accents its weight is redistributed rather than awarded, so a score of 80
+  // means the same amount of playing on every pattern — otherwise the easiest
+  // pattern in the library is also the fastest way to level up.
+  const TIMING_WEIGHT = 0.55;
+  const DYNAMICS_WEIGHT = 0.25;
+  const COMPLETION_WEIGHT = 0.2;
+
+  const weighted = dynamics.applicable
+    ? timing.score * TIMING_WEIGHT +
+      dynamics.score * DYNAMICS_WEIGHT +
+      completionRatio * 100 * COMPLETION_WEIGHT
+    : (timing.score * TIMING_WEIGHT + completionRatio * 100 * COMPLETION_WEIGHT) /
+      (TIMING_WEIGHT + COMPLETION_WEIGHT);
+
   // Completion gates the rest. Playing four of twenty strums beautifully in
   // time is not a good performance, and a score that said otherwise would be
   // actively misleading.
-  const overallScore = Math.round(
-    (timing.score * 0.55 + dynamics.score * 0.25 + completionRatio * 100 * 0.2) *
-      clamp01(completionRatio + 0.15),
-  );
+  const overallScore = Math.round(weighted * clamp01(completionRatio + 0.15));
 
   return {
     timing,
@@ -214,13 +249,47 @@ function clamp01(value: number): number {
   return Math.max(0, Math.min(1, value));
 }
 
-/** Loudest-to-softest ratio, guarding against a zero denominator. */
-function ratio(values: readonly number[]): number {
-  if (values.length === 0) return 1;
-  const loudest = Math.max(...values);
-  const softest = Math.min(...values);
-  if (softest <= 1e-6) return loudest > 1e-6 ? Infinity : 1;
-  return loudest / softest;
+/**
+ * The largest contrast the pattern asks for. Anything beyond this is not extra
+ * credit, and letting it run away lets one loud strum paper over a flat take.
+ */
+const MAX_MEANINGFUL_CONTRAST = 6;
+
+/**
+ * How much louder the strums that were *meant* to be loud actually were.
+ *
+ * Groups the measured values by the accent each step asked for, averages within
+ * each group, and compares the loudest group's average to the softest. Group
+ * averages rather than extremes: a max-over-min ratio is decided by exactly two
+ * samples, so a single near-silent strum sent it to infinity — which then
+ * clamped to full marks and suppressed the "everything sounds the same" note,
+ * exactly inverting what the learner needed to hear. It also serialised to
+ * `null` in the stored metrics.
+ */
+function groupContrast(intended: readonly number[], measured: readonly number[]): number {
+  const groups = new Map<number, number[]>();
+
+  for (let i = 0; i < intended.length; i += 1) {
+    const key = intended[i]!;
+    const value = measured[i];
+    if (value === undefined) continue;
+    const bucket = groups.get(key);
+    if (bucket) bucket.push(value);
+    else groups.set(key, [value]);
+  }
+
+  if (groups.size < 2) return 1;
+
+  // Ordered by what the pattern asked for, not by what came out — otherwise
+  // this measures the spread of the performance rather than whether the
+  // performance followed the pattern.
+  const keys = [...groups.keys()].sort((a, b) => a - b);
+  const softest = mean(groups.get(keys[0]!)!);
+  const loudest = mean(groups.get(keys[keys.length - 1]!)!);
+
+  if (softest <= 1e-6) return loudest > 1e-6 ? MAX_MEANINGFUL_CONTRAST : 1;
+
+  return Math.min(MAX_MEANINGFUL_CONTRAST, loudest / softest);
 }
 
 /** Slope of the least-squares line through the values, per index step. */

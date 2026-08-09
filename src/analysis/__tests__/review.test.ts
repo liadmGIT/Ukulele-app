@@ -48,6 +48,7 @@ function goodMetrics(overrides: Partial<PerformanceMetrics> = {}): PerformanceMe
       accentContrast: 2.6,
       intendedContrast: 2.9,
       patternIsFlat: false,
+      applicable: true,
       score: 85,
       ...overrides.dynamics,
     },
@@ -115,7 +116,12 @@ describe('rule selection', () => {
   it('says nothing about dynamics when the pattern has none', () => {
     const notes = ids(
       goodMetrics({
-        dynamics: { ...goodMetrics().dynamics, patternIsFlat: true, accentContrast: 1.0 },
+        dynamics: {
+          ...goodMetrics().dynamics,
+          patternIsFlat: true,
+          applicable: false,
+          accentContrast: 1.0,
+        },
       }),
     );
     expect(notes).not.toContain('noDynamics');
@@ -159,6 +165,7 @@ describe('rule selection', () => {
         accentContrast: 1.05,
         intendedContrast: 2.9,
         patternIsFlat: false,
+        applicable: true,
         score: 5,
       },
       missedCount: 4,
@@ -189,6 +196,35 @@ describe('the positive note', () => {
     expect(review(goodMetrics()).positive.id).toBe('greatTiming');
   });
 
+  it('does not praise the timing of a take that was abandoned', () => {
+    // Six strums out of thirty-two, all of them on the beat. The old rule read
+    // the ratio over what was played and announced "100% on the beat" directly
+    // beneath "you stopped after 6 of 32" — two true numbers making one false
+    // impression.
+    const abandoned = goodMetrics({
+      playedCount: 6,
+      expectedCount: 32,
+      missedCount: 26,
+      completionRatio: 6 / 32,
+      overallScore: 20,
+    });
+
+    const result = review(abandoned);
+    expect(result.positive.id).not.toBe('greatTiming');
+    expect(result.notes.map((note) => note.id)).toContain('stopped');
+  });
+
+  it('still praises a take that was played most of the way through', () => {
+    const mostly = goodMetrics({
+      playedCount: 24,
+      expectedCount: 32,
+      missedCount: 8,
+      completionRatio: 24 / 32,
+    });
+
+    expect(review(mostly).positive.id).toBe('greatTiming');
+  });
+
   it('finds something true to say about a poor take', () => {
     const positive = review(
       goodMetrics({
@@ -206,6 +242,7 @@ describe('the positive note', () => {
           accentContrast: 1.05,
           intendedContrast: 2.9,
           patternIsFlat: false,
+          applicable: true,
           score: 5,
         },
         overallScore: 15,

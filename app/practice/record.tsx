@@ -7,11 +7,13 @@ import { gridForPattern } from '@/analysis/performance';
 import { usePatternPlayer } from '@/audio/usePatternPlayer';
 import { useTakeRecorder } from '@/audio/useTakeRecorder';
 import { getChordById, getStrumPatternById, getStrumPatterns } from '@/content';
+import { getChordMastery } from '@/db/mastery';
 import { recordChordAttempt, recordPractice } from '@/db/progress';
 import { getMicLatencySeconds, hasCalibratedMicLatency, saveTake } from '@/db/recordings';
 import { ChordDiagram } from '@/ui/ChordDiagram';
 import { Button } from '@/ui/components/Button';
 import { Card } from '@/ui/components/Card';
+import { MicNotice } from '@/ui/components/MicNotice';
 import { Screen } from '@/ui/components/Screen';
 import { Text } from '@/ui/components/Text';
 import { musicalRow } from '@/ui/direction';
@@ -20,13 +22,17 @@ import { RhythmStrip } from '@/ui/RhythmStrip';
 import { radius, spacing } from '@/ui/theme';
 import { useTheme } from '@/ui/ThemeProvider';
 
-const PRACTICE_CHORD_IDS = ['C-maj', 'A-min', 'F-maj', 'G-maj'];
+/** The suggested starting points, not the whole list — any chord can be recorded. */
+const SUGGESTED_CHORD_IDS = ['C-maj', 'A-min', 'F-maj', 'G-maj'];
 const BPM = 90;
 /** Bars of playing per take — long enough to show a drift, short enough to hold. */
 const REPEATS = 4;
 
 export default function RecordScreen() {
-  const { patternId } = useLocalSearchParams<{ patternId?: string }>();
+  const { patternId, chordId: chordParam } = useLocalSearchParams<{
+    patternId?: string;
+    chordId?: string;
+  }>();
   const { t, i18n } = useTranslation();
   const theme = useTheme();
   const router = useRouter();
@@ -35,7 +41,20 @@ export default function RecordScreen() {
   const [selectedPatternId, setSelectedPatternId] = useState(
     patternId ?? patterns[0]?.id ?? 'all-downs',
   );
-  const [chordId, setChordId] = useState(PRACTICE_CHORD_IDS[0]!);
+  const [chordId, setChordId] = useState(
+    chordParam && getChordById(chordParam) ? chordParam : SUGGESTED_CHORD_IDS[0]!,
+  );
+
+  // Whichever chord the learner arrived to practise belongs in the picker, even
+  // when it is not one of the four suggestions — otherwise tapping "practise
+  // this" on a chord's own page lands on a screen that offers four other chords.
+  const chordChoices = useMemo(() => {
+    const ids = [...SUGGESTED_CHORD_IDS];
+    if (chordParam && getChordById(chordParam) && !ids.includes(chordParam)) {
+      ids.unshift(chordParam);
+    }
+    return ids;
+  }, [chordParam]);
 
   const pattern = getStrumPatternById(selectedPatternId) ?? patterns[0]!;
   const chord = getChordById(chordId);
@@ -71,7 +90,12 @@ export default function RecordScreen() {
     haptics: true,
   });
 
-  const recorder = useTakeRecorder({ steps, grid, latencySeconds });
+  // The timing tolerance tightens as a chord is mastered — 50 ms at level 0,
+  // 25 ms at level 5. Without passing it, every take was judged at beginner
+  // tolerance forever and the higher levels could not ask for anything more.
+  const level = useMemo(() => getChordMastery(chordId)?.level ?? 0, [chordId]);
+
+  const recorder = useTakeRecorder({ steps, grid, latencySeconds, level });
 
   // Persist once per take. The audio itself is not written to disk yet — the
   // metrics and review are what the progress screen charts, and keeping a few
@@ -106,7 +130,12 @@ export default function RecordScreen() {
   }, [recorder.review, recorder.analysis, recorder.completedAt, pattern.id, chordId]);
 
   const begin = async () => {
-    await recorder.start();
+    const status = await recorder.start();
+    // Only once the microphone is actually live. Starting the player regardless
+    // meant a refused microphone left the strum pattern looping with no way to
+    // stop it: the button's label and action both key off `isRecording`, which
+    // never became true, so pressing it started yet another loop.
+    if (status !== 'running') return;
     // The player starts after the microphone is live, so nothing is clipped
     // from the count-in.
     player.start();
@@ -194,7 +223,7 @@ export default function RecordScreen() {
               </Text>
               <ScrollView horizontal showsHorizontalScrollIndicator={false}>
                 <View style={styles.chordRow}>
-                  {PRACTICE_CHORD_IDS.map((id) => {
+                  {chordChoices.map((id) => {
                     const option = getChordById(id);
                     const optionShape = option?.shapes[0];
                     if (!option || !optionShape) return null;
@@ -222,17 +251,23 @@ export default function RecordScreen() {
               </ScrollView>
             </Card>
 
-            {recorder.status === 'denied' && (
-              <Text variant="caption" tone="danger">
-                {t('record.needsMic')}
+            <MicNotice status={recorder.status} />
+
+            {recorder.isRecording && (
+              <Text variant="heading" tone="primary" style={styles.centred}>
+                {t('record.recording', { seconds: Math.floor(recorder.elapsed) })}
               </Text>
             )}
 
+            {/*
+              The elapsed count belongs above, not inside the button. Labelling
+              the only control "Recording… 12 seconds" left a beginner with
+              nothing telling them how to finish — the way to stop was to press
+              the thing that described what was already happening.
+            */}
             <Button
               title={
-                recorder.isRecording
-                  ? t('record.recording', { seconds: Math.floor(recorder.elapsed) })
-                  : t('record.startRecording')
+                recorder.isRecording ? t('record.stopRecording') : t('record.startRecording')
               }
               onPress={recorder.isRecording ? finish : begin}
             />
@@ -257,6 +292,7 @@ export default function RecordScreen() {
 }
 
 const styles = StyleSheet.create({
+  centred: { textAlign: 'center' },
   chips: { gap: spacing.xs, flexWrap: 'wrap' },
   chip: {
     paddingHorizontal: spacing.md,

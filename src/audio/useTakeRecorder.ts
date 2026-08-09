@@ -33,7 +33,11 @@ export type TakeRecorderState = {
   completedAt: number | null;
   /** Seconds recorded so far. */
   elapsed: number;
-  start: () => Promise<void>;
+  /**
+   * @returns the status reached, so a caller can avoid starting playback into a
+   * recording that never began.
+   */
+  start: () => Promise<MicrophoneStatus>;
   /**
    * @param gridStartTime audio-clock time the metronome's count-in began.
    * Passed at stop time rather than captured at render, so it reflects the run
@@ -79,7 +83,7 @@ export function useTakeRecorder({
     // `isRecording` is only set after the await below, so an impatient double
     // tap would otherwise build a second Microphone and orphan the first —
     // leaving a recorder nothing can stop and the mic indicator lit.
-    if (isRecording || microphone.current) return;
+    if (isRecording || microphone.current) return 'running';
 
     setAnalysis(null);
     setReview(null);
@@ -93,7 +97,7 @@ export function useTakeRecorder({
     setStatus(result);
     if (result !== 'running') {
       microphone.current = null;
-      return;
+      return result;
     }
 
     recordingStartedAt.current = audioNow();
@@ -102,6 +106,8 @@ export function useTakeRecorder({
     ticker.current = setInterval(() => {
       setElapsed(audioNow() - recordingStartedAt.current);
     }, 200);
+
+    return result;
   }, [isRecording]);
 
   const stop = useCallback(async (gridStartTime?: number) => {
