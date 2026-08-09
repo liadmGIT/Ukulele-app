@@ -39,7 +39,14 @@
     "fingers": "אצבעות",
     "openStrings": "מיתרים פתוחים",
     "barre": "באריה",
-    "noResults": "לא נמצאו אקורדים שמתאימים לחיפוש"
+    "noResults": "לא נמצאו אקורדים שמתאימים לחיפוש",
+    "notesInChord": "תווים באקורד",
+    "stringByString": "מיתר אחר מיתר",
+    "doNotPlay": "לא מנגנים",
+    "openString": "מיתר פתוח",
+    "fret": "סריג",
+    "finger": "אצבע {{finger}}",
+    "alsoWritten": "נקרא גם"
   },
   "songs": {
     "title": "שירים",

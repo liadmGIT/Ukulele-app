@@ -37,7 +37,14 @@
     "fingers": "Fingers",
     "openStrings": "Open strings",
     "barre": "Barre",
-    "noResults": "No chords match this search"
+    "noResults": "No chords match this search",
+    "notesInChord": "Notes in this chord",
+    "stringByString": "String by string",
+    "doNotPlay": "Do not play",
+    "openString": "Open string",
+    "fret": "Fret",
+    "finger": "Finger {{finger}}",
+    "alsoWritten": "Also written"
   },
   "songs": {
     "title": "Songs",

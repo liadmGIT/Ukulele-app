@@ -181,6 +181,10 @@ const styles = StyleSheet.create({
     // with an instrument in their hands — tempo, pattern, filter. At the old
     // ~28pt they were a coin toss.
     minHeight: 44,
+    // Without a minimum width a two-letter label like "הכל" comes out as tall
+    // as it is wide, so one filter renders as a circle among pills.
+    minWidth: 76,
+    alignItems: 'center',
     justifyContent: 'center',
     paddingVertical: spacing.xs + 2,
     borderRadius: radius.pill,

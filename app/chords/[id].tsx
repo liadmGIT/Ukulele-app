@@ -99,7 +99,7 @@ export default function ChordDetailScreen() {
 
         <Card>
           <Text variant="label" tone="muted">
-            {i18n.language === 'he' ? 'תווים באקורד' : 'Notes in this chord'}
+            {t('chords.notesInChord')}
           </Text>
           <Text variant="mono">{chord.notes.join(' · ')}</Text>
         </Card>
@@ -107,20 +107,21 @@ export default function ChordDetailScreen() {
         {shape && (
           <Card>
             <Text variant="label" tone="muted">
-              {i18n.language === 'he' ? 'מיתר אחר מיתר' : 'String by string'}
+              {t('chords.stringByString')}
             </Text>
             {STANDARD_TUNING.map((string) => {
               const fret = shape.frets[string.index] ?? 0;
               const finger = shape.fingers[string.index] ?? 0;
+              // One string at a time, so the labels are singular: this row used
+              // to read "open strings" beside a single string, and "fingers 1"
+              // beside a single finger.
               const description =
                 fret < 0
-                  ? i18n.language === 'he'
-                    ? 'לא מנגנים'
-                    : 'Do not play'
+                  ? t('chords.doNotPlay')
                   : fret === 0
-                    ? t('chords.openStrings')
-                    : `${i18n.language === 'he' ? 'סריג' : 'Fret'} ${fret}${
-                        finger ? ` · ${t('chords.fingers')} ${finger}` : ''
+                    ? t('chords.openString')
+                    : `${t('chords.fret')} ${fret}${
+                        finger ? ` · ${t('chords.finger', { finger })}` : ''
                       }`;
 
               return (
@@ -137,7 +138,7 @@ export default function ChordDetailScreen() {
 
         {chord.aliases.length > 0 && (
           <Text variant="caption" tone="muted">
-            {i18n.language === 'he' ? 'נקרא גם' : 'Also written'}: {chord.aliases.join(', ')}
+            {t('chords.alsoWritten')}: {chord.aliases.join(', ')}
           </Text>
         )}
 

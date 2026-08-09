@@ -18,7 +18,7 @@ import { radius, spacing } from '@/ui/theme';
 import { useTheme } from '@/ui/ThemeProvider';
 
 export default function ProgressScreen() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const theme = useTheme();
   const router = useRouter();
 
@@ -98,7 +98,12 @@ export default function ProgressScreen() {
                 ]}
               />
               <Text variant="caption" tone="muted">
-                {new Date(entry.day).toLocaleDateString(undefined, { weekday: 'narrow' })}
+                {/*
+                  The app's language, not the device's. Passing `undefined`
+                  meant a Hebrew interface on an English-locale phone printed
+                  "M T W T F S S" across the middle of it.
+                */}
+                {new Date(entry.day).toLocaleDateString(i18n.language, { weekday: 'narrow' })}
               </Text>
             </View>
           ))}
@@ -199,7 +204,7 @@ export default function ProgressScreen() {
               <View style={styles.takeText}>
                 <Text variant="body">{t(reviewHeadlineKey(take.review))}</Text>
                 <Text variant="caption" tone="muted">
-                  {new Date(take.createdAt).toLocaleDateString()}
+                  {new Date(take.createdAt).toLocaleDateString(i18n.language)}
                 </Text>
               </View>
               <Text variant="label" tone="primary">
