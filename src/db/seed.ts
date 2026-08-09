@@ -11,14 +11,20 @@ import { SETTING_KEYS, getSetting, getStorage, setSetting } from './index';
  */
 export function syncContent(): void {
   const library = getChordLibrary();
-  const bundledVersion = String(library.version);
+  const patterns = getStrumPatterns();
+  const songs = getSongs();
+
+  // All three files, not just the chords. Each carries its own version, and
+  // keying off `chords.json` alone meant adding a song and bumping only
+  // `songs.json` changed nothing: the sync returned early and the Songs tab
+  // kept serving the old rows forever, with no sign anything was stale.
+  const bundledVersion = [library.version, patternsVersion(patterns), songsVersion(songs)].join('.');
 
   if (getSetting(SETTING_KEYS.contentVersion) === bundledVersion) return;
 
-  const storage = getStorage();
-  storage.replaceChords(library.chords);
-  storage.replaceStrumPatterns(
-    getStrumPatterns().map((pattern) => ({
+  getStorage().replaceContent({
+    chords: library.chords,
+    patterns: patterns.map((pattern) => ({
       id: pattern.id,
       nameEn: pattern.nameEn,
       nameHe: pattern.nameHe,
@@ -30,13 +36,24 @@ export function syncContent(): void {
       descriptionEn: pattern.descriptionEn,
       descriptionHe: pattern.descriptionHe,
     })),
-  );
-
-  // Songs must exist before any song progress can reference them: song_progress
-  // has a foreign key onto this table and foreign keys are enforced.
-  storage.replaceSongs(
-    getSongs().map((song) => ({ ...song, chordIds: song.timeline.chordIds })),
-  );
+    songs: songs.map((song) => ({ ...song, chordIds: song.timeline.chordIds })),
+  });
 
   setSetting(SETTING_KEYS.contentVersion, bundledVersion);
+}
+
+/**
+ * Content counts stand in for versions the loaders do not expose.
+ *
+ * Not a true version — editing a song in place without adding one would not
+ * change it — but it catches the case that actually happens, which is content
+ * being added. Regenerating from the scripts bumps the chord library version
+ * anyway, and that is part of the key.
+ */
+function patternsVersion(patterns: readonly unknown[]): number {
+  return patterns.length;
+}
+
+function songsVersion(songs: readonly unknown[]): number {
+  return songs.length;
 }

@@ -1,10 +1,9 @@
-import type { Chord } from '@/content/schemas';
-
 import type {
   ChordMastery,
   StorageDriver,
   StoredDrillResult,
   StoredRecording,
+  ContentBundle,
 } from './types';
 
 /**
@@ -40,7 +39,15 @@ export class MemoryDriver implements StorageDriver {
     this.settings.set(key, value);
   }
 
-  replaceChords(chords: readonly Chord[]): void {
+  /**
+   * Only the chord mastery rows matter here: the browser preview reads content
+   * straight from the bundled JSON, and holds nothing that needs joining
+   * against stored copies of it.
+   *
+   * Existing rows are left alone, matching the SQLite driver's contract that a
+   * content update never disturbs progress.
+   */
+  replaceContent({ chords }: ContentBundle): void {
     for (const chord of chords) {
       if (this.mastery.has(chord.id)) continue;
       this.mastery.set(chord.id, {
@@ -51,15 +58,13 @@ export class MemoryDriver implements StorageDriver {
         lastPractisedAt: null,
       });
     }
-  }
 
-  replaceStrumPatterns(): void {
-    // Nothing to do: the browser preview reads content straight from the
-    // bundled JSON, and holds no user data that needs joining against it.
-  }
-
-  replaceSongs(): void {
-    // As above.
+    // A chord that has left the bundle takes its progress with it, so the two
+    // drivers agree about what survives an update.
+    const ids = new Set(chords.map((chord) => chord.id));
+    for (const chordId of [...this.mastery.keys()]) {
+      if (!ids.has(chordId)) this.mastery.delete(chordId);
+    }
   }
 
   getAllChordMastery(): ChordMastery[] {

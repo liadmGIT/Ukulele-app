@@ -42,17 +42,30 @@ export type StoredDrillResult = {
   changesPerMinute: number;
 };
 
+export type ContentBundle = {
+  chords: readonly Chord[];
+  patterns: readonly StrumPatternData[];
+  /** Songs and the chords they need. `song_progress` has a foreign key onto this. */
+  songs: readonly (SongData & { chordIds: readonly string[] })[];
+};
+
 export interface StorageDriver {
   readonly persistent: boolean;
 
   getSetting(key: string): string | null;
   setSetting(key: string, value: string): void;
 
-  /** Replaces the stored copy of the bundled content. */
-  replaceChords(chords: readonly Chord[]): void;
-  replaceStrumPatterns(patterns: readonly StrumPatternData[]): void;
-  /** Songs and the chords they need. `song_progress` has a foreign key onto this. */
-  replaceSongs(songs: readonly (SongData & { chordIds: readonly string[] })[]): void;
+  /**
+   * Brings the stored copy of the bundled content up to date, in one
+   * transaction, without disturbing the learner's progress.
+   *
+   * One call rather than three, because the three tables reference each other
+   * and the user's tables reference all of them. Anything that empties a
+   * content table in isolation either violates a foreign key or destroys
+   * progress; the ordering that avoids both only exists if the whole swap
+   * happens together.
+   */
+  replaceContent(content: ContentBundle): void;
 
   getAllChordMastery(): ChordMastery[];
   getChordMastery(chordId: string): ChordMastery | null;

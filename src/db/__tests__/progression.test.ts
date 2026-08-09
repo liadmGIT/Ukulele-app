@@ -35,7 +35,7 @@ function practiseToLevel(chordId: string, level: number, startAt = Date.UTC(2026
 describe('practising a chord', () => {
   beforeEach(() => {
     const driver = new MemoryDriver();
-    driver.replaceChords(getChordLibrary().chords);
+    driver.replaceContent({ chords: getChordLibrary().chords, patterns: [], songs: [] });
     setStorage(driver);
   });
 
@@ -79,7 +79,7 @@ describe('unlocking songs by practising chords', () => {
 
   beforeEach(() => {
     const driver = new MemoryDriver();
-    driver.replaceChords(getChordLibrary().chords);
+    driver.replaceContent({ chords: getChordLibrary().chords, patterns: [], songs: [] });
     setStorage(driver);
   });
 
@@ -115,7 +115,7 @@ describe('unlocking songs by practising chords', () => {
 describe('song mastery', () => {
   beforeEach(() => {
     const driver = new MemoryDriver();
-    driver.replaceChords(getChordLibrary().chords);
+    driver.replaceContent({ chords: getChordLibrary().chords, patterns: [], songs: [] });
     setStorage(driver);
   });
 

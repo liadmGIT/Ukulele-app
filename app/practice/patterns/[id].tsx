@@ -32,7 +32,12 @@ export default function PatternDetailScreen() {
   if (!pattern) {
     return (
       <Screen>
-        <Text>{t('common.loading')}</Text>
+        <Card>
+          <Text variant="heading">{t('common.notFound')}</Text>
+          <Text variant="body" tone="muted">
+            {t('common.notFoundBody')}
+          </Text>
+        </Card>
       </Screen>
     );
   }
